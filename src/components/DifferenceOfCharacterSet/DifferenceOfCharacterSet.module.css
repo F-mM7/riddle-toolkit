@@ -1,0 +1,114 @@
+.container {
+  height: calc(100vh - 180px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  flex: 2;
+}
+
+.resultSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.inputGroup,
+.resultGroup {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-card);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.inputGroup {
+  flex: 1;
+  overflow: hidden;
+}
+
+.label {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.textarea {
+  flex: 1;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  color: var(--color-text-primary);
+  resize: none;
+  overflow-y: auto;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.result {
+  flex: 1;
+  padding: 1rem;
+  background-color: var(--color-bg-main);
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: var(--color-secondary);
+  word-wrap: break-word;
+  overflow-y: auto;
+  min-height: 100px;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    height: auto;
+  }
+
+  .inputSection,
+  .resultSection {
+    grid-template-columns: 1fr;
+  }
+
+  .inputGroup {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 1rem;
+  }
+
+  .inputSection,
+  .resultSection {
+    gap: 1rem;
+  }
+
+  .inputGroup,
+  .resultGroup {
+    padding: 1rem;
+  }
+
+  .label {
+    font-size: 1.1rem;
+  }
+}
