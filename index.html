@@ -6,18 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>riddle-toolkit</title>
     <script>
-      // GitHub Pages SPA redirect hack - redirect handling
+      // GitHub Pages SPA redirect hack - restore the path
       // https://github.com/rafgraph/spa-github-pages
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
         }
-      }(window.location))
+      })();
     </script>
     <script type="module" crossorigin src="/riddle-toolkit/assets/index-DocWsVsA.js"></script>
     <link rel="stylesheet" crossorigin href="/riddle-toolkit/assets/index-DLZtQ7HU.css">
