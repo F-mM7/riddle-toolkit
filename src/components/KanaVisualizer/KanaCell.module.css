@@ -26,14 +26,61 @@
   user-select: none;
 }
 
-@media (max-width: 768px) {
+/* 1400px未満: セルを少し小さく */
+@media (max-width: 1400px) {
   .cell {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
   }
 
   .character {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
+  }
+}
+
+/* 1200px未満: セルをさらに小さく */
+@media (max-width: 1200px) {
+  .cell {
+    width: 55px;
+    height: 55px;
+  }
+
+  .character {
+    font-size: 1.6rem;
+  }
+}
+
+/* 1024px未満: 縦並びになるので大きく戻す */
+@media (max-width: 1024px) {
+  .cell {
+    width: 65px;
+    height: 65px;
+  }
+
+  .character {
+    font-size: 1.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cell {
+    width: 50px;
+    height: 50px;
+  }
+
+  .character {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .cell {
+    width: 42px;
+    height: 42px;
+  }
+
+  .character {
+    font-size: 1.3rem;
   }
 }
 

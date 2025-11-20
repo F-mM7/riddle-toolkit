@@ -2,6 +2,7 @@
   height: calc(100vh - 180px);
   display: flex;
   gap: 1.5rem;
+  overflow: hidden;
 }
 
 .inputSection {
@@ -12,6 +13,7 @@
   padding: 1.5rem;
   border-radius: 0.5rem;
   border: 1px solid var(--color-border);
+  min-width: 0;
 }
 
 .tableSection {
@@ -22,6 +24,8 @@
   padding: 1.5rem;
   border-radius: 0.5rem;
   border: 1px solid var(--color-border);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .label {
@@ -47,15 +51,34 @@
   background-color: var(--color-border);
 }
 
+/* 1400px未満: セルを少し小さく */
+@media (max-width: 1400px) {
+  .inputSection {
+    flex: 0 0 380px;
+  }
+}
+
+/* 1200px未満: セルをさらに小さく */
+@media (max-width: 1200px) {
+  .inputSection {
+    flex: 0 0 350px;
+  }
+}
+
+/* 1024px未満: 縦並びに */
 @media (max-width: 1024px) {
   .container {
     height: auto;
     flex-direction: column;
+    overflow: visible;
   }
 
-  .inputSection,
+  .inputSection {
+    flex: 1 1 auto;
+  }
+
   .tableSection {
-    min-height: 300px;
+    min-height: 400px;
   }
 }
 
@@ -67,7 +90,10 @@
   .inputSection,
   .tableSection {
     padding: 1rem;
-    min-height: 250px;
+  }
+
+  .tableSection {
+    min-height: 350px;
   }
 
   .label {

@@ -26,6 +26,30 @@
   visibility: hidden;
 }
 
+/* 1400px未満: セルを少し小さく */
+@media (max-width: 1400px) {
+  .emptyCell {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* 1200px未満: セルをさらに小さく */
+@media (max-width: 1200px) {
+  .emptyCell {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* 1024px未満: 縦並びになるので大きく戻す */
+@media (max-width: 1024px) {
+  .emptyCell {
+    width: 65px;
+    height: 65px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0.5rem;
@@ -40,8 +64,15 @@
   }
 
   .emptyCell {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 600px) {
+  .emptyCell {
+    width: 42px;
+    height: 42px;
   }
 }
 
