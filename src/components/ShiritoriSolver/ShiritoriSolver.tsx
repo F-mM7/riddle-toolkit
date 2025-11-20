@@ -11,6 +11,8 @@ export function ShiritoriSolver() {
     solutions: { words: string[] }[];
     error?: string;
   } | null>(null);
+  const [clearCount, setClearCount] = useState<number>(0);
+  const [showSample, setShowSample] = useState<boolean>(false);
 
   const handleSolve = () => {
     const words = inputText
@@ -19,15 +21,26 @@ export function ShiritoriSolver() {
       .filter((w) => w !== '');
     const solveResult = solveShiritori(words);
     setResult(solveResult);
+    setClearCount(0); // カウントをリセット
   };
 
   const handleSample = () => {
     setInputText(SAMPLE_WORDS.join('\n'));
+    setClearCount(0); // カウントをリセット
   };
 
   const handleClear = () => {
     setInputText('');
     setResult(null);
+
+    // クリア回数をカウント
+    const newCount = clearCount + 1;
+    setClearCount(newCount);
+
+    // 5回連続でクリアするとsampleボタンを表示
+    if (newCount >= 5) {
+      setShowSample(true);
+    }
   };
 
   return (
@@ -46,12 +59,14 @@ export function ShiritoriSolver() {
           <button className={styles.button} onClick={handleSolve}>
             Solve
           </button>
-          <button
-            className={`${styles.button} ${styles.buttonSecondary}`}
-            onClick={handleSample}
-          >
-            Sample
-          </button>
+          {showSample && (
+            <button
+              className={`${styles.button} ${styles.buttonSecondary}`}
+              onClick={handleSample}
+            >
+              Sample
+            </button>
+          )}
           <button
             className={`${styles.button} ${styles.buttonSecondary}`}
             onClick={handleClear}

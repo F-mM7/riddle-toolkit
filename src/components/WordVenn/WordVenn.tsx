@@ -17,19 +17,19 @@ export function WordVenn() {
       cx: 250,
       cy: 165,
       r: 120,
-      fill: 'var(--color-primary)',
+      fill: '#DC2626', // 赤（単語1）- 暗めの赤
     },
     {
       cx: 190,
       cy: 269,
       r: 120,
-      fill: 'var(--color-secondary)',
+      fill: '#16A34A', // 緑（単語2）- 暗めの緑
     },
     {
       cx: 310,
       cy: 269,
       r: 120,
-      fill: 'var(--color-accent)',
+      fill: '#2563EB', // 青（単語3）- 暗めの青
     },
   ];
 
@@ -111,9 +111,10 @@ export function WordVenn() {
                 cy={circle.cy}
                 r={circle.r}
                 fill={circle.fill}
-                fillOpacity="0.3"
+                fillOpacity="0.4"
                 stroke={circle.fill}
                 strokeWidth="2"
+                style={{ mixBlendMode: 'screen' }}
               />
             ))}
 

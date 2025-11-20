@@ -4,11 +4,11 @@ import {
   FileDigit,
   CircleMinus,
   Link,
-  Boxes,
   Spade,
   VectorSquare,
   Cross,
   Grid,
+  Blend,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -46,7 +46,7 @@ export const TOOLS: ToolInfo[] = [
     name: '単語ベン図',
     description: '3つの単語に含まれる文字の重複関係をベン図として視覚化',
     path: '/word-venn',
-    icon: Boxes,
+    icon: Blend,
   },
   {
     id: 'babanuki',
