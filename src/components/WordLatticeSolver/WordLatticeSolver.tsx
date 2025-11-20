@@ -54,7 +54,7 @@ export function WordLatticeSolver() {
         onWordsChange={setWords}
       />
 
-      <SolutionDisplay rows={rows} cols={cols} words={words} />
+      <SolutionDisplay words={words} />
     </div>
   );
 }

@@ -5,8 +5,6 @@ import { GridVisualization } from './GridVisualization';
 import styles from './WordLatticeSolver.module.css';
 
 interface SolutionDisplayProps {
-  rows: number;
-  cols: number;
   words: string[][];
 }
 
