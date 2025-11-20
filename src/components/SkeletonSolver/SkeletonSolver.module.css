@@ -1,13 +1,13 @@
 .container {
   min-height: 100vh;
   padding: 2rem;
-  background-color: #1f2937;
+  background-color: var(--color-bg-main);
 }
 
 .mainTitle {
   font-size: 2rem;
   font-weight: 700;
-  color: #f9fafb;
+  color: var(--color-text-primary);
   margin: 0 0 2rem 0;
   text-align: center;
 }
@@ -28,9 +28,10 @@
 }
 
 .panel {
-  background-color: #374151;
+  background-color: var(--color-bg-card);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -38,10 +39,10 @@
 
 .buttonPrimary {
   padding: 0.75rem 2rem;
-  background-color: #60a5fa;
-  color: #f9fafb;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.25rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -49,7 +50,7 @@
 }
 
 .buttonPrimary:hover:not(:disabled) {
-  background-color: #3b82f6;
+  background-color: var(--color-bg-hover);
 }
 
 .buttonPrimary:disabled {
@@ -59,10 +60,10 @@
 
 .buttonSecondary {
   padding: 0.75rem 2rem;
-  background-color: #4b5563;
-  color: #f9fafb;
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.25rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -70,16 +71,16 @@
 }
 
 .buttonSecondary:hover {
-  background-color: #6b7280;
+  background-color: var(--color-border);
 }
 
 .error {
   margin-top: 1rem;
   padding: 1rem;
   background-color: rgba(248, 113, 113, 0.1);
-  border: 1px solid #f87171;
-  border-radius: 6px;
-  color: #f87171;
+  border: 1px solid var(--color-accent);
+  border-radius: 0.25rem;
+  color: var(--color-accent);
   text-align: center;
   font-weight: 500;
   max-width: 600px;

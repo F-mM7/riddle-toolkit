@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: center;
 }
 
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #f9fafb;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -16,36 +17,36 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background-color: #4b5563;
-  border-radius: 6px;
+  background-color: var(--color-bg-hover);
+  border-radius: 0.25rem;
 }
 
 .sizeLabel {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #d1d5db;
+  color: var(--color-text-secondary);
 }
 
 .sizeInput {
   width: 70px;
   padding: 0.5rem;
-  background-color: #374151;
-  color: #f9fafb;
-  border: 1px solid #6b7280;
-  border-radius: 4px;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
   font-size: 1rem;
   text-align: center;
 }
 
 .sizeInput:focus {
   outline: none;
-  border-color: #60a5fa;
+  border-color: var(--color-primary);
 }
 
 .sizeDisplay {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--color-primary);
   min-width: 60px;
   text-align: center;
 }
@@ -54,9 +55,9 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  background-color: #6b7280;
+  background-color: var(--color-border);
   padding: 2px;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   width: fit-content;
 }
 
@@ -75,23 +76,24 @@
 }
 
 .inactive {
-  background-color: #4b5563;
+  background-color: var(--color-bg-hover);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .inactive:hover {
-  background-color: #6b7280;
+  background-color: var(--color-border);
 }
 
 .active {
-  background-color: #f9fafb;
+  background-color: var(--color-text-primary);
 }
 
 .active:hover {
-  background-color: #60a5fa;
+  background-color: var(--color-primary);
 }
 
 .cell:focus {
-  outline: 2px solid #60a5fa;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -102,28 +104,32 @@
 }
 
 .transformButton {
-  padding: 0.5rem 1rem;
-  background-color: #4b5563;
-  color: #f9fafb;
+  padding: 0.5rem;
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 1.25rem;
   cursor: pointer;
   transition: background-color 0.15s ease;
-  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .transformButton:hover {
-  background-color: #6b7280;
+  background-color: var(--color-border);
 }
 
 .transformButton:active {
-  background-color: #374151;
+  background-color: var(--color-bg-card);
 }
 
 .hint {
   font-size: 0.875rem;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 

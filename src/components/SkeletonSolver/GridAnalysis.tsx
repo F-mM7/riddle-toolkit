@@ -91,15 +91,6 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
           </div>
         ))}
       </div>
-
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>入力状況</h3>
-        <div
-          className={`${styles.overallStatus} ${allOk ? styles.statusOk : styles.statusError}`}
-        >
-          {allOk ? 'すべて揃っています' : '単語数が一致していません'}
-        </div>
-      </div>
     </div>
   );
 }

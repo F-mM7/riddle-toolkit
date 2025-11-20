@@ -3,14 +3,15 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 1.5rem;
-  background-color: #374151;
-  border-radius: 8px;
+  background-color: var(--color-bg-card);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
 }
 
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #f9fafb;
+  color: var(--color-text-primary);
   margin: 0;
   text-align: center;
 }
@@ -18,7 +19,7 @@
 .message {
   padding: 2rem;
   text-align: center;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
 }
 
@@ -30,9 +31,9 @@
   padding: 1.5rem;
   text-align: center;
   background-color: rgba(248, 113, 113, 0.1);
-  border: 1px solid #f87171;
-  border-radius: 6px;
-  color: #f87171;
+  border: 1px solid var(--color-accent);
+  border-radius: 0.25rem;
+  color: var(--color-accent);
   font-weight: 500;
 }
 
@@ -42,17 +43,17 @@
 
 .solutionCount {
   text-align: center;
-  color: #60a5fa;
+  color: var(--color-primary);
   font-weight: 500;
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
 
 .solutionsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  justify-items: center;
+  align-items: center;
 }
 
 .solutionItem {
@@ -65,8 +66,19 @@
 .solutionLabel {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #60a5fa;
+  color: var(--color-primary);
   padding: 0.25rem 0.75rem;
   background-color: rgba(96, 165, 250, 0.1);
   border-radius: 12px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .solutionsGrid {
+    gap: 1rem;
+  }
 }
