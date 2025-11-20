@@ -5,21 +5,21 @@
     </style>
   </defs>
 
-  <!-- 3つの円（正三角形配置、はみ出さないサイズ） -->
+  <!-- 3つの円（正三角形配置、中央寄せ） -->
   <!-- 円1（青・上） -->
-  <circle cx="50" cy="30" r="28"
+  <circle cx="50" cy="35" r="28"
           fill="#60A5FA"
           stroke="#60A5FA"
           class="circle"/>
 
   <!-- 円2（緑・左下） -->
-  <circle cx="32" cy="62" r="28"
+  <circle cx="32" cy="67" r="28"
           fill="#34D399"
           stroke="#34D399"
           class="circle"/>
 
   <!-- 円3（赤・右下） -->
-  <circle cx="68" cy="62" r="28"
+  <circle cx="68" cy="67" r="28"
           fill="#F87171"
           stroke="#F87171"
           class="circle"/>
