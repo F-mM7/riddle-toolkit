@@ -50,4 +50,10 @@ export const TOOLS: ToolInfo[] = [
     description: 'クロスワードパズルの一種であるスケルトンパズルを自動解決',
     path: '/skeleton-solver',
   },
+  {
+    id: 'kana-visualizer',
+    name: 'かな文字ビジュアライザー',
+    description: 'ひらがな（清音）を入力すると50音表の対応箇所を色で視覚化',
+    path: '/kana-visualizer',
+  },
 ];

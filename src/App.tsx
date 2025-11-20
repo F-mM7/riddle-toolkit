@@ -8,6 +8,7 @@ import { WordVenn } from './components/WordVenn/WordVenn';
 import { Babanuki } from './components/Babanuki/Babanuki';
 import { WordLatticeSolver } from './components/WordLatticeSolver/WordLatticeSolver';
 import { SkeletonSolver } from './components/SkeletonSolver/SkeletonSolver';
+import KanaVisualizer from './components/KanaVisualizer/KanaVisualizer';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             element={<WordLatticeSolver />}
           />
           <Route path="/skeleton-solver" element={<SkeletonSolver />} />
+          <Route path="/kana-visualizer" element={<KanaVisualizer />} />
         </Routes>
       </Layout>
     </BrowserRouter>

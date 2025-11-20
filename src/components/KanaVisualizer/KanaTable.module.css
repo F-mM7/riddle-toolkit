@@ -1,0 +1,65 @@
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-bg-main);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 4px;
+}
+
+.emptyCell {
+  width: 70px;
+  height: 70px;
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .table {
+    gap: 3px;
+  }
+
+  .row {
+    gap: 3px;
+  }
+
+  .emptyCell {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.25rem;
+  }
+
+  .table {
+    gap: 2px;
+  }
+
+  .row {
+    gap: 2px;
+  }
+
+  .emptyCell {
+    width: 35px;
+    height: 35px;
+  }
+}
