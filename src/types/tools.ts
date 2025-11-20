@@ -38,4 +38,10 @@ export const TOOLS: ToolInfo[] = [
     description: '入力文字列からペアになった文字と未ペア文字を検出',
     path: '/babanuki',
   },
+  {
+    id: 'word-lattice-solver',
+    name: '単語格子ソルバー',
+    description: '格子点に文字を配置して全てのセルの単語を構成',
+    path: '/word-lattice-solver',
+  },
 ];

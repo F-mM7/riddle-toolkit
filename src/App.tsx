@@ -6,6 +6,7 @@ import { DifferenceOfCharacterSet } from './components/DifferenceOfCharacterSet/
 import { ShiritoriSolver } from './components/ShiritoriSolver/ShiritoriSolver';
 import { WordVenn } from './components/WordVenn/WordVenn';
 import { Babanuki } from './components/Babanuki/Babanuki';
+import { WordLatticeSolver } from './components/WordLatticeSolver/WordLatticeSolver';
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
           <Route path="/shiritori-solver" element={<ShiritoriSolver />} />
           <Route path="/word-venn" element={<WordVenn />} />
           <Route path="/babanuki" element={<Babanuki />} />
+          <Route
+            path="/word-lattice-solver"
+            element={<WordLatticeSolver />}
+          />
         </Routes>
       </Layout>
     </BrowserRouter>
