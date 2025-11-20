@@ -12,6 +12,7 @@ export function Home() {
             name={tool.name}
             description={tool.description}
             path={tool.path}
+            icon={tool.icon}
           />
         ))}
       </div>

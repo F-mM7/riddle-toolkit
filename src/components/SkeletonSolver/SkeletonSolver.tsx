@@ -195,7 +195,7 @@ export function SkeletonSolver() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.mainTitle}>スケルトンパズルソルバー</h1>
+      <h1 className={styles.mainTitle}>スケルトンソルバー</h1>
 
       <div className={styles.actions}>
         {showSamples && (
