@@ -52,9 +52,6 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
     lengthComparison.push({ length, required, provided, status });
   });
 
-  // 全体のステータス
-  const allOk = lengthComparison.every((item) => item.status === 'ok');
-
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>グリッド解析</h2>

@@ -5,7 +5,6 @@ import {
   GRID_ROWS,
   GRID_COLS,
   VALID_POSITIONS,
-  POSITION_TO_KANA,
 } from '../../utils/kanaVisualizer/kanaMapping';
 import { extractSeion } from '../../utils/kanaVisualizer/kanaUtils';
 import { calculateMixedColor } from '../../utils/kanaVisualizer/colorUtils';
