@@ -1,28 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
     <style>
-      .circle { fill-opacity: 0.5; stroke-width: 2; }
+      .circle { fill-opacity: 0.6; stroke-width: 2.5; }
     </style>
   </defs>
 
-  <!-- 背景 -->
-  <rect width="100" height="100" fill="#1F2937"/>
-
-  <!-- 3つの円（正三角形配置） -->
+  <!-- 3つの円（正三角形配置、中央寄せ） -->
   <!-- 円1（青・上） -->
-  <circle cx="50" cy="30" r="24"
+  <circle cx="50" cy="35" r="28"
           fill="#60A5FA"
           stroke="#60A5FA"
           class="circle"/>
 
   <!-- 円2（緑・左下） -->
-  <circle cx="35" cy="56" r="24"
+  <circle cx="32" cy="67" r="28"
           fill="#34D399"
           stroke="#34D399"
           class="circle"/>
 
   <!-- 円3（赤・右下） -->
-  <circle cx="65" cy="56" r="24"
+  <circle cx="68" cy="67" r="28"
           fill="#F87171"
           stroke="#F87171"
           class="circle"/>
