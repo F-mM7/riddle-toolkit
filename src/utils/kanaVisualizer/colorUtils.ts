@@ -1,10 +1,11 @@
 import { RowColor } from '../../types/kanaVisualizer/kana';
 
-// 行の色定義（最大3行）- より明るく視認性を向上
+// 行の色定義（最大3行）
+// RGB値の範囲: 下限48、上限216
 export const ROW_COLORS: RowColor[] = [
-  { r: 255, g: 120, b: 120 }, // 1行目: 明るい赤
-  { r: 120, g: 255, b: 120 }, // 2行目: 明るい緑
-  { r: 120, g: 180, b: 255 }, // 3行目: 明るい青
+  { r: 216, g: 48, b: 48 }, // 1行目: 赤
+  { r: 48, g: 216, b: 48 }, // 2行目: 緑
+  { r: 48, g: 48, b: 216 }, // 3行目: 青
 ];
 
 /**
@@ -34,11 +35,11 @@ export function mixColors(colors: RowColor[]): RowColor {
     { r: 0, g: 0, b: 0 }
   );
 
-  // RGB値が255を超える場合は255に制限
+  // RGB値が216を超える場合は216に制限
   return {
-    r: Math.min(mixed.r, 255),
-    g: Math.min(mixed.g, 255),
-    b: Math.min(mixed.b, 255),
+    r: Math.min(mixed.r, 216),
+    g: Math.min(mixed.g, 216),
+    b: Math.min(mixed.b, 216),
   };
 }
 
