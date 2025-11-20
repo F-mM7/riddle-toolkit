@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f9fafb;
+  margin: 0;
+}
+
+.emptyMessage {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #1f2937;
+  border-radius: 6px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #d1d5db;
+  margin: 0 0 0.5rem 0;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.label {
+  color: #9ca3af;
+}
+
+.value {
+  color: #f9fafb;
+  font-weight: 500;
+}
+
+.lengthRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.lengthLabel {
+  color: #9ca3af;
+  min-width: 60px;
+}
+
+.lengthValue {
+  color: #f9fafb;
+  font-weight: 500;
+  flex: 1;
+}
+
+.status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  min-width: 50px;
+  text-align: center;
+}
+
+.ok {
+  background-color: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+}
+
+.short {
+  background-color: rgba(248, 113, 113, 0.1);
+  color: #f87171;
+}
+
+.over {
+  background-color: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+}
+
+.overallStatus {
+  padding: 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.statusOk {
+  background-color: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+}
+
+.statusError {
+  background-color: rgba(248, 113, 113, 0.1);
+  color: #f87171;
+}

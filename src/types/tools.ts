@@ -44,4 +44,10 @@ export const TOOLS: ToolInfo[] = [
     description: '格子点に文字を配置して全てのセルの単語を構成',
     path: '/word-lattice-solver',
   },
+  {
+    id: 'skeleton-solver',
+    name: 'スケルトンパズルソルバー',
+    description: 'クロスワードパズルの一種であるスケルトンパズルを自動解決',
+    path: '/skeleton-solver',
+  },
 ];

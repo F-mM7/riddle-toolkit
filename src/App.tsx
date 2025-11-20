@@ -7,6 +7,7 @@ import { ShiritoriSolver } from './components/ShiritoriSolver/ShiritoriSolver';
 import { WordVenn } from './components/WordVenn/WordVenn';
 import { Babanuki } from './components/Babanuki/Babanuki';
 import { WordLatticeSolver } from './components/WordLatticeSolver/WordLatticeSolver';
+import { SkeletonSolver } from './components/SkeletonSolver/SkeletonSolver';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             path="/word-lattice-solver"
             element={<WordLatticeSolver />}
           />
+          <Route path="/skeleton-solver" element={<SkeletonSolver />} />
         </Routes>
       </Layout>
     </BrowserRouter>

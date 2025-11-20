@@ -1,0 +1,112 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #1f2937;
+}
+
+.mainTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f9fafb;
+  margin: 0 0 2rem 0;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.panel {
+  background-color: #374151;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.buttonPrimary {
+  padding: 0.75rem 2rem;
+  background-color: #60a5fa;
+  color: #f9fafb;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background-color: #3b82f6;
+}
+
+.buttonPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonSecondary {
+  padding: 0.75rem 2rem;
+  background-color: #4b5563;
+  color: #f9fafb;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.buttonSecondary:hover {
+  background-color: #6b7280;
+}
+
+.error {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(248, 113, 113, 0.1);
+  border: 1px solid #f87171;
+  border-radius: 6px;
+  color: #f87171;
+  text-align: center;
+  font-weight: 500;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .mainTitle {
+    font-size: 1.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .buttonPrimary,
+  .buttonSecondary {
+    width: 100%;
+  }
+}

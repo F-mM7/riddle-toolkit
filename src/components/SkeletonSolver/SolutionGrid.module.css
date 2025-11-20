@@ -1,0 +1,50 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background-color: #6b7280;
+  padding: 2px;
+  border-radius: 4px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  gap: 2px;
+}
+
+.cell {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.inactive {
+  background-color: #4b5563;
+}
+
+.active {
+  background-color: #f9fafb;
+}
+
+.character {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 640px) {
+  .cell {
+    width: 28px;
+    height: 28px;
+  }
+
+  .character {
+    font-size: 0.875rem;
+  }
+}
