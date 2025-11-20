@@ -1,7 +1,5 @@
 .container {
-  min-height: 100vh;
-  padding: 2rem;
-  background-color: var(--color-bg-main);
+  width: 100%;
 }
 
 .mainTitle {
@@ -90,9 +88,6 @@
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
 
   .content {
     grid-template-columns: 1fr;
