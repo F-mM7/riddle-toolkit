@@ -2,14 +2,6 @@
   width: 100%;
 }
 
-.mainTitle {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin: 0 0 2rem 0;
-  text-align: center;
-}
-
 .actions {
   display: flex;
   gap: 1rem;
@@ -88,13 +80,8 @@
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
-
   .content {
     grid-template-columns: 1fr;
-  }
-
-  .mainTitle {
-    font-size: 1.5rem;
   }
 
   .actions {

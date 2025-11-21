@@ -22,11 +22,11 @@ export function WordListInput({
         className={styles.textarea}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="1行に1単語を入力してください&#10;例:&#10;リスト&#10;左手&#10;表紙"
+        placeholder="1行に1単語"
         rows={15}
       />
 
-      <p className={styles.hint}>1行 = 1単語（空行は無視されます）</p>
+      <p className={styles.hint}>1行 = 1単語</p>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export function DifferenceOfCharacterSet() {
             className={styles.textarea}
             value={textA}
             onChange={(e) => setTextA(e.target.value)}
-            placeholder="テキストAを入力..."
+            placeholder="入力..."
           />
         </div>
         <div className={styles.inputGroup}>
@@ -30,7 +30,7 @@ export function DifferenceOfCharacterSet() {
             className={styles.textarea}
             value={textB}
             onChange={(e) => setTextB(e.target.value)}
-            placeholder="テキストBを入力..."
+            placeholder="入力..."
           />
         </div>
       </div>

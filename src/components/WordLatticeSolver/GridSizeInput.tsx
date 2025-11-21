@@ -30,10 +30,10 @@ export const GridSizeInput: React.FC<GridSizeInputProps> = ({
 
   return (
     <div className={styles.gridSizeInput}>
-      <h2>格子サイズ</h2>
+      <h2>サイズ</h2>
       <div className={styles.inputGroup}>
         <label>
-          行数:
+          行:
           <input
             type="number"
             min="1"
@@ -44,7 +44,7 @@ export const GridSizeInput: React.FC<GridSizeInputProps> = ({
           />
         </label>
         <label>
-          列数:
+          列:
           <input
             type="number"
             min="1"

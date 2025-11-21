@@ -19,6 +19,10 @@
   font-weight: 700;
   color: var(--color-primary);
   margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .homeLink {
@@ -29,6 +33,16 @@
 
 .homeLink:hover {
   color: var(--color-secondary);
+}
+
+.separator {
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.pageName {
+  color: var(--color-text-primary);
+  font-weight: 400;
 }
 
 .backButton {

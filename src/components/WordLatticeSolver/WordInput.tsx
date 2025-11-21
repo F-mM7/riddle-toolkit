@@ -87,7 +87,7 @@ export const WordInput: React.FC<WordInputProps> = ({
 
   return (
     <div className={styles.wordInputSection}>
-      <h2>単語入力</h2>
+      <h2>単語</h2>
       <div
         className={styles.wordGrid}
         style={{
@@ -116,7 +116,7 @@ export const WordInput: React.FC<WordInputProps> = ({
           ))
         )}
       </div>
-      <div className={styles.hint}>※ 各セルに4文字を入力してください</div>
+      <div className={styles.hint}>※ 各セルに4文字</div>
     </div>
   );
 };

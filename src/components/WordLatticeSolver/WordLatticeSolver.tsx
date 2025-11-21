@@ -35,11 +35,6 @@ export function WordLatticeSolver() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>単語格子ソルバー</h1>
-      <p className={styles.description}>
-        格子点に文字を配置して全てのセルの単語を構成
-      </p>
-
       <GridSizeInput
         rows={rows}
         cols={cols}

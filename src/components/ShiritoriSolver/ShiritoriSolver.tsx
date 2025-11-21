@@ -47,12 +47,12 @@ export function ShiritoriSolver() {
     <div className={styles.container}>
       {/* 入力エリア */}
       <div className={styles.inputSection}>
-        <h2 className={styles.label}>単語リスト（1行に1単語）</h2>
+        <h2 className={styles.label}>単語リスト</h2>
         <textarea
           className={styles.textarea}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="単語を1行に1つずつ入力してください..."
+          placeholder="1行に1単語..."
           rows={24}
         />
         <div className={styles.buttonGroup}>
@@ -81,13 +81,13 @@ export function ShiritoriSolver() {
         <h2 className={styles.label}>結果</h2>
         {result === null ? (
           <p className={styles.placeholder}>
-            単語を入力して「解く」ボタンを押してください
+            単語を入力してSolveを押してください
           </p>
         ) : result.error ? (
           <p className={styles.error}>{result.error}</p>
         ) : result.solutions.length === 0 ? (
           <p className={styles.noSolution}>
-            解が見つかりませんでした（全ての単語を使うしりとりは不可能です）
+            解が見つかりませんでした
           </p>
         ) : (
           <>

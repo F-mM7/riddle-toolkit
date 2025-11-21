@@ -11,12 +11,12 @@ export function Babanuki() {
     <div className={styles.container}>
       {/* 入力エリア */}
       <div className={styles.inputSection}>
-        <h2 className={styles.label}>文字列入力</h2>
+        <h2 className={styles.label}>入力</h2>
         <textarea
           className={styles.textarea}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="文字列を入力してください..."
+          placeholder="文字列を入力..."
         />
       </div>
 

@@ -58,7 +58,7 @@ export function WordVenn() {
     <div className={styles.container}>
       {/* 入力エリア */}
       <div className={styles.inputSection}>
-        <h2 className={styles.label}>単語入力</h2>
+        <h2 className={styles.label}>入力</h2>
         <div className={styles.inputGroup}>
           <div className={styles.inputRow}>
             <label className={`${styles.inputLabel} ${styles.label1}`}>単語1</label>
@@ -67,7 +67,7 @@ export function WordVenn() {
               className={`${styles.input} ${styles.input1}`}
               value={word1}
               onChange={(e) => setWord1(e.target.value)}
-              placeholder="例: りんご"
+              placeholder=""
             />
           </div>
           <div className={styles.inputRow}>
@@ -77,7 +77,7 @@ export function WordVenn() {
               className={`${styles.input} ${styles.input2}`}
               value={word2}
               onChange={(e) => setWord2(e.target.value)}
-              placeholder="例: ごりら"
+              placeholder=""
             />
           </div>
           <div className={styles.inputRow}>
@@ -87,7 +87,7 @@ export function WordVenn() {
               className={`${styles.input} ${styles.input3}`}
               value={word3}
               onChange={(e) => setWord3(e.target.value)}
-              placeholder="例: らくだ"
+              placeholder=""
             />
           </div>
         </div>

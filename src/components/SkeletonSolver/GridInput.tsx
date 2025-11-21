@@ -94,11 +94,11 @@ export function GridInput({
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>グリッド入力</h2>
+      <h2 className={styles.title}>グリッド</h2>
 
       <div className={styles.sizeControl}>
         <label htmlFor="gridSize" className={styles.sizeLabel}>
-          グリッドサイズ:
+          サイズ:
         </label>
         <input
           id="gridSize"
@@ -171,7 +171,7 @@ export function GridInput({
       </div>
 
       <p className={styles.hint}>
-        クリックまたはドラッグでマスを切り替えられます
+        クリック/ドラッグでマスを切り替え
       </p>
     </div>
   );
