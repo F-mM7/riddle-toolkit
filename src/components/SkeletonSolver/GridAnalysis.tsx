@@ -7,6 +7,7 @@ import styles from './GridAnalysis.module.css';
 interface GridAnalysisProps {
   analysis: GridAnalysisType | null;
   words: string[];
+  actions?: React.ReactNode;
 }
 
 // 単語リストを文字数でグループ化
@@ -20,7 +21,7 @@ function groupWordsByLength(words: string[]): WordsByLength {
   return grouped;
 }
 
-export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
+export function GridAnalysis({ analysis, words, actions }: GridAnalysisProps) {
   if (!analysis || analysis.totalWords === 0) {
     return (
       <div className={styles.container}>
@@ -28,6 +29,7 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
         <p className={styles.emptyMessage}>
           グリッドにマスを配置してください
         </p>
+        {actions && <div className={styles.actions}>{actions}</div>}
       </div>
     );
   }
@@ -111,6 +113,8 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
           </tbody>
         </table>
       </div>
+
+      {actions && <div className={styles.actions}>{actions}</div>}
     </div>
   );
 }

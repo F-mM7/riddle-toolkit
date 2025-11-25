@@ -2,19 +2,29 @@
   width: 100%;
 }
 
-.actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.content {
+.mainLayout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 11fr 9fr;
   gap: 1.5rem;
   max-width: 1600px;
   margin: 0 auto;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
 .panel {
@@ -79,15 +89,17 @@
 }
 
 /* レスポンシブ対応 */
-@media (max-width: 768px) {
-  .content {
+@media (max-width: 1024px) {
+  .mainLayout {
     grid-template-columns: 1fr;
   }
 
-  .actions {
-    flex-direction: column;
+  .topRow {
+    grid-template-columns: 1fr;
   }
+}
 
+@media (max-width: 768px) {
   .buttonPrimary,
   .buttonSecondary {
     width: 100%;

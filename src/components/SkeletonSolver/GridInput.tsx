@@ -96,26 +96,60 @@ export function GridInput({
     <div className={styles.container}>
       <h2 className={styles.title}>グリッド</h2>
 
-      <div className={styles.sizeControl}>
-        <label htmlFor="gridSize" className={styles.sizeLabel}>
-          サイズ:
-        </label>
-        <input
-          id="gridSize"
-          type="number"
-          min="3"
-          max="20"
-          value={gridSize}
-          onChange={(e) =>
-            onSizeChange(
-              Math.max(3, Math.min(20, parseInt(e.target.value) || 10))
-            )
-          }
-          className={styles.sizeInput}
-        />
-        <span className={styles.sizeDisplay}>
-          {gridSize}×{gridSize}
-        </span>
+      <div className={styles.controls}>
+        <div className={styles.sizeControl}>
+          <label htmlFor="gridSize" className={styles.sizeLabel}>
+            サイズ:
+          </label>
+          <input
+            id="gridSize"
+            type="number"
+            min="3"
+            max="20"
+            value={gridSize}
+            onChange={(e) =>
+              onSizeChange(
+                Math.max(3, Math.min(20, parseInt(e.target.value) || 10))
+              )
+            }
+            className={styles.sizeInput}
+          />
+        </div>
+
+        <div className={styles.transformButtons}>
+          <button
+            onClick={handleFlipVertical}
+            className={styles.transformButton}
+            type="button"
+            title="上下反転"
+          >
+            ↕️
+          </button>
+          <button
+            onClick={handleFlipHorizontal}
+            className={styles.transformButton}
+            type="button"
+            title="左右反転"
+          >
+            ↔️
+          </button>
+          <button
+            onClick={handleRotateLeft}
+            className={styles.transformButton}
+            type="button"
+            title="左90度回転"
+          >
+            ↶
+          </button>
+          <button
+            onClick={handleRotateRight}
+            className={styles.transformButton}
+            type="button"
+            title="右90度回転"
+          >
+            ↷
+          </button>
+        </div>
       </div>
 
       <div className={styles.grid}>
@@ -134,45 +168,6 @@ export function GridInput({
           </div>
         ))}
       </div>
-
-      <div className={styles.transformButtons}>
-        <button
-          onClick={handleFlipVertical}
-          className={styles.transformButton}
-          type="button"
-          title="上下反転"
-        >
-          ↕️
-        </button>
-        <button
-          onClick={handleFlipHorizontal}
-          className={styles.transformButton}
-          type="button"
-          title="左右反転"
-        >
-          ↔️
-        </button>
-        <button
-          onClick={handleRotateLeft}
-          className={styles.transformButton}
-          type="button"
-          title="左90度回転"
-        >
-          ↶
-        </button>
-        <button
-          onClick={handleRotateRight}
-          className={styles.transformButton}
-          type="button"
-          title="右90度回転"
-        >
-          ↷
-        </button>
-      </div>
-
-      <p className={styles.hint}>
-        クリック/ドラッグでマスを切り替え
-      </p>
     </div>
   );
 }

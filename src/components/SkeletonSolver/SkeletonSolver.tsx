@@ -288,77 +288,88 @@ export function SkeletonSolver() {
     setSolutionError('');
   };
 
+  const actionButtons = (
+    <>
+      {showSamples && (
+        <>
+          <button
+            onClick={handleLoadSample}
+            className={styles.buttonSecondary}
+            type="button"
+          >
+            sample1
+          </button>
+          <button
+            onClick={handleLoadSample2}
+            className={styles.buttonSecondary}
+            type="button"
+          >
+            sample2
+          </button>
+          <button
+            onClick={handleLoadSample3}
+            className={styles.buttonSecondary}
+            type="button"
+          >
+            sample3
+          </button>
+          <button
+            onClick={handleLoadSample4}
+            className={styles.buttonSecondary}
+            type="button"
+          >
+            sample4
+          </button>
+        </>
+      )}
+      <button
+        onClick={handleClear}
+        className={styles.buttonSecondary}
+        type="button"
+      >
+        clear
+      </button>
+    </>
+  );
+
   return (
     <div className={styles.container}>
-      <div className={styles.actions}>
-        {showSamples && (
-          <>
-            <button
-              onClick={handleLoadSample}
-              className={styles.buttonSecondary}
-              type="button"
-            >
-              sample1
-            </button>
-            <button
-              onClick={handleLoadSample2}
-              className={styles.buttonSecondary}
-              type="button"
-            >
-              sample2
-            </button>
-            <button
-              onClick={handleLoadSample3}
-              className={styles.buttonSecondary}
-              type="button"
-            >
-              sample3
-            </button>
-            <button
-              onClick={handleLoadSample4}
-              className={styles.buttonSecondary}
-              type="button"
-            >
-              sample4
-            </button>
-          </>
-        )}
-        <button
-          onClick={handleClear}
-          className={styles.buttonSecondary}
-          type="button"
-        >
-          clear
-        </button>
-      </div>
+      <div className={styles.mainLayout}>
+        <div className={styles.leftSection}>
+          <div className={styles.topRow}>
+            <div className={styles.panel}>
+              <GridInput
+                grid={grid}
+                onGridChange={handleGridChange}
+                gridSize={gridSize}
+                onSizeChange={handleSizeChange}
+              />
+            </div>
 
-      <div className={styles.content}>
-        <div className={styles.panel}>
-          <GridInput
-            grid={grid}
-            onGridChange={handleGridChange}
-            gridSize={gridSize}
-            onSizeChange={handleSizeChange}
-          />
+            <div className={styles.panel}>
+              <WordListInput
+                value={wordListText}
+                onChange={handleWordListChange}
+                wordCount={words.length}
+              />
+            </div>
+          </div>
+
+          <div className={styles.panel}>
+            <GridAnalysis analysis={analysis} words={words} actions={actionButtons} />
+          </div>
         </div>
 
-        <div className={styles.panel}>
-          <WordListInput
-            value={wordListText}
-            onChange={handleWordListChange}
-            wordCount={words.length}
-          />
-          <GridAnalysis analysis={analysis} words={words} />
-        </div>
-
-        <div className={styles.panel}>
-          <SolutionDisplay
-            solutions={solutions}
-            grid={solvedGrid}
-            analysis={solvedAnalysis}
-            isSolving={isSolving}
-            errorMessage={solutionError}
-          />
+        <div className={styles.rightSection}>
+          <div className={styles.panel}>
+            <SolutionDisplay
+              solutions={solutions}
+              grid={solvedGrid}
+              analysis={solvedAnalysis}
+              isSolving={isSolving}
+              errorMessage={solutionError}
+            />
+          </div>
         </div>
       </div>
     </div>

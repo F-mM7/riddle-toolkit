@@ -25,8 +25,6 @@ export function WordListInput({
         placeholder="1行に1単語"
         rows={15}
       />
-
-      <p className={styles.hint}>1行 = 1単語</p>
     </div>
   );
 }
