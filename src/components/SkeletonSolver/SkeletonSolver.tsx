@@ -85,6 +85,31 @@ const SAMPLE_WORDS_3 = `ごうこく
 ごるふ
 かうんと`;
 
+// サンプルデータ4（単語過剰テスト）
+const SAMPLE_GRID_4: Grid = [
+  [false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, true, false, false, false, false, false],
+  [false, false, false, false, true, false, true, false, false, false],
+  [false, false, false, false, true, true, true, false, false, false],
+  [false, false, true, true, true, false, true, false, false, false],
+  [false, false, true, false, false, false, true, false, false, false],
+  [false, false, true, false, false, false, false, false, false, false],
+  [false, false, true, true, true, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
+];
+
+const SAMPLE_WORDS_4 = `せんてい
+ふなぞこ
+いちおし
+しんたい
+からだ
+おとな
+しじよう
+いちば
+しきし
+いろがみ`;
+
 export function SkeletonSolver() {
   const [gridSize, setGridSize] = useState<number>(10);
   const [grid, setGrid] = useState<Grid>(createEmptyGrid(10));
@@ -253,6 +278,16 @@ export function SkeletonSolver() {
     setSolutionError('');
   };
 
+  // サンプル4読み込み
+  const handleLoadSample4 = () => {
+    const sampleSize = SAMPLE_GRID_4.length;
+    setGridSize(sampleSize);
+    setGrid(SAMPLE_GRID_4);
+    setWordListText(SAMPLE_WORDS_4);
+    setSolutions([]);
+    setSolutionError('');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.actions}>
@@ -278,6 +313,13 @@ export function SkeletonSolver() {
               type="button"
             >
               sample3
+            </button>
+            <button
+              onClick={handleLoadSample4}
+              className={styles.buttonSecondary}
+              type="button"
+            >
+              sample4
             </button>
           </>
         )}

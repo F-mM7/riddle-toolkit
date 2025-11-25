@@ -24,7 +24,7 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
   if (!analysis || analysis.totalWords === 0) {
     return (
       <div className={styles.container}>
-        <h2 className={styles.title}>グリッド解析</h2>
+        <h2 className={styles.title}>入力状況</h2>
         <p className={styles.emptyMessage}>
           グリッドにマスを配置してください
         </p>
@@ -44,7 +44,7 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>グリッド解析</h2>
+      <h2 className={styles.title}>入力状況</h2>
 
       <div className={styles.tableWrapper}>
         <table className={styles.table}>

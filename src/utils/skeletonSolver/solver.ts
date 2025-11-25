@@ -21,7 +21,8 @@ function groupWordsByLength(words: string[]): WordsByLength {
 
 /**
  * スケルトンパズルを解く
- * 単語が不足している場合でも部分的な解を返す
+ * 単語が不足している場合：一部のスロットをスキップして部分的な解を返す
+ * 単語が過剰な場合：一部の単語を使わずにすべてのスロットを埋める解を返す
  */
 export function solveSkeleton(
   analysis: GridAnalysis,
@@ -35,6 +36,10 @@ export function solveSkeleton(
   // 各長さの単語に対して、どのインデックスが使用済みかを追跡
   const usedWordIndices: Map<number, Set<number>> = new Map();
   const assignments: Record<number, string> = {};
+
+  // 単語数とスロット数を比較
+  const totalSlots = analysis.slots.length;
+  const totalWords = words.length;
 
   /**
    * バックトラッキングで解を探索（完全な解のみ）
@@ -95,9 +100,9 @@ export function solveSkeleton(
   }
 
   /**
-   * バックトラッキングで解を探索（部分解も許可）
+   * バックトラッキングで解を探索（スロットスキップを許可：単語不足時）
    */
-  function backtrackPartial(slotIndex: number, skippedCount: number): void {
+  function backtrackWithSlotSkip(slotIndex: number, skippedCount: number): void {
     // すべてのスロットをチェック完了
     if (slotIndex === analysis.slots.length) {
       const filledCount = Object.keys(assignments).length;
@@ -147,7 +152,7 @@ export function solveSkeleton(
         usedWordIndices.get(slot.length)!.add(i);
 
         // 再帰
-        backtrackPartial(slotIndex + 1, skippedCount);
+        backtrackWithSlotSkip(slotIndex + 1, skippedCount);
 
         // バックトラック
         delete assignments[slot.id];
@@ -156,18 +161,87 @@ export function solveSkeleton(
     }
 
     // このスロットをスキップする選択肢も試す（スキップ上限に達していない場合のみ）
-    const maxSkips = analysis.slots.length - words.length;
+    const maxSkips = totalSlots - totalWords;
     if (skippedCount < maxSkips) {
-      backtrackPartial(slotIndex + 1, skippedCount + 1);
+      backtrackWithSlotSkip(slotIndex + 1, skippedCount + 1);
     }
   }
 
-  // まず完全な解を探索
-  backtrackComplete(0);
+  /**
+   * バックトラッキングで解を探索（単語余りを許可：単語過剰時）
+   * すべてのスロットを埋めることを目指し、一部の単語は使わない
+   */
+  function backtrackWithExcessWords(slotIndex: number): void {
+    // すべてのスロットに割り当て完了
+    if (slotIndex === analysis.slots.length) {
+      const filledCount = Object.keys(assignments).length;
+      // すべてのスロットが埋まっている場合のみ解として採用
+      if (filledCount === totalSlots) {
+        const constraints = calculateConstraints(
+          assignments,
+          analysis.slots,
+          analysis.intersections
+        );
+        const solution: Solution = {
+          assignments: { ...assignments },
+          isPartial: false, // すべてのスロットが埋まっているので完全解
+          filledCount,
+          totalSlots: analysis.slots.length,
+          constraints,
+        };
+        solutions.push(solution);
+        if (onSolutionFound) {
+          onSolutionFound(solution);
+        }
+      }
+      return;
+    }
 
-  // 完全な解が見つからなかった場合、部分解を探索
-  if (solutions.length === 0) {
-    backtrackPartial(0, 0);
+    // 最大解数に達したら終了
+    if (solutions.length >= maxSolutions) return;
+
+    const slot = analysis.slots[slotIndex];
+    const candidates = wordsByLength[slot.length] || [];
+
+    for (let i = 0; i < candidates.length; i++) {
+      // この長さの単語でこのインデックスが使用済みか確認
+      const usedSet = usedWordIndices.get(slot.length);
+      if (usedSet && usedSet.has(i)) continue;
+
+      const word = candidates[i];
+
+      // 制約チェック
+      if (checkConstraints(slot, word, assignments, analysis.intersections)) {
+        // 割り当て
+        assignments[slot.id] = word;
+        if (!usedWordIndices.has(slot.length)) {
+          usedWordIndices.set(slot.length, new Set());
+        }
+        usedWordIndices.get(slot.length)!.add(i);
+
+        // 再帰
+        backtrackWithExcessWords(slotIndex + 1);
+
+        // バックトラック
+        delete assignments[slot.id];
+        usedWordIndices.get(slot.length)!.delete(i);
+      }
+    }
+  }
+
+  // 単語数とスロット数に応じて探索方法を選択
+  if (totalWords === totalSlots) {
+    // ちょうどの場合：完全な解のみを探索
+    backtrackComplete(0);
+  } else if (totalWords < totalSlots) {
+    // 単語不足の場合：まず完全な解を探し、なければスロットスキップを許可
+    backtrackComplete(0);
+    if (solutions.length === 0) {
+      backtrackWithSlotSkip(0, 0);
+    }
+  } else {
+    // 単語過剰の場合：すべてのスロットを埋める（一部の単語は使わない）
+    backtrackWithExcessWords(0);
   }
 
   return solutions;
