@@ -100,7 +100,7 @@ export function solveShiritori(inputWords: string[]): SolveResult {
     if (x === 0) {
       // 全ての単語を使い切った
       solutions.push({
-        words: [...path].reverse().map((idx) => words[idx]),
+        words: [...path].map((idx) => words[idx]),
       });
       answerCount++;
       return;
