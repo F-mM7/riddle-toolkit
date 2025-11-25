@@ -9,6 +9,7 @@ import {
   Cross,
   Grid,
   Blend,
+  MapPin,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -75,5 +76,12 @@ export const TOOLS: ToolInfo[] = [
     description: '文字列の50音表対応箇所を視覚化',
     path: '/kana-visualizer',
     icon: Grid,
+  },
+  {
+    id: 'prefecture-regex',
+    name: '都道府県正規表現マッチャー',
+    description: '都道府県名・県庁所在地名を正規表現で検索',
+    path: '/prefecture-regex',
+    icon: MapPin,
   },
 ];

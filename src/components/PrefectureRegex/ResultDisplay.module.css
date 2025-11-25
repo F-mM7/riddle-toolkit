@@ -1,0 +1,94 @@
+.container {
+  margin-bottom: 1.5rem;
+  background-color: var(--color-bg-card);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.placeholder {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.noResults {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+}
+
+.resultList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.resultList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.resultList::-webkit-scrollbar-track {
+  background: var(--color-bg-main);
+  border-radius: 4px;
+}
+
+.resultList::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.resultList::-webkit-scrollbar-thumb:hover {
+  background: var(--color-bg-hover);
+}
+
+.resultCard {
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.patternMatches {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.patternMatch {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.patternNumber {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  min-width: 80px;
+}
+
+.matchedValue {
+  font-weight: 600;
+  color: var(--color-secondary);
+  font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 640px) {
+  .patternMatch {
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .patternNumber {
+    min-width: auto;
+  }
+}

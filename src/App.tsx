@@ -9,6 +9,7 @@ import { Babanuki } from './components/Babanuki/Babanuki';
 import { WordLatticeSolver } from './components/WordLatticeSolver/WordLatticeSolver';
 import { SkeletonSolver } from './components/SkeletonSolver/SkeletonSolver';
 import KanaVisualizer from './components/KanaVisualizer/KanaVisualizer';
+import { PrefectureRegex } from './components/PrefectureRegex/PrefectureRegex';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           />
           <Route path="/skeleton-solver" element={<SkeletonSolver />} />
           <Route path="/kana-visualizer" element={<KanaVisualizer />} />
+          <Route path="/prefecture-regex" element={<PrefectureRegex />} />
         </Routes>
       </Layout>
     </BrowserRouter>
