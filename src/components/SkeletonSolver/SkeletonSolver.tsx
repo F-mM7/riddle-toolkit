@@ -25,13 +25,13 @@ const parseWordList = (text: string): string[] => {
 // サンプルデータ
 const SAMPLE_GRID: Grid = [
   [false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, true, false, false, false],
   [false, false, false, false, false, false, true, false, false, false],
   [false, false, true, false, true, false, true, false, false, false],
   [false, false, true, false, true, true, true, true, false, false],
   [false, false, true, false, true, false, false, true, false, false],
   [false, false, true, true, true, true, false, true, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false],
 ];
@@ -63,6 +63,27 @@ const SAMPLE_WORDS_2 = `きばつ
 がんせき
 てぢか
 つかいて`;
+
+// サンプルデータ3
+const SAMPLE_GRID_3: Grid = [
+  [false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
+  [false, false, true, true, true, false, true, false, false, false],
+  [false, false, true, false, true, true, true, false, false, false],
+  [false, false, true, true, true, true, true, false, false, false],
+  [false, false, true, true, false, true, false, false, false, false],
+  [false, false, false, true, true, true, true, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false],
+];
+
+const SAMPLE_WORDS_3 = `ごうこく
+こうつうひ
+はかい
+ふはつ
+ごるふ
+かうんと`;
 
 export function SkeletonSolver() {
   const [gridSize, setGridSize] = useState<number>(10);
@@ -222,6 +243,15 @@ export function SkeletonSolver() {
     setSolutionError('');
   };
 
+  // サンプル3読み込み
+  const handleLoadSample3 = () => {
+    const sampleSize = SAMPLE_GRID_3.length;
+    setGridSize(sampleSize);
+    setGrid(SAMPLE_GRID_3);
+    setWordListText(SAMPLE_WORDS_3);
+    setSolutions([]);
+    setSolutionError('');
+  };
 
   return (
     <div className={styles.container}>
@@ -241,6 +271,13 @@ export function SkeletonSolver() {
               type="button"
             >
               sample2
+            </button>
+            <button
+              onClick={handleLoadSample3}
+              className={styles.buttonSecondary}
+              type="button"
+            >
+              sample3
             </button>
           </>
         )}
