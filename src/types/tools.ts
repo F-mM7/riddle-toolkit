@@ -10,6 +10,7 @@ import {
   Grid,
   Blend,
   MapPin,
+  ArrowRightLeft,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -83,5 +84,12 @@ export const TOOLS: ToolInfo[] = [
     description: '都道府県名・県庁所在地名を正規表現で検索',
     path: '/prefecture-regex',
     icon: MapPin,
+  },
+  {
+    id: 'char-shifter',
+    name: '文字ずらし',
+    description: 'かな文字・アルファベットをシフト暗号で変換',
+    path: '/char-shifter',
+    icon: ArrowRightLeft,
   },
 ];

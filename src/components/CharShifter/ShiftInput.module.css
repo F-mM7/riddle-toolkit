@@ -1,0 +1,56 @@
+.container {
+  margin: 1.5rem 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.placeholder {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  padding: 1rem;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.numberInput {
+  width: 80px;
+  padding: 0.625rem 0.75rem;
+  font-size: 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.numberInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.inputGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .numberInput {
+    width: 70px;
+    padding: 0.5rem 0.625rem;
+    font-size: 0.9rem;
+  }
+
+  .inputGrid {
+    gap: 0.5rem;
+  }
+}

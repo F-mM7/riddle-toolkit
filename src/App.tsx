@@ -10,6 +10,7 @@ import { WordLatticeSolver } from './components/WordLatticeSolver/WordLatticeSol
 import { SkeletonSolver } from './components/SkeletonSolver/SkeletonSolver';
 import KanaVisualizer from './components/KanaVisualizer/KanaVisualizer';
 import { PrefectureRegex } from './components/PrefectureRegex/PrefectureRegex';
+import { CharShifter } from './components/CharShifter/CharShifter';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/skeleton-solver" element={<SkeletonSolver />} />
           <Route path="/kana-visualizer" element={<KanaVisualizer />} />
           <Route path="/prefecture-regex" element={<PrefectureRegex />} />
+          <Route path="/char-shifter" element={<CharShifter />} />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -20,6 +20,9 @@
   --color-text-secondary: #D1D5DB;
   --color-border: #4B5563;
 
+  /* フォントサイズ */
+  --font-size-index: 1rem;
+
   color-scheme: dark;
   color: var(--color-text-primary);
   background-color: var(--color-bg-main);
