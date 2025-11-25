@@ -43,11 +43,17 @@ export function solveSkeleton(
     // すべてのスロットに割り当て完了
     if (slotIndex === analysis.slots.length) {
       const filledCount = Object.keys(assignments).length;
+      const constraints = calculateConstraints(
+        assignments,
+        analysis.slots,
+        analysis.intersections
+      );
       const solution: Solution = {
         assignments: { ...assignments },
         isPartial: false,
         filledCount,
         totalSlots: analysis.slots.length,
+        constraints,
       };
       solutions.push(solution);
       if (onSolutionFound) {
@@ -97,11 +103,17 @@ export function solveSkeleton(
       const filledCount = Object.keys(assignments).length;
       if (filledCount > 0) {
         // 部分解として追加
+        const constraints = calculateConstraints(
+          assignments,
+          analysis.slots,
+          analysis.intersections
+        );
         const solution: Solution = {
           assignments: { ...assignments },
           isPartial: true,
           filledCount,
           totalSlots: analysis.slots.length,
+          constraints,
         };
         solutions.push(solution);
         if (onSolutionFound) {
@@ -198,4 +210,57 @@ function checkConstraints(
   }
 
   return true;
+}
+
+/**
+ * 未入力スロットの制約を計算
+ * 既に入力されている単語から、未入力の単語が満たすべきパターンを生成
+ */
+function calculateConstraints(
+  assignments: Record<number, string>,
+  slots: Slot[],
+  intersections: Intersection[]
+): string[] {
+  const constraints: string[] = [];
+
+  for (const slot of slots) {
+    // このスロットが未入力の場合
+    if (!assignments[slot.id]) {
+      // このスロットの制約パターンを作成
+      const pattern: string[] = Array(slot.length).fill('○');
+
+      // 交差点を確認して、確定している文字を埋める
+      for (const intersection of intersections) {
+        let thisIndex: number;
+        let otherSlotId: number;
+        let otherIndex: number;
+
+        if (intersection.slot1Id === slot.id) {
+          thisIndex = intersection.slot1Index;
+          otherSlotId = intersection.slot2Id;
+          otherIndex = intersection.slot2Index;
+        } else if (intersection.slot2Id === slot.id) {
+          thisIndex = intersection.slot2Index;
+          otherSlotId = intersection.slot1Id;
+          otherIndex = intersection.slot1Index;
+        } else {
+          continue;
+        }
+
+        // 交差する他のスロットが入力済みの場合
+        const otherWord = assignments[otherSlotId];
+        if (otherWord) {
+          pattern[thisIndex] = otherWord[otherIndex];
+        }
+      }
+
+      // パターンを文字列に変換して追加（○だけのパターンは省略）
+      const patternStr = pattern.join('');
+      if (patternStr.includes('○') && patternStr !== '○'.repeat(slot.length)) {
+        constraints.push(patternStr);
+      }
+    }
+  }
+
+  return constraints;
 }

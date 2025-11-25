@@ -72,19 +72,30 @@ export function analyzeGrid(grid: Grid): GridAnalysis {
 
   // 統計情報の生成
   const wordLengthCounts: Record<number, number> = {};
+  const horizontalLengthCounts: Record<number, number> = {};
+  const verticalLengthCounts: Record<number, number> = {};
   let horizontalCount = 0;
   let verticalCount = 0;
 
   slots.forEach((slot) => {
     wordLengthCounts[slot.length] = (wordLengthCounts[slot.length] || 0) + 1;
-    if (slot.direction === 'horizontal') horizontalCount++;
-    else verticalCount++;
+    if (slot.direction === 'horizontal') {
+      horizontalCount++;
+      horizontalLengthCounts[slot.length] =
+        (horizontalLengthCounts[slot.length] || 0) + 1;
+    } else {
+      verticalCount++;
+      verticalLengthCounts[slot.length] =
+        (verticalLengthCounts[slot.length] || 0) + 1;
+    }
   });
 
   return {
     slots,
     intersections,
     wordLengthCounts,
+    horizontalLengthCounts,
+    verticalLengthCounts,
     totalWords: slots.length,
     horizontalCount,
     verticalCount,

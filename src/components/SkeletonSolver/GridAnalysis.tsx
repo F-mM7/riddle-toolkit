@@ -34,59 +34,82 @@ export function GridAnalysis({ analysis, words }: GridAnalysisProps) {
 
   const wordsByLength = groupWordsByLength(words);
 
-  // 各文字数ごとの必要数と入力数を比較
-  const lengthComparison: Array<{
-    length: number;
-    required: number;
-    provided: number;
-    status: 'ok' | 'short' | 'over';
-  }> = [];
-
-  Object.entries(analysis.wordLengthCounts).forEach(([lengthStr, required]) => {
-    const length = parseInt(lengthStr);
-    const provided = wordsByLength[length]?.length || 0;
-    let status: 'ok' | 'short' | 'over' = 'ok';
-    if (provided < required) status = 'short';
-    else if (provided > required) status = 'over';
-
-    lengthComparison.push({ length, required, provided, status });
-  });
+  // すべての文字数を取得（必要数と入力数の両方から）
+  const allLengths = new Set<number>();
+  Object.keys(analysis.wordLengthCounts).forEach((len) =>
+    allLengths.add(parseInt(len))
+  );
+  Object.keys(wordsByLength).forEach((len) => allLengths.add(parseInt(len)));
+  const lengths = Array.from(allLengths).sort((a, b) => a - b);
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>グリッド解析</h2>
 
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>必要な単語数</h3>
-        <div className={styles.stat}>
-          <span className={styles.label}>合計:</span>
-          <span className={styles.value}>{analysis.totalWords}個</span>
-        </div>
-        <div className={styles.stat}>
-          <span className={styles.label}>横方向:</span>
-          <span className={styles.value}>{analysis.horizontalCount}個</span>
-        </div>
-        <div className={styles.stat}>
-          <span className={styles.label}>縦方向:</span>
-          <span className={styles.value}>{analysis.verticalCount}個</span>
-        </div>
-      </div>
-
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>文字数分布</h3>
-        {lengthComparison.map((item) => (
-          <div key={item.length} className={styles.lengthRow}>
-            <span className={styles.lengthLabel}>{item.length}文字:</span>
-            <span className={styles.lengthValue}>
-              {item.provided} / {item.required}個
-            </span>
-            <span className={`${styles.status} ${styles[item.status]}`}>
-              {item.status === 'ok' && '✓'}
-              {item.status === 'short' && '不足'}
-              {item.status === 'over' && '過剰'}
-            </span>
-          </div>
-        ))}
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th></th>
+              {lengths.map((len) => (
+                <th key={len}>{len}文字</th>
+              ))}
+              <th>計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className={styles.rowHeader}>横</td>
+              {lengths.map((len) => (
+                <td key={len}>{analysis.horizontalLengthCounts[len] || 0}</td>
+              ))}
+              <td className={styles.totalCell}>{analysis.horizontalCount}</td>
+            </tr>
+            <tr>
+              <td className={styles.rowHeader}>縦</td>
+              {lengths.map((len) => (
+                <td key={len}>{analysis.verticalLengthCounts[len] || 0}</td>
+              ))}
+              <td className={styles.totalCell}>{analysis.verticalCount}</td>
+            </tr>
+            <tr className={styles.separatorRow}>
+              <td colSpan={lengths.length + 2} className={styles.separator}>
+                <div className={styles.separatorLine}></div>
+              </td>
+            </tr>
+            <tr className={styles.totalRow}>
+              <td className={styles.rowHeader}>計</td>
+              {lengths.map((len) => (
+                <td key={len}>{analysis.wordLengthCounts[len] || 0}</td>
+              ))}
+              <td className={styles.totalCell}>{analysis.totalWords}</td>
+            </tr>
+            <tr>
+              <td className={styles.rowHeader}>入力</td>
+              {lengths.map((len) => {
+                const required = analysis.wordLengthCounts[len] || 0;
+                const provided = wordsByLength[len]?.length || 0;
+                const diff = provided - required;
+                return (
+                  <td key={len}>
+                    {provided}
+                    {diff !== 0 && (
+                      <span
+                        className={
+                          diff > 0 ? styles.overStatus : styles.shortStatus
+                        }
+                      >
+                        ({diff > 0 ? '+' : ''}
+                        {diff})
+                      </span>
+                    )}
+                  </td>
+                );
+              })}
+              <td className={styles.totalCell}>{words.length}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

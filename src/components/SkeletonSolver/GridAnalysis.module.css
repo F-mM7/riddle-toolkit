@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .title {
@@ -17,94 +17,77 @@
   margin: 0;
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1rem;
-  background-color: var(--color-bg-main);
-  border-radius: 0.25rem;
+.tableWrapper {
+  overflow-x: auto;
+  padding: 0.5rem;
 }
 
-.sectionTitle {
-  font-size: 1rem;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  background-color: var(--color-bg-main);
+}
+
+.table th {
+  padding: 0.5rem;
+  text-align: center;
   font-weight: 600;
   color: var(--color-text-secondary);
-  margin: 0 0 0.5rem 0;
+  border-bottom: 2px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
 }
 
-.stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.875rem;
+.table td {
+  padding: 0.5rem;
+  text-align: center;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.label {
+.rowHeader {
+  font-weight: 600;
+  text-align: left !important;
+  padding-left: 1rem !important;
   color: var(--color-text-secondary);
 }
 
-.value {
-  color: var(--color-text-primary);
-  font-weight: 500;
+.totalCell {
+  font-weight: 600;
+  background-color: rgba(96, 165, 250, 0.05);
 }
 
-.lengthRow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.875rem;
+.totalRow {
+  border-top: 2px solid var(--color-border);
 }
 
-.lengthLabel {
-  color: var(--color-text-secondary);
-  min-width: 60px;
+.separatorRow {
+  height: 0;
 }
 
-.lengthValue {
-  color: var(--color-text-primary);
-  font-weight: 500;
-  flex: 1;
+.separator {
+  padding: 0 !important;
+  border: none !important;
 }
 
-.status {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+.separatorLine {
+  height: 2px;
+  background-color: var(--color-border);
+  margin: 0.25rem 0;
+}
+
+.inputCell {
+  gap: 0.25rem;
+}
+
+.overStatus {
   font-size: 0.75rem;
-  font-weight: 500;
-  min-width: 50px;
-  text-align: center;
-}
-
-.ok {
-  background-color: rgba(52, 211, 153, 0.1);
-  color: var(--color-secondary);
-}
-
-.short {
-  background-color: rgba(248, 113, 113, 0.1);
-  color: var(--color-accent);
-}
-
-.over {
-  background-color: rgba(251, 191, 36, 0.1);
   color: #fbbf24;
-}
-
-.overallStatus {
-  padding: 0.75rem;
-  border-radius: 0.25rem;
-  text-align: center;
   font-weight: 500;
-  font-size: 0.875rem;
 }
 
-.statusOk {
-  background-color: rgba(52, 211, 153, 0.1);
-  color: var(--color-secondary);
-}
-
-.statusError {
-  background-color: rgba(248, 113, 113, 0.1);
+.shortStatus {
+  font-size: 0.75rem;
   color: var(--color-accent);
+  font-weight: 500;
 }
