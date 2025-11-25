@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { type Grid, type Solution } from '../../utils/skeletonSolver/types';
 import { GridInput } from './GridInput';
 import { WordListInput } from './WordListInput';
@@ -90,15 +90,89 @@ export function SkeletonSolver() {
     [analysis, words]
   );
 
+  // グリッドまたは単語リストが変更されたら自動的に解を計算
+  useEffect(() => {
+    // バリデーション
+    if (analysis.totalWords === 0) {
+      setSolutions([]);
+      setSolvedGrid(null);
+      setSolvedAnalysis(null);
+      setSolutionError('');
+      return;
+    }
+
+    if (words.length === 0) {
+      setSolutions([]);
+      setSolvedGrid(null);
+      setSolvedAnalysis(null);
+      setSolutionError('');
+      return;
+    }
+
+    if (!isWordsValid) {
+      setSolutions([]);
+      setSolvedGrid(null);
+      setSolvedAnalysis(null);
+      setSolutionError('');
+      return;
+    }
+
+    // 解を計算
+    setSolutionError('');
+    setIsSolving(true);
+
+    // 現在のグリッドと解析結果を保存
+    const currentGrid = grid.map((row) => [...row]);
+    const currentAnalysis = analysis;
+
+    // 少し遅延させて入力が連続する場合は最後の入力だけ処理
+    const timer = setTimeout(() => {
+      try {
+        // リアルタイムで解を追加するコールバック
+        let isFirstSolution = true;
+        const onSolutionFound = (solution: Solution) => {
+          setSolutions((prev) => [...prev, solution]);
+          if (isFirstSolution) {
+            setSolvedGrid(currentGrid);
+            setSolvedAnalysis(currentAnalysis);
+            isFirstSolution = false;
+          }
+        };
+
+        const foundSolutions = solveSkeleton(
+          currentAnalysis,
+          words,
+          100,
+          onSolutionFound
+        );
+
+        if (foundSolutions.length === 0) {
+          setSolutionError('解が見つかりませんでした');
+          setSolvedGrid(null);
+          setSolvedAnalysis(null);
+        }
+      } catch (error) {
+        setSolutionError('エラーが発生しました');
+        console.error(error);
+      } finally {
+        setIsSolving(false);
+      }
+    }, 300); // 300msのデバウンス
+
+    return () => clearTimeout(timer);
+  }, [grid, words, analysis, isWordsValid]);
+
   // グリッド変更時の処理
   const handleGridChange = (newGrid: Grid) => {
     setGrid(newGrid);
+    setSolutions([]); // 解をクリア
     setClearCount(0); // カウントをリセット
   };
 
   // 単語リスト変更時の処理
   const handleWordListChange = (text: string) => {
     setWordListText(text);
+    setSolutions([]); // 解をクリア
     setClearCount(0); // カウントをリセット
   };
 
@@ -148,50 +222,6 @@ export function SkeletonSolver() {
     setSolutionError('');
   };
 
-  // 解く
-  const handleSolve = () => {
-    setSolutionError('');
-    setSolutions([]);
-    setSolvedGrid(null);
-    setSolvedAnalysis(null);
-
-    // バリデーション
-    if (analysis.totalWords === 0) {
-      setSolutionError('グリッドにマスを配置してください');
-      return;
-    }
-
-    if (words.length === 0) {
-      setSolutionError('単語リストを入力してください');
-      return;
-    }
-
-    setIsSolving(true);
-
-    // 解を計算する時点のグリッドと解析結果を保存
-    const currentGrid = grid.map((row) => [...row]);
-    const currentAnalysis = analysis;
-
-    // 少し遅延させてローディング表示を見せる
-    setTimeout(() => {
-      try {
-        const foundSolutions = solveSkeleton(currentAnalysis, words, 100);
-
-        if (foundSolutions.length === 0) {
-          setSolutionError('解が見つかりませんでした');
-        } else {
-          setSolutions(foundSolutions);
-          setSolvedGrid(currentGrid);
-          setSolvedAnalysis(currentAnalysis);
-        }
-      } catch (error) {
-        setSolutionError('エラーが発生しました');
-        console.error(error);
-      } finally {
-        setIsSolving(false);
-      }
-    }, 100);
-  };
 
   return (
     <div className={styles.container}>
@@ -220,14 +250,6 @@ export function SkeletonSolver() {
           type="button"
         >
           clear
-        </button>
-        <button
-          onClick={handleSolve}
-          className={styles.buttonPrimary}
-          type="button"
-          disabled={isSolving || !isWordsValid}
-        >
-          {isSolving ? 'solving...' : 'solve'}
         </button>
       </div>
 

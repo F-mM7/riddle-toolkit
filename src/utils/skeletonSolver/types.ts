@@ -29,6 +29,9 @@ export interface GridAnalysis {
 
 export interface Solution {
   assignments: Record<number, string>; // slotId -> 単語
+  isPartial?: boolean; // 部分解かどうか
+  filledCount?: number; // 埋めたスロット数
+  totalSlots?: number; // 全スロット数
 }
 
 export type WordsByLength = Record<number, string[]>;

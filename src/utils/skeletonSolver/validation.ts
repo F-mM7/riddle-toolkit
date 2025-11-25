@@ -17,15 +17,6 @@ export function checkWordsValid(
   if (analysis.totalWords === 0) return false;
   if (words.length === 0) return false;
 
-  const wordsByLength = groupWordsByLength(words);
-
-  for (const [lengthStr, required] of Object.entries(
-    analysis.wordLengthCounts
-  )) {
-    const length = parseInt(lengthStr);
-    const provided = wordsByLength[length]?.length || 0;
-    if (provided !== required) return false;
-  }
-
+  // 単語が不足していても解けるように変更
   return true;
 }

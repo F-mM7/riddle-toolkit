@@ -41,6 +41,23 @@
   margin: 0;
 }
 
+.warningMessage {
+  padding: 1rem;
+  text-align: center;
+  background-color: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  border-radius: 0.25rem;
+  color: rgb(217, 119, 6);
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.warningMessage span {
+  display: block;
+  margin-top: 0.25rem;
+}
+
 .solutionCount {
   text-align: center;
   color: var(--color-primary);

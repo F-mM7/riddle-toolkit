@@ -48,6 +48,17 @@ export function SolutionDisplay({
           <div className={styles.solutionCount}>
             {solutions.length}個の解が見つかりました
           </div>
+          {solutions.some((s) => s.isPartial) && (
+            <div className={styles.warningMessage}>
+              ⚠️ 単語数が不足しているため、一部のマスが埋まっていない暫定的な解を表示しています
+              {solutions[0].filledCount !== undefined &&
+                solutions[0].totalSlots !== undefined && (
+                  <span>
+                    （{solutions[0].filledCount}/{solutions[0].totalSlots}個のマスを埋めました）
+                  </span>
+                )}
+            </div>
+          )}
           <div className={styles.solutionsGrid}>
             {solutions.map((solution, index) => (
               <div key={index} className={styles.solutionItem}>
