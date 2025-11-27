@@ -11,6 +11,7 @@ import { SkeletonSolver } from './components/SkeletonSolver/SkeletonSolver';
 import KanaVisualizer from './components/KanaVisualizer/KanaVisualizer';
 import { PrefectureRegex } from './components/PrefectureRegex/PrefectureRegex';
 import { CharShifter } from './components/CharShifter/CharShifter';
+import { CubeVisualizer } from './components/CubeVisualizer/CubeVisualizer';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/kana-visualizer" element={<KanaVisualizer />} />
           <Route path="/prefecture-regex" element={<PrefectureRegex />} />
           <Route path="/char-shifter" element={<CharShifter />} />
+          <Route path="/cube-visualizer" element={<CubeVisualizer />} />
         </Routes>
       </Layout>
     </BrowserRouter>

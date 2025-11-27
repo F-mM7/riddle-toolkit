@@ -1,0 +1,11 @@
+.inputGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.gridRow {
+  display: flex;
+  gap: 0.5rem;
+}

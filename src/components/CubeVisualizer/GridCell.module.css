@@ -1,0 +1,95 @@
+.gridCell {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-main);
+  border: 2px solid var(--color-border);
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.gridCell.filled {
+  background-color: var(--color-bg-card);
+  border-color: var(--color-primary);
+}
+
+.cellInput {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: text;
+  outline: none;
+}
+
+.cellInput:focus {
+  outline: none;
+}
+
+.rotationControls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px;
+  pointer-events: none;
+}
+
+.rotateBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  pointer-events: auto;
+  opacity: 0.8;
+}
+
+.rotateBtn:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  opacity: 1;
+}
+
+.rotateBtn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.rotateBtn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .gridCell {
+    width: 65px;
+    height: 65px;
+  }
+
+  .cellInput {
+    font-size: 1.5rem;
+  }
+
+  .rotateBtn {
+    width: 20px;
+    height: 20px;
+    font-size: 0.8rem;
+  }
+}

@@ -11,6 +11,7 @@ import {
   Blend,
   MapPin,
   ArrowRightLeft,
+  Box,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -91,5 +92,12 @@ export const TOOLS: ToolInfo[] = [
     description: 'かな文字・アルファベットをシフト暗号で変換',
     path: '/char-shifter',
     icon: ArrowRightLeft,
+  },
+  {
+    id: 'cube-visualizer',
+    name: '立方体ビジュアライザー',
+    description: '立方体の展開図を3Dで可視化',
+    path: '/cube-visualizer',
+    icon: Box,
   },
 ];
