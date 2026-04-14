@@ -13,12 +13,12 @@
   --color-primary: #60A5FA;
   --color-secondary: #34D399;
   --color-accent: #F87171;
-  --color-bg-main: #1F2937;
-  --color-bg-card: #374151;
-  --color-bg-hover: #4B5563;
+  --color-bg-main: #000000;
+  --color-bg-card: #111111;
+  --color-bg-hover: #1C1C1C;
   --color-text-primary: #F9FAFB;
   --color-text-secondary: #D1D5DB;
-  --color-border: #4B5563;
+  --color-border: #222222;
 
   /* フォントサイズ */
   --font-size-index: 1rem;
