@@ -36,8 +36,10 @@ export interface SolveResult {
  * しりとりソルバー
  * ビットマスクDP + DFSで全解を探索
  */
-export function solveShiritori(inputWords: string[]): SolveResult {
-  // 入力チェック
+export function solveShiritori(
+  inputWords: string[],
+  maxAnswers: number = ANSWER_MAX
+): SolveResult {
   const words = inputWords.filter((w) => w.trim() !== '');
   const N = words.length;
 
@@ -95,7 +97,7 @@ export function solveShiritori(inputWords: string[]): SolveResult {
   let answerCount = 0;
 
   const dfs = (x: number, i: number, path: number[]) => {
-    if (answerCount >= ANSWER_MAX) return;
+    if (answerCount >= maxAnswers) return;
 
     if (x === 0) {
       // 全ての単語を使い切った
@@ -121,4 +123,53 @@ export function solveShiritori(inputWords: string[]): SolveResult {
   }
 
   return { solutions };
+}
+
+export interface ExclusionResult {
+  excludedIndex: number;
+  excludedWord: string;
+  solution: ShiritoriSolution;
+}
+
+export interface SolveWithExclusionResult {
+  results: ExclusionResult[];
+  error?: string;
+}
+
+/**
+ * 1つ除外して残り全単語が連結するパターンを検索
+ */
+export function solveShiritoriWithOneExclusion(
+  inputWords: string[]
+): SolveWithExclusionResult {
+  const words = inputWords.filter((w) => w.trim() !== '');
+  const N = words.length;
+
+  if (N > INPUT_MAX) {
+    return {
+      results: [],
+      error: `入力が多すぎます (N = ${N} > ${INPUT_MAX})`,
+    };
+  }
+
+  if (N <= 1) {
+    return { results: [] };
+  }
+
+  const results: ExclusionResult[] = [];
+
+  for (let excluded = 0; excluded < N; excluded++) {
+    const subset = words.filter((_, idx) => idx !== excluded);
+    const solveResult = solveShiritori(subset, 1);
+
+    if (solveResult.solutions.length > 0) {
+      results.push({
+        excludedIndex: excluded,
+        excludedWord: words[excluded],
+        solution: solveResult.solutions[0],
+      });
+    }
+  }
+
+  return { results };
 }
