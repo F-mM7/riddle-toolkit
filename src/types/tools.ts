@@ -12,6 +12,8 @@ import {
   MapPin,
   ArrowRightLeft,
   Box,
+  FlipHorizontal2,
+  Shuffle,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -99,5 +101,19 @@ export const TOOLS: ToolInfo[] = [
     description: '立方体の展開図を3Dで可視化',
     path: '/cube-visualizer',
     icon: Box,
+  },
+  {
+    id: 'palindrome-checker',
+    name: '回文チェッカー',
+    description: '文字列を行ごとに逆順表示',
+    path: '/palindrome-checker',
+    icon: FlipHorizontal2,
+  },
+  {
+    id: 'palindrome-arranger',
+    name: '回文並べ替え',
+    description: '単語を並べ替えて回文を作る',
+    path: '/palindrome-arranger',
+    icon: Shuffle,
   },
 ];

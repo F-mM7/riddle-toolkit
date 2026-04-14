@@ -12,6 +12,8 @@ import KanaVisualizer from './components/KanaVisualizer/KanaVisualizer';
 import { PrefectureRegex } from './components/PrefectureRegex/PrefectureRegex';
 import { CharShifter } from './components/CharShifter/CharShifter';
 import { CubeVisualizer } from './components/CubeVisualizer/CubeVisualizer';
+import { PalindromeChecker } from './components/PalindromeChecker/PalindromeChecker';
+import { PalindromeArranger } from './components/PalindromeArranger/PalindromeArranger';
 
 function App() {
   return (
@@ -36,6 +38,11 @@ function App() {
           <Route path="/prefecture-regex" element={<PrefectureRegex />} />
           <Route path="/char-shifter" element={<CharShifter />} />
           <Route path="/cube-visualizer" element={<CubeVisualizer />} />
+          <Route path="/palindrome-checker" element={<PalindromeChecker />} />
+          <Route
+            path="/palindrome-arranger"
+            element={<PalindromeArranger />}
+          />
         </Routes>
       </Layout>
     </BrowserRouter>
