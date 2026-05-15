@@ -1,0 +1,33 @@
+.container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  /* Layout の main padding(2rem×2) + Header(≈4.5rem) を引いた高さ */
+  height: calc(100vh - 8.5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 0 0 1.5rem 0;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 1rem;
+    /* mobile の main padding(1.5rem×2) + Header(≈4.5rem) */
+    height: calc(100vh - 7.5rem);
+  }
+
+  .controls {
+    gap: 1.25rem;
+  }
+}

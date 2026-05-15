@@ -14,6 +14,7 @@ import { CharShifter } from './components/CharShifter/CharShifter';
 import { CubeVisualizer } from './components/CubeVisualizer/CubeVisualizer';
 import { PalindromeChecker } from './components/PalindromeChecker/PalindromeChecker';
 import { PalindromeArranger } from './components/PalindromeArranger/PalindromeArranger';
+import { SequenceSkipper } from './components/SequenceSkipper/SequenceSkipper';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             path="/palindrome-arranger"
             element={<PalindromeArranger />}
           />
+          <Route path="/sequence-skipper" element={<SequenceSkipper />} />
         </Routes>
       </Layout>
     </BrowserRouter>

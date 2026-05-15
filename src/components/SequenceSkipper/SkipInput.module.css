@@ -1,0 +1,99 @@
+.container {
+  margin: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.625rem;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stepper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+}
+
+.stepButton {
+  width: 2.75rem;
+  border: none;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    transform 0.05s ease;
+  user-select: none;
+}
+
+.stepButton:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-bg-main);
+}
+
+.stepButton:active:not(:disabled) {
+  transform: scale(0.95);
+  background-color: var(--color-secondary);
+}
+
+.stepButton:focus-visible {
+  outline: none;
+}
+
+.stepButton:disabled {
+  color: var(--color-text-secondary);
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.numberInput {
+  width: 3.5rem;
+  padding: 0.5rem 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  border-left: 2px solid var(--color-border);
+  border-right: 2px solid var(--color-border);
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.numberInput:focus {
+  outline: none;
+}
+
+.numberInput::-webkit-outer-spin-button,
+.numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.numberInput {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+@media (max-width: 768px) {
+  .stepButton {
+    width: 2.5rem;
+  }
+
+  .numberInput {
+    width: 3rem;
+    font-size: 1rem;
+  }
+}

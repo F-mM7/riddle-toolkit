@@ -14,6 +14,7 @@ import {
   Box,
   FlipHorizontal2,
   Shuffle,
+  SkipForward,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -115,5 +116,12 @@ export const TOOLS: ToolInfo[] = [
     description: '単語を並べ替えて回文を作る',
     path: '/palindrome-arranger',
     icon: Shuffle,
+  },
+  {
+    id: 'sequence-skipper',
+    name: 'シーケンスとばし',
+    description: '曜日や干支をいくつか飛ばしで表示',
+    path: '/sequence-skipper',
+    icon: SkipForward,
   },
 ];
