@@ -15,6 +15,7 @@ import {
   FlipHorizontal2,
   Shuffle,
   SkipForward,
+  Hash,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -123,5 +124,12 @@ export const TOOLS: ToolInfo[] = [
     description: '曜日や干支をいくつか飛ばしで表示',
     path: '/sequence-skipper',
     icon: SkipForward,
+  },
+  {
+    id: 'number-to-char',
+    name: '数字→文字変換',
+    description: '数字を50音順・いろは順・アルファベット順の文字に変換',
+    path: '/number-to-char',
+    icon: Hash,
   },
 ];

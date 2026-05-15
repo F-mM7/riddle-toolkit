@@ -15,6 +15,7 @@ import { CubeVisualizer } from './components/CubeVisualizer/CubeVisualizer';
 import { PalindromeChecker } from './components/PalindromeChecker/PalindromeChecker';
 import { PalindromeArranger } from './components/PalindromeArranger/PalindromeArranger';
 import { SequenceSkipper } from './components/SequenceSkipper/SequenceSkipper';
+import { NumberToChar } from './components/NumberToChar/NumberToChar';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             element={<PalindromeArranger />}
           />
           <Route path="/sequence-skipper" element={<SequenceSkipper />} />
+          <Route path="/number-to-char" element={<NumberToChar />} />
         </Routes>
       </Layout>
     </BrowserRouter>
