@@ -1,5 +1,5 @@
 // モード
-export type ShiftMode = 'individual' | 'batch';
+export type ShiftMode = 'individual' | 'batch' | 'compare';
 
 // 順序タイプ
 export type OrderType = 'gojuon' | 'iroha47' | 'iroha48' | 'alphabet';
@@ -27,4 +27,15 @@ export interface InputState {
   kanaText: string;           // 入力されたかな文字列
   shifts: number[];           // ずらし数の配列
   mode: ShiftMode;            // 個別/一括モード
+}
+
+// 2文字間の距離情報（比較モード）
+export interface CharDistance {
+  char1?: string;              // 単語1の文字
+  char2?: string;              // 単語2の文字
+  index1?: number;             // 単語1の文字の順序インデックス（1始まり）
+  index2?: number;             // 単語2の文字の順序インデックス（1始まり）
+  forwardDistance?: number;    // 順方向（単語1→単語2）の距離
+  backwardDistance?: number;   // 逆方向（単語2→単語1）の距離
+  isValid: boolean;            // 両文字が順序表に存在し比較可能か
 }

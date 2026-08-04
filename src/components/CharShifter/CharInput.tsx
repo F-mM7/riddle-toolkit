@@ -7,9 +7,12 @@ interface CharInputProps {
   value: string;
   onChange: (value: string) => void;
   orderType: OrderType;
+  id?: string;
+  label?: string;
+  autoFocus?: boolean;
 }
 
-export function CharInput({ value, onChange, orderType }: CharInputProps) {
+export function CharInput({ value, onChange, orderType, id = 'char-input', label, autoFocus = true }: CharInputProps) {
   const [rawValue, setRawValue] = useState(value);
 
   useEffect(() => {
@@ -26,19 +29,19 @@ export function CharInput({ value, onChange, orderType }: CharInputProps) {
   };
 
   const placeholder = orderType === 'alphabet' ? '例: abcde' : '例: あいうえお';
-  const label = orderType === 'alphabet' ? '文字列' : 'かな文字列';
+  const resolvedLabel = label ?? (orderType === 'alphabet' ? '文字列' : 'かな文字列');
 
   return (
     <div className={styles.container}>
-      <label htmlFor="char-input" className={styles.label}>{label}</label>
+      <label htmlFor={id} className={styles.label}>{resolvedLabel}</label>
       <input
-        id="char-input"
+        id={id}
         type="text"
         value={rawValue}
         onChange={handleChange}
         placeholder={placeholder}
         className={styles.input}
-        autoFocus
+        autoFocus={autoFocus}
       />
     </div>
   );

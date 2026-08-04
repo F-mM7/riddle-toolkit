@@ -12,6 +12,16 @@
   margin: 0 0 2rem 0;
 }
 
+.compareInputs {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.compareInputs > * {
+  flex: 1;
+  min-width: 0;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem 1rem;
@@ -19,5 +29,10 @@
 
   .title {
     font-size: 1.5rem;
+  }
+
+  .compareInputs {
+    flex-direction: column;
+    gap: 1rem;
   }
 }

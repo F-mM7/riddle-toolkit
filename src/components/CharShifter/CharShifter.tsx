@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
 import { ShiftMode, OrderType } from '../../utils/charShifter/types';
-import { shiftChar } from '../../utils/charShifter/charShifter';
+import { shiftChar, compareChars } from '../../utils/charShifter/charShifter';
 import { ModeSelector } from './ModeSelector';
 import { OrderSelector } from './OrderSelector';
 import { CharInput } from './CharInput';
 import { ShiftInput } from './ShiftInput';
 import { ResultDisplay } from './ResultDisplay';
+import { CompareResultDisplay } from './CompareResultDisplay';
 import styles from './CharShifter.module.css';
 
 export function CharShifter() {
@@ -13,6 +14,8 @@ export function CharShifter() {
   const [orderType, setOrderType] = useState<OrderType>('gojuon');
   const [charText, setCharText] = useState('');
   const [shifts, setShifts] = useState<number[]>([]);
+  const [compareWord1, setCompareWord1] = useState('');
+  const [compareWord2, setCompareWord2] = useState('');
 
   // 文字数を計算
   const charLength = useMemo(() => [...charText].length, [charText]);
@@ -34,6 +37,12 @@ export function CharShifter() {
     return shiftChar(charText, adjustedShifts, orderType);
   }, [charText, adjustedShifts, orderType]);
 
+  // 比較モードの結果を計算
+  const comparisonResults = useMemo(() => {
+    if (!compareWord1 && !compareWord2) return [];
+    return compareChars(compareWord1, compareWord2, orderType);
+  }, [compareWord1, compareWord2, orderType]);
+
   return (
     <div className={styles.container}>
       <OrderSelector
@@ -46,20 +55,46 @@ export function CharShifter() {
         onModeChange={setMode}
       />
 
-      <CharInput
-        value={charText}
-        onChange={setCharText}
-        orderType={orderType}
-      />
+      {mode === 'compare' ? (
+        <>
+          <div className={styles.compareInputs}>
+            <CharInput
+              id="compare-word1"
+              value={compareWord1}
+              onChange={setCompareWord1}
+              orderType={orderType}
+              label="単語1"
+            />
+            <CharInput
+              id="compare-word2"
+              value={compareWord2}
+              onChange={setCompareWord2}
+              orderType={orderType}
+              label="単語2"
+              autoFocus={false}
+            />
+          </div>
 
-      <ShiftInput
-        mode={mode}
-        charLength={charLength}
-        shifts={adjustedShifts}
-        onShiftsChange={setShifts}
-      />
+          <CompareResultDisplay results={comparisonResults} />
+        </>
+      ) : (
+        <>
+          <CharInput
+            value={charText}
+            onChange={setCharText}
+            orderType={orderType}
+          />
 
-      <ResultDisplay results={results} />
+          <ShiftInput
+            mode={mode}
+            charLength={charLength}
+            shifts={adjustedShifts}
+            onShiftsChange={setShifts}
+          />
+
+          <ResultDisplay results={results} />
+        </>
+      )}
     </div>
   );
 }

@@ -25,6 +25,13 @@ export function ModeSelector({ mode, onModeChange }: ModeSelectorProps) {
         >
           一括
         </button>
+        <button
+          className={mode === 'compare' ? styles.active : styles.button}
+          onClick={() => onModeChange('compare')}
+          disabled={mode === 'compare'}
+        >
+          比較
+        </button>
       </div>
     </div>
   );

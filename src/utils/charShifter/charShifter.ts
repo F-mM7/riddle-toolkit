@@ -1,6 +1,6 @@
 import { SEION, IROHA_47, IROHA_48, ALPHABET } from '../../data/kana';
 import { toSeion, getCharacterType, fromSeion } from './charConverter';
-import { ShiftedChar, OrderType } from './types';
+import { ShiftedChar, CharDistance, OrderType } from './types';
 
 /**
  * 順序タイプに応じた文字配列を取得
@@ -118,5 +118,66 @@ export function shiftChar(
 ): ShiftedChar[] {
   return [...charText].map((char, i) =>
     shiftCharSingle(char, shifts[i] || 0, orderType)
+  );
+}
+
+/**
+ * 1文字の順序インデックスを取得（0始まり、該当なしは-1）
+ */
+function getCharIndex(char: string, orderType: OrderType): number {
+  if (orderType === 'alphabet') {
+    return ALPHABET.indexOf(char.toLowerCase());
+  }
+  return getKanaOrder(orderType).indexOf(toSeion(char));
+}
+
+/**
+ * 2文字間の距離（順方向・逆方向）を計算
+ */
+function compareCharPair(
+  char1: string | undefined,
+  char2: string | undefined,
+  orderType: OrderType
+): CharDistance {
+  if (char1 === undefined || char2 === undefined) {
+    return { char1, char2, isValid: false };
+  }
+
+  const index1 = getCharIndex(char1, orderType);
+  const index2 = getCharIndex(char2, orderType);
+
+  if (index1 === -1 || index2 === -1) {
+    return { char1, char2, isValid: false };
+  }
+
+  const length = orderType === 'alphabet' ? ALPHABET.length : getKanaOrder(orderType).length;
+  const forwardDistance = ((index2 - index1) % length + length) % length;
+  const backwardDistance = ((index1 - index2) % length + length) % length;
+
+  return {
+    char1,
+    char2,
+    index1: index1 + 1,
+    index2: index2 + 1,
+    forwardDistance,
+    backwardDistance,
+    isValid: true,
+  };
+}
+
+/**
+ * 2つの文字列を比較し、各文字位置ごとの距離を計算
+ */
+export function compareChars(
+  word1: string,
+  word2: string,
+  orderType: OrderType = 'gojuon'
+): CharDistance[] {
+  const chars1 = [...word1];
+  const chars2 = [...word2];
+  const length = Math.max(chars1.length, chars2.length);
+
+  return Array.from({ length }, (_, i) =>
+    compareCharPair(chars1[i], chars2[i], orderType)
   );
 }

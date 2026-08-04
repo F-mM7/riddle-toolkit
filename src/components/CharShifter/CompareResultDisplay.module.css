@@ -37,12 +37,6 @@
   gap: 1rem;
 }
 
-.arrowRow {
-  display: flex;
-  gap: 1rem;
-  padding: 0.75rem 0;
-}
-
 .charWrapper {
   position: relative;
   display: flex;
@@ -60,14 +54,11 @@
   letter-spacing: 0.05em;
 }
 
-.charDimmed {
+.charEmpty {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--color-text-primary);
   min-width: 50px;
   text-align: center;
-  letter-spacing: 0.05em;
-  opacity: 0.5;
 }
 
 .charIndex {
@@ -82,34 +73,46 @@
   user-select: none;
 }
 
-.arrowWrapper {
+.distanceRow {
   display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.distanceWrapper {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-width: 50px;
+  gap: 0.25rem;
 }
 
-.arrowContent {
-  position: relative;
-  display: inline-block;
-}
-
-.arrow {
-  font-size: 1.5rem;
-  color: var(--color-secondary);
+.distanceForward,
+.distanceBackward {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: var(--font-size-index);
+  font-weight: 600;
   line-height: 1;
 }
 
-.shiftAmount {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  font-size: var(--font-size-index);
-  font-weight: 600;
+.distanceForward {
   color: var(--color-secondary);
-  line-height: 1.5rem;
-  margin-left: -4px;
+}
+
+.distanceBackward {
+  color: var(--color-accent);
+}
+
+.arrow {
+  font-size: 0.9rem;
   user-select: none;
+}
+
+.distanceInvalid {
+  color: var(--color-text-secondary);
 }
 
 @media (max-width: 768px) {
@@ -118,27 +121,23 @@
   }
 
   .row,
-  .arrowRow {
+  .distanceRow {
     gap: 0.75rem;
   }
 
   .charWrapper,
-  .arrowWrapper {
+  .distanceWrapper {
     min-width: 40px;
   }
 
   .char,
-  .charDimmed {
+  .charEmpty {
     font-size: 1.5rem;
     min-width: 40px;
   }
 
-  .arrow {
-    font-size: 1.25rem;
-  }
-
-  .shiftAmount {
+  .distanceForward,
+  .distanceBackward {
     font-size: var(--font-size-index);
-    line-height: 1.25rem;
   }
 }
