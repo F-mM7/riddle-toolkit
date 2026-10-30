@@ -1,0 +1,83 @@
+.container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+/* margin: auto で中央寄せ（はみ出す場合は左端から横スクロールできる） */
+.svg {
+  display: block;
+  margin: 0 auto;
+  cursor: crosshair;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.vertical {
+  stroke: var(--color-text-secondary);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.rung {
+  stroke: var(--color-text-primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.rungHit {
+  stroke: transparent;
+  cursor: pointer;
+}
+
+.rungGroup:hover .rung,
+.rungGroup:focus-visible .rung {
+  stroke: var(--color-accent);
+}
+
+.rungGroup:focus,
+.gap:focus {
+  outline: none;
+}
+
+.rungGroup:focus-visible .rungHit {
+  stroke: var(--color-accent);
+  opacity: 0.25;
+}
+
+.gap {
+  fill: transparent;
+}
+
+.gap:focus-visible {
+  fill: var(--color-primary);
+  fill-opacity: 0.08;
+}
+
+.ghost {
+  stroke: var(--color-primary);
+  stroke-width: 3;
+  stroke-dasharray: 6 4;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ghostNg {
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-dasharray: 2 4;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.inputLabel {
+  color: var(--color-primary);
+}
+
+.resultLabel {
+  color: var(--color-secondary);
+}

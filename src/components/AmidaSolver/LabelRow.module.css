@@ -1,0 +1,35 @@
+.row {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.cell {
+  flex: none;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  caret-color: transparent;
+  cursor: text;
+}
+
+.cell::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+.cell:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.cell:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -4px;
+  background-color: var(--color-bg-hover);
+}

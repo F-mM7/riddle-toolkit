@@ -1,0 +1,45 @@
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.stepButton {
+  width: 2.25rem;
+  border: none;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+  user-select: none;
+}
+
+.stepButton:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-bg-main);
+}
+
+.stepButton:disabled {
+  color: var(--color-text-secondary);
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.count {
+  min-width: 2rem;
+  padding: 0.4rem 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}

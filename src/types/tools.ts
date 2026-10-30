@@ -16,6 +16,7 @@ import {
   Shuffle,
   SkipForward,
   Hash,
+  Waypoints,
 } from 'lucide-react';
 
 export interface ToolInfo {
@@ -131,5 +132,12 @@ export const TOOLS: ToolInfo[] = [
     description: '数字を50音順・いろは順・アルファベット順の文字に変換',
     path: '/number-to-char',
     icon: Hash,
+  },
+  {
+    id: 'amida-solver',
+    name: 'あみだくじソルバー',
+    description: 'あみだくじに沿って文字を並び替え',
+    path: '/amida-solver',
+    icon: Waypoints,
   },
 ];
