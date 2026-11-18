@@ -10,7 +10,7 @@ interface ToolCardProps {
 
 export function ToolCard({ name, path, icon: Icon }: ToolCardProps) {
   return (
-    <Link to={path} className={styles.card}>
+    <Link to={path} className={styles.card} target="_blank" rel="noopener noreferrer">
       <div className={styles.icon}>
         <Icon size={48} strokeWidth={1.5} />
       </div>

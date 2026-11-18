@@ -29,11 +29,6 @@ export function Header() {
             </>
           )}
         </h1>
-        {!isHome && (
-          <Link to="/" className={styles.backButton}>
-            ← ホームへ戻る
-          </Link>
-        )}
       </div>
     </header>
   );
