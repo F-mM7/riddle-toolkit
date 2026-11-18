@@ -19,6 +19,7 @@ import {
   Waypoints,
   TextWrap,
   TextCursor,
+  Eraser,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -97,6 +98,13 @@ export const TOOLS: ToolInfo[] = [
     path: '/sequence-skipper',
     genre: 'convert',
     icon: SkipForward,
+  },
+  {
+    id: 'tanuki-solver',
+    name: 'たぬき暗号ソルバー',
+    path: '/tanuki-solver',
+    genre: 'convert',
+    icon: Eraser,
   },
   {
     id: 'line-wrapper',

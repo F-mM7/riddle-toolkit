@@ -19,6 +19,7 @@ import { NumberToChar } from './components/NumberToChar/NumberToChar';
 import { AmidaSolver } from './components/AmidaSolver/AmidaSolver';
 import { LineWrapper } from './components/LineWrapper/LineWrapper';
 import { CharPicker } from './components/CharPicker/CharPicker';
+import { TanukiSolver } from './components/TanukiSolver/TanukiSolver';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/amida-solver" element={<AmidaSolver />} />
           <Route path="/line-wrapper" element={<LineWrapper />} />
           <Route path="/char-picker" element={<CharPicker />} />
+          <Route path="/tanuki-solver" element={<TanukiSolver />} />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -1,0 +1,136 @@
+.container {
+  margin: 2rem 0;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.75rem 0;
+}
+
+.emptyMessage {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  padding: 2rem;
+  margin: 0;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.final {
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-primary);
+  border-radius: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.emptyText {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.step {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+
+.stepLabel {
+  min-width: 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.pattern {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.arrow {
+  color: var(--color-text-secondary);
+}
+
+.text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.unchanged,
+.removed,
+.error {
+  font-size: 0.8rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-bg-main);
+  white-space: nowrap;
+}
+
+.unchanged {
+  color: var(--color-text-secondary);
+}
+
+.removed {
+  color: var(--color-primary);
+}
+
+.error {
+  color: var(--color-accent);
+  font-weight: 600;
+  white-space: normal;
+}
+
+@media (max-width: 768px) {
+  .final {
+    padding: 0.75rem 1rem;
+    font-size: 1.4rem;
+  }
+
+  .step {
+    padding: 0.625rem 0.75rem;
+  }
+
+  .text {
+    font-size: 1.1rem;
+  }
+}
