@@ -3,6 +3,9 @@ export interface CharacterCount {
   count: number;
 }
 
+/** 集計結果の並び順: 登場順 / 頻度順 */
+export type SortOrder = 'appearance' | 'frequency';
+
 export interface TextStats {
   characterCounts: CharacterCount[];
   totalChars: number;
@@ -42,4 +45,23 @@ export function analyzeText(text: string): TextStats {
     totalChars: cleanedText.length,
     uniqueChars: charMap.size,
   };
+}
+
+/**
+ * 文字ごとの集計結果を指定の並び順に並べ替える
+ * 頻度順で回数が同じ場合は登場順を保つ(安定ソート)
+ * @param characterCounts 登場順に並んだ集計結果
+ * @param order 並び順
+ * @returns 並べ替えた新しい配列
+ */
+export function sortCharacterCounts(
+  characterCounts: CharacterCount[],
+  order: SortOrder
+): CharacterCount[] {
+  switch (order) {
+    case 'appearance':
+      return characterCounts;
+    case 'frequency':
+      return [...characterCounts].sort((a, b) => b.count - a.count);
+  }
 }
