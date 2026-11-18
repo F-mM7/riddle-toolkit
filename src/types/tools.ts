@@ -20,6 +20,7 @@ import {
   TextWrap,
   TextCursor,
   Eraser,
+  Route,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -175,5 +176,12 @@ export const TOOLS: ToolInfo[] = [
     path: '/prefecture-regex',
     genre: 'solve',
     icon: MapPin,
+  },
+  {
+    id: 'maze-helper',
+    name: '迷路ヘルパー',
+    path: '/maze-helper',
+    genre: 'solve',
+    icon: Route,
   },
 ];

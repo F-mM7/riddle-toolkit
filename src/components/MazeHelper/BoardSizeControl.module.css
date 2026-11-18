@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.times {
+  padding-bottom: 0.45rem;
+  color: var(--color-text-secondary);
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.stepButton {
+  width: 2.25rem;
+  border: none;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+  user-select: none;
+}
+
+.stepButton:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-bg-main);
+}
+
+.stepButton:disabled {
+  color: var(--color-text-secondary);
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.input {
+  width: 3rem;
+  padding: 0.4rem 0.25rem;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input:focus {
+  outline: none;
+  background-color: var(--color-bg-hover);
+}

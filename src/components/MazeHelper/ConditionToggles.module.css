@@ -1,0 +1,141 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.toggle:hover {
+  border-color: var(--condition-color);
+  color: var(--color-text-primary);
+}
+
+.on {
+  border-color: var(--condition-color);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-hover);
+}
+
+.swatch {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  border: 2px solid var(--condition-color);
+}
+
+.on .swatch {
+  background-color: var(--condition-color);
+}
+
+.count {
+  min-width: 1.4rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background-color: var(--condition-color);
+  color: #111111;
+  font-size: 0.75rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.nField {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.nInput {
+  width: 3.5rem;
+  padding: 0.35rem 0.4rem;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.nInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.invalid {
+  border-color: var(--color-accent);
+}
+
+.groupLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.symbol {
+  display: inline-block;
+  min-width: 1em;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 1.05rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.segment {
+  display: inline-flex;
+  border: 2px solid var(--color-border);
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+
+.segmentButton {
+  min-width: 2rem;
+  padding: 0.3rem 0.5rem;
+  border: none;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.segmentButton:hover:not(.segmentActive) {
+  background-color: var(--color-bg-hover);
+}
+
+.segmentActive {
+  background-color: var(--color-primary);
+  color: var(--color-bg-main);
+  cursor: default;
+}

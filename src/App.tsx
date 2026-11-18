@@ -20,6 +20,7 @@ import { AmidaSolver } from './components/AmidaSolver/AmidaSolver';
 import { LineWrapper } from './components/LineWrapper/LineWrapper';
 import { CharPicker } from './components/CharPicker/CharPicker';
 import { TanukiSolver } from './components/TanukiSolver/TanukiSolver';
+import { MazeHelper } from './components/MazeHelper/MazeHelper';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="/line-wrapper" element={<LineWrapper />} />
           <Route path="/char-picker" element={<CharPicker />} />
           <Route path="/tanuki-solver" element={<TanukiSolver />} />
+          <Route path="/maze-helper" element={<MazeHelper />} />
         </Routes>
       </Layout>
     </BrowserRouter>
