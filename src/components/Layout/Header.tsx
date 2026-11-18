@@ -7,7 +7,7 @@ export function Header() {
   const isHome = location.pathname === '/';
 
   // 現在のパスに対応するツール名を取得
-  const currentTool = TOOLS.find(tool => tool.path === location.pathname);
+  const currentTool = TOOLS.find((tool) => tool.path === location.pathname);
 
   return (
     <header className={styles.header}>

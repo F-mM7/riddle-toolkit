@@ -13,9 +13,7 @@ export function StatsDisplay({ stats }: StatsDisplayProps) {
       <h2 className={styles.sectionTitle}>統計情報</h2>
 
       {characterCounts.length === 0 ? (
-        <p className={styles.emptyMessage}>
-          テキストを入力すると統計情報が表示されます
-        </p>
+        <p className={styles.emptyMessage}>テキストを入力すると統計情報が表示されます</p>
       ) : (
         <>
           <div className={styles.characterCounts}>
