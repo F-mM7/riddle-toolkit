@@ -21,6 +21,7 @@ import {
   TextCursor,
   Eraser,
   Route,
+  LayoutGrid,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -169,6 +170,13 @@ export const TOOLS: ToolInfo[] = [
     path: '/amida-solver',
     genre: 'solve',
     icon: Waypoints,
+  },
+  {
+    id: 'tiling-solver',
+    name: 'タイリングソルバー',
+    path: '/tiling-solver',
+    genre: 'solve',
+    icon: LayoutGrid,
   },
   {
     id: 'prefecture-regex',

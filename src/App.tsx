@@ -21,6 +21,7 @@ import { LineWrapper } from './components/LineWrapper/LineWrapper';
 import { CharPicker } from './components/CharPicker/CharPicker';
 import { TanukiSolver } from './components/TanukiSolver/TanukiSolver';
 import { MazeHelper } from './components/MazeHelper/MazeHelper';
+import { TilingSolver } from './components/TilingSolver/TilingSolver';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/char-picker" element={<CharPicker />} />
           <Route path="/tanuki-solver" element={<TanukiSolver />} />
           <Route path="/maze-helper" element={<MazeHelper />} />
+          <Route path="/tiling-solver" element={<TilingSolver />} />
         </Routes>
       </Layout>
     </BrowserRouter>
