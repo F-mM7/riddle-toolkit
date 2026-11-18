@@ -17,6 +17,7 @@ import {
   SkipForward,
   Hash,
   Waypoints,
+  TextWrap,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -88,6 +89,13 @@ export const TOOLS: ToolInfo[] = [
     path: '/sequence-skipper',
     genre: 'convert',
     icon: SkipForward,
+  },
+  {
+    id: 'line-wrapper',
+    name: '改行グリッド',
+    path: '/line-wrapper',
+    genre: 'view',
+    icon: TextWrap,
   },
   {
     id: 'palindrome-checker',

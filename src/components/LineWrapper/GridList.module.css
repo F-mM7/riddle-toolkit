@@ -1,0 +1,78 @@
+.container {
+  margin: 2rem 0;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+}
+
+.empty {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  padding: 2rem;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.card {
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-width: 100%;
+}
+
+.cardTitle {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.gridScroll {
+  overflow-x: auto;
+}
+
+.grid {
+  --cell-size: 2rem;
+  display: grid;
+  gap: 2px;
+  width: fit-content;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-main);
+  border-radius: 0.25rem;
+  white-space: pre;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    --cell-size: 1.75rem;
+  }
+
+  .cell {
+    font-size: 1.1rem;
+  }
+}

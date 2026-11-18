@@ -17,6 +17,7 @@ import { PalindromeArranger } from './components/PalindromeArranger/PalindromeAr
 import { SequenceSkipper } from './components/SequenceSkipper/SequenceSkipper';
 import { NumberToChar } from './components/NumberToChar/NumberToChar';
 import { AmidaSolver } from './components/AmidaSolver/AmidaSolver';
+import { LineWrapper } from './components/LineWrapper/LineWrapper';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/sequence-skipper" element={<SequenceSkipper />} />
           <Route path="/number-to-char" element={<NumberToChar />} />
           <Route path="/amida-solver" element={<AmidaSolver />} />
+          <Route path="/line-wrapper" element={<LineWrapper />} />
         </Routes>
       </Layout>
     </BrowserRouter>
