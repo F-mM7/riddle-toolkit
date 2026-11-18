@@ -18,6 +18,7 @@ import { SequenceSkipper } from './components/SequenceSkipper/SequenceSkipper';
 import { NumberToChar } from './components/NumberToChar/NumberToChar';
 import { AmidaSolver } from './components/AmidaSolver/AmidaSolver';
 import { LineWrapper } from './components/LineWrapper/LineWrapper';
+import { CharPicker } from './components/CharPicker/CharPicker';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route path="/number-to-char" element={<NumberToChar />} />
           <Route path="/amida-solver" element={<AmidaSolver />} />
           <Route path="/line-wrapper" element={<LineWrapper />} />
+          <Route path="/char-picker" element={<CharPicker />} />
         </Routes>
       </Layout>
     </BrowserRouter>

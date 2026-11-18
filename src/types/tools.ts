@@ -18,6 +18,7 @@ import {
   Hash,
   Waypoints,
   TextWrap,
+  TextCursor,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -82,6 +83,13 @@ export const TOOLS: ToolInfo[] = [
     path: '/number-to-char',
     genre: 'convert',
     icon: Hash,
+  },
+  {
+    id: 'char-picker',
+    name: 'n文字目抽出',
+    path: '/char-picker',
+    genre: 'convert',
+    icon: TextCursor,
   },
   {
     id: 'sequence-skipper',
