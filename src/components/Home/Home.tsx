@@ -13,13 +13,7 @@ export function Home() {
             <h2 className={styles.sectionTitle}>{genre.name}</h2>
             <div className={styles.grid}>
               {tools.map((tool) => (
-                <ToolCard
-                  key={tool.id}
-                  name={tool.name}
-                  description={tool.description}
-                  path={tool.path}
-                  icon={tool.icon}
-                />
+                <ToolCard key={tool.id} name={tool.name} path={tool.path} icon={tool.icon} />
               ))}
             </div>
           </section>
