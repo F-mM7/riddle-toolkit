@@ -37,7 +37,7 @@ function shiftCharAlphabet(char: string, shift: number): ShiftedChar {
 
   // ずらし計算（循環）
   const length = ALPHABET.length;
-  const newIndex = ((index + shift) % length + length) % length;
+  const newIndex = (((index + shift) % length) + length) % length;
   const shiftedChar = ALPHABET[newIndex];
 
   const result = isUpper ? shiftedChar.toUpperCase() : shiftedChar;
@@ -55,7 +55,11 @@ function shiftCharAlphabet(char: string, shift: number): ShiftedChar {
 /**
  * 1文字をずらす
  */
-function shiftCharSingle(char: string, shift: number, orderType: OrderType = 'gojuon'): ShiftedChar {
+function shiftCharSingle(
+  char: string,
+  shift: number,
+  orderType: OrderType = 'gojuon'
+): ShiftedChar {
   // アルファベットモードの場合
   if (orderType === 'alphabet') {
     return shiftCharAlphabet(char, shift);
@@ -80,7 +84,7 @@ function shiftCharSingle(char: string, shift: number, orderType: OrderType = 'go
 
   // ずらし計算（循環）
   const length = kanaOrder.length;
-  const newIndex = ((index + shift) % length + length) % length;
+  const newIndex = (((index + shift) % length) + length) % length;
   const shiftedSeion = kanaOrder[newIndex];
 
   // 元の文字種に対応する文字を探す
@@ -116,9 +120,7 @@ export function shiftChar(
   shifts: number[],
   orderType: OrderType = 'gojuon'
 ): ShiftedChar[] {
-  return [...charText].map((char, i) =>
-    shiftCharSingle(char, shifts[i] || 0, orderType)
-  );
+  return [...charText].map((char, i) => shiftCharSingle(char, shifts[i] || 0, orderType));
 }
 
 /**
@@ -151,8 +153,8 @@ function compareCharPair(
   }
 
   const length = orderType === 'alphabet' ? ALPHABET.length : getKanaOrder(orderType).length;
-  const forwardDistance = ((index2 - index1) % length + length) % length;
-  const backwardDistance = ((index1 - index2) % length + length) % length;
+  const forwardDistance = (((index2 - index1) % length) + length) % length;
+  const backwardDistance = (((index1 - index2) % length) + length) % length;
 
   return {
     char1,
@@ -177,7 +179,5 @@ export function compareChars(
   const chars2 = [...word2];
   const length = Math.max(chars1.length, chars2.length);
 
-  return Array.from({ length }, (_, i) =>
-    compareCharPair(chars1[i], chars2[i], orderType)
-  );
+  return Array.from({ length }, (_, i) => compareCharPair(chars1[i], chars2[i], orderType));
 }

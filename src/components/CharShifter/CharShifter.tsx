@@ -28,7 +28,9 @@ export function CharShifter() {
       return Array(charLength).fill(shifts[0] || 0);
     }
 
-    return Array(charLength).fill(0).map((_, i) => shifts[i] || 0);
+    return Array(charLength)
+      .fill(0)
+      .map((_, i) => shifts[i] || 0);
   }, [charText, shifts, mode, charLength]);
 
   // 結果を計算
@@ -45,15 +47,9 @@ export function CharShifter() {
 
   return (
     <div className={styles.container}>
-      <OrderSelector
-        orderType={orderType}
-        onOrderTypeChange={setOrderType}
-      />
+      <OrderSelector orderType={orderType} onOrderTypeChange={setOrderType} />
 
-      <ModeSelector
-        mode={mode}
-        onModeChange={setMode}
-      />
+      <ModeSelector mode={mode} onModeChange={setMode} />
 
       {mode === 'compare' ? (
         <>
@@ -79,11 +75,7 @@ export function CharShifter() {
         </>
       ) : (
         <>
-          <CharInput
-            value={charText}
-            onChange={setCharText}
-            orderType={orderType}
-          />
+          <CharInput value={charText} onChange={setCharText} orderType={orderType} />
 
           <ShiftInput
             mode={mode}

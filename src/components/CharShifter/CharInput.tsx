@@ -12,7 +12,14 @@ interface CharInputProps {
   autoFocus?: boolean;
 }
 
-export function CharInput({ value, onChange, orderType, id = 'char-input', label, autoFocus = true }: CharInputProps) {
+export function CharInput({
+  value,
+  onChange,
+  orderType,
+  id = 'char-input',
+  label,
+  autoFocus = true,
+}: CharInputProps) {
   const [rawValue, setRawValue] = useState(value);
 
   useEffect(() => {
@@ -33,7 +40,9 @@ export function CharInput({ value, onChange, orderType, id = 'char-input', label
 
   return (
     <div className={styles.container}>
-      <label htmlFor={id} className={styles.label}>{resolvedLabel}</label>
+      <label htmlFor={id} className={styles.label}>
+        {resolvedLabel}
+      </label>
       <input
         id={id}
         type="text"

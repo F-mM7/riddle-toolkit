@@ -24,9 +24,7 @@ export function ResultDisplay({ results }: ResultDisplayProps) {
               {result.originalIndex !== undefined && (
                 <div className={styles.charIndex}>{result.originalIndex}</div>
               )}
-              <div className={styles.char}>
-                {result.original}
-              </div>
+              <div className={styles.char}>{result.original}</div>
             </div>
           ))}
         </div>
@@ -46,13 +44,7 @@ export function ResultDisplay({ results }: ResultDisplayProps) {
               {result.shiftedIndex !== undefined && (
                 <div className={styles.charIndex}>{result.shiftedIndex}</div>
               )}
-              <div
-                className={
-                  result.isFullMatch
-                    ? styles.char
-                    : styles.charDimmed
-                }
-              >
+              <div className={result.isFullMatch ? styles.char : styles.charDimmed}>
                 {result.shifted}
               </div>
             </div>

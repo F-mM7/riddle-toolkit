@@ -5,10 +5,7 @@ import { OrderType } from './types';
  * かな文字かどうかを判定
  */
 export function isKanaChar(char: string): boolean {
-  return SEION.includes(char)
-    || char in DAKUON_MAP
-    || char in HANDAKUON_MAP
-    || char in KOGAKI_MAP;
+  return SEION.includes(char) || char in DAKUON_MAP || char in HANDAKUON_MAP || char in KOGAKI_MAP;
 }
 
 /**
@@ -47,5 +44,5 @@ export function filterKana(text: string): string {
  * 順序タイプに応じて有効な文字のみをフィルタリング
  */
 export function filterByOrderType(text: string, orderType: OrderType): string {
-  return [...text].filter(char => isValidChar(char, orderType)).join('');
+  return [...text].filter((char) => isValidChar(char, orderType)).join('');
 }
