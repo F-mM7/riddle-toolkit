@@ -1,11 +1,20 @@
+/*
+ * 欄の幅いっぱいまで追従し、上限は --cube-net-max-width(CubeVisualizer.module.css)。
+ * マスと間隔の比は 10:1(5マス + 4間隔 = 54 単位)で、マスは aspect-ratio で正方形を保つ。
+ */
 .inputGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: center;
+  container-type: inline-size;
+  width: min(100%, var(--cube-net-max-width));
+  margin: 0 auto;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: calc(100cqi / 54);
+}
+
+/* 行の要素は Tab 順・構造のために残し、配置は外側のグリッドに任せる */
 .gridRow {
-  display: flex;
-  gap: 0.5rem;
+  display: contents;
 }

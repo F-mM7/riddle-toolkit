@@ -1,19 +1,19 @@
-import { GridData, NetPattern, ValidationResult } from "../../types/cube";
-import { NET_PATTERNS } from "./netPatterns";
+import { GridData, NetPattern, ValidationResult } from '../../types/cube';
+import { NET_PATTERNS } from './netPatterns';
 
 /**
- * グリッドから入力済みセルの座標を抽出
+ * グリッドから選択セルの座標を抽出
  */
-function getFilledCells(gridData: GridData): [number, number][] {
-  const filled: [number, number][] = [];
+function getSelectedCells(gridData: GridData): [number, number][] {
+  const selected: [number, number][] = [];
   for (let row = 0; row < gridData.length; row++) {
     for (let col = 0; col < gridData[row].length; col++) {
-      if (gridData[row][col].char !== "") {
-        filled.push([row, col]);
+      if (gridData[row][col].selected) {
+        selected.push([row, col]);
       }
     }
   }
-  return filled;
+  return selected;
 }
 
 /**
@@ -47,10 +47,7 @@ function rotateCoordinates(cells: [number, number][]): [number, number][] {
 /**
  * 2つの座標セットが同じかを判定
  */
-function coordinatesSetsEqual(
-  cells1: [number, number][],
-  cells2: [number, number][]
-): boolean {
+function coordinatesSetsEqual(cells1: [number, number][], cells2: [number, number][]): boolean {
   if (cells1.length !== cells2.length) return false;
 
   // ソートして比較
@@ -72,10 +69,10 @@ function matchPattern(
 
   // 回転のみを試す: 4通り（0, 90, 180, 270度）
   const transformations = [
-    { name: "original", cells },
-    { name: "rotate90", cells: rotateCoordinates(cells) },
-    { name: "rotate180", cells: rotateCoordinates(rotateCoordinates(cells)) },
-    { name: "rotate270", cells: rotateCoordinates(rotateCoordinates(rotateCoordinates(cells))) },
+    { name: 'original', cells },
+    { name: 'rotate90', cells: rotateCoordinates(cells) },
+    { name: 'rotate180', cells: rotateCoordinates(rotateCoordinates(cells)) },
+    { name: 'rotate270', cells: rotateCoordinates(rotateCoordinates(rotateCoordinates(cells))) },
   ];
 
   for (const transform of transformations) {
@@ -111,15 +108,15 @@ function matchPattern(
  * 全パターンとの照合
  */
 export function validateNet(gridData: GridData): ValidationResult {
-  const filledCells = getFilledCells(gridData);
+  const selectedCells = getSelectedCells(gridData);
 
-  // 入力済みセルが6個でなければ無効
-  if (filledCells.length !== 6) {
+  // 選択セルが6個でなければ無効
+  if (selectedCells.length !== 6) {
     return { isValid: false };
   }
 
   // 座標を正規化
-  const normalizedCells = normalizeCoordinates(filledCells);
+  const normalizedCells = normalizeCoordinates(selectedCells);
 
   // 各パターンとマッチングを試みる
   for (const pattern of NET_PATTERNS) {
@@ -128,7 +125,7 @@ export function validateNet(gridData: GridData): ValidationResult {
       return {
         isValid: true,
         matchedPattern: pattern,
-        filledCells,
+        selectedCells,
         cellMapping: result.cellMapping,
         transformation: result.transformation,
       };

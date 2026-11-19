@@ -1,16 +1,16 @@
-import { useRef, useState, useEffect } from "react";
-import { CellData } from "../../types/cube";
-import styles from "./GridCell.module.css";
+import { useRef, useState, useEffect } from 'react';
+import { CellData } from '../../types/cube';
+import styles from './GridCell.module.css';
 
 interface GridCellProps {
   cellData: CellData;
   onChange: (row: number, col: number, char: string) => void;
-  onRotate: (row: number, col: number, direction: "left" | "right") => void;
+  onRotate: (row: number, col: number, direction: 'left' | 'right') => void;
 }
 
 export default function GridCell({ cellData, onChange, onRotate }: GridCellProps) {
-  const { row, col, char, rotation } = cellData;
-  const isEmpty = char === "";
+  const { row, col, selected, char, rotation } = cellData;
+  const isEmpty = char === '';
   const isComposing = useRef(false);
   const [displayValue, setDisplayValue] = useState(char);
 
@@ -47,27 +47,32 @@ export default function GridCell({ cellData, onChange, onRotate }: GridCellProps
   };
 
   const handleRotateLeft = () => {
-    onRotate(row, col, "left");
+    onRotate(row, col, 'left');
   };
 
   const handleRotateRight = () => {
-    onRotate(row, col, "right");
+    onRotate(row, col, 'right');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isEmpty) return;
 
-    if (e.key === "ArrowLeft") {
+    if (e.key === 'ArrowLeft') {
       e.preventDefault();
       handleRotateLeft();
-    } else if (e.key === "ArrowRight") {
+    } else if (e.key === 'ArrowRight') {
       e.preventDefault();
       handleRotateRight();
     }
   };
 
+  // 未選択セルは入力欄を持たない空き枠（フォーカス不可）
+  if (!selected) {
+    return <div className={`${styles.gridCell} ${styles.unused}`} />;
+  }
+
   return (
-    <div className={`${styles.gridCell} ${isEmpty ? "" : styles.filled}`}>
+    <div className={`${styles.gridCell} ${isEmpty ? '' : styles.filled}`}>
       <input
         type="text"
         value={displayValue}

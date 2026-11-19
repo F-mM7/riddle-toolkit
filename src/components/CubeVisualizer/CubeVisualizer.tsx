@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import InputGrid from "./InputGrid";
-import CubeViewer from "./CubeViewer";
-import { GridData, FaceMapping } from "../../types/cube";
-import { validateNet } from "../../utils/cubeVisualizer/netValidator";
-import { mapNetToCube } from "../../utils/cubeVisualizer/cubeMapper";
-import styles from "./CubeVisualizer.module.css";
+import { useState, useEffect, useRef } from 'react';
+import CellSelectGrid from './CellSelectGrid';
+import InputGrid from './InputGrid';
+import CubeViewer from './CubeViewer';
+import { CellData, GridData, FaceMapping } from '../../types/cube';
+import { validateNet } from '../../utils/cubeVisualizer/netValidator';
+import { mapNetToCube } from '../../utils/cubeVisualizer/cubeMapper';
+import styles from './CubeVisualizer.module.css';
 
 // 初期化用のヘルパー関数
 function createEmptyGrid(): GridData {
@@ -16,7 +17,8 @@ function createEmptyGrid(): GridData {
         .map((_, col) => ({
           row,
           col,
-          char: "",
+          selected: false,
+          char: '',
           rotation: 0,
         }))
     );
@@ -41,9 +43,9 @@ function createSampleGrid(): GridData {
     // 上下左右の4方向
     const directions = [
       { dr: -1, dc: 0 }, // 上
-      { dr: 1, dc: 0 },  // 下
+      { dr: 1, dc: 0 }, // 下
       { dr: 0, dc: -1 }, // 左
-      { dr: 0, dc: 1 },  // 右
+      { dr: 0, dc: 1 }, // 右
     ];
 
     directions.forEach(({ dr, dc }) => {
@@ -51,10 +53,12 @@ function createSampleGrid(): GridData {
       const newCol = col + dc;
       // グリッド範囲内かつ未選択のセルのみ追加
       if (
-        newRow >= 0 && newRow < 5 &&
-        newCol >= 0 && newCol < 5 &&
-        !selectedCells.some(cell => cell.row === newRow && cell.col === newCol) &&
-        !adjacentCells.some(cell => cell.row === newRow && cell.col === newCol)
+        newRow >= 0 &&
+        newRow < 5 &&
+        newCol >= 0 &&
+        newCol < 5 &&
+        !selectedCells.some((cell) => cell.row === newRow && cell.col === newCol) &&
+        !adjacentCells.some((cell) => cell.row === newRow && cell.col === newCol)
       ) {
         adjacent.push({ row: newRow, col: newCol });
       }
@@ -86,7 +90,7 @@ function createSampleGrid(): GridData {
     adjacentCells.push(...newAdjacentCells);
   }
 
-  // 選択した6マスに文字を設定（A～F、ランダムな回転）
+  // 選択した6マスを使用セルにして文字を設定（A～F、ランダムな回転）
   selectedCells.forEach((cell, index) => {
     const chars = ['A', 'B', 'C', 'D', 'E', 'F'];
     const rotations = [0, 90, 180, 270];
@@ -95,6 +99,7 @@ function createSampleGrid(): GridData {
     grid[cell.row][cell.col] = {
       row: cell.row,
       col: cell.col,
+      selected: true,
       char: chars[index],
       rotation: randomRotation,
     };
@@ -121,29 +126,52 @@ export function CubeVisualizer() {
   // グリッドが変更されるたびに検証
   useEffect(() => {
     const result = validateNet(gridData);
-    console.log("Validation result:", result);
+    console.log('Validation result:', result);
     setIsValid(result.isValid);
 
-    if (result.isValid && result.matchedPattern && result.filledCells && result.cellMapping) {
+    if (result.isValid && result.matchedPattern && result.selectedCells && result.cellMapping) {
       const mappings = mapNetToCube(
         gridData,
         result.matchedPattern,
-        result.filledCells,
+        result.selectedCells,
         result.cellMapping,
         result.transformation
       );
-      console.log("Face mappings:", mappings);
+      console.log('Face mappings:', mappings);
       setFaceMappings(mappings);
     } else {
       setFaceMappings([]);
     }
   }, [gridData]);
 
-  // グリッド変更を監視
-  const handleGridChange = (newGridData: GridData) => {
+  // 1セルを更新（ドラッグ選択の連続更新でも取りこぼさないよう関数形式で更新）
+  const updateCell = (row: number, col: number, update: (cell: CellData) => CellData) => {
     gridModifiedRef.current = true;
     clearCountRef.current = 0; // グリッド変更時にカウントリセット
-    setGridData(newGridData);
+    setGridData((prev) =>
+      prev.map((rowData, r) =>
+        rowData.map((cell, c) => (r === row && c === col ? update(cell) : cell))
+      )
+    );
+  };
+
+  // 使用セルの選択変更（選択を外したセルは文字・回転をクリア）
+  const handleSelectChange = (row: number, col: number, selected: boolean) => {
+    updateCell(row, col, (cell) =>
+      selected ? { ...cell, selected } : { ...cell, selected, char: '', rotation: 0 }
+    );
+  };
+
+  const handleCellChange = (row: number, col: number, char: string) => {
+    updateCell(row, col, (cell) => ({ ...cell, char }));
+  };
+
+  const handleCellRotate = (row: number, col: number, direction: 'left' | 'right') => {
+    const rotationDelta = direction === 'left' ? -90 : 90;
+    updateCell(row, col, (cell) => ({
+      ...cell,
+      rotation: (cell.rotation + rotationDelta + 360) % 360,
+    }));
   };
 
   // Clearボタンの処理
@@ -187,29 +215,39 @@ export function CubeVisualizer() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>展開図入力</h2>
-          <InputGrid gridData={gridData} onGridChange={handleGridChange} />
-          <div className={styles.controls}>
-            <button onClick={handleClear} className={`${styles.button} ${styles.clearButton}`} tabIndex={-1}>
-              Clear
-            </button>
-            {showSampleButton && (
-              <button onClick={handleSample} className={`${styles.button} ${styles.sampleButton}`} tabIndex={-1}>
-                Sample
+          <div className={styles.sectionHeader}>
+            <h2 className={`${styles.sectionTitle} ${styles.headerTitle}`}>展開図入力</h2>
+            <div className={styles.controls}>
+              <button
+                onClick={handleClear}
+                className={`${styles.button} ${styles.clearButton}`}
+                tabIndex={-1}
+              >
+                Clear
               </button>
-            )}
+              {showSampleButton && (
+                <button
+                  onClick={handleSample}
+                  className={`${styles.button} ${styles.sampleButton}`}
+                  tabIndex={-1}
+                >
+                  Sample
+                </button>
+              )}
+            </div>
           </div>
+          <div className={styles.selectRow}>
+            <CellSelectGrid gridData={gridData} onSelectChange={handleSelectChange} />
+          </div>
+          <InputGrid
+            gridData={gridData}
+            onCellChange={handleCellChange}
+            onCellRotate={handleCellRotate}
+          />
         </div>
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>3Dプレビュー</h2>
-          {isValid ? (
-            <CubeViewer faceMappings={faceMappings} />
-          ) : (
-            <div className={styles.errorMessage}>
-              <p>有効な展開図を入力してください</p>
-              <p className={styles.hint}>6個のセルに文字を入力し、立方体の展開図を作成してください</p>
-            </div>
-          )}
+          <CubeViewer faceMappings={faceMappings} ready={isValid} />
         </div>
       </div>
     </div>

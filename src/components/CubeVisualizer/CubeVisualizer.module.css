@@ -1,4 +1,24 @@
 .container {
+  /*
+   * 下段の入力グリッドと3Dプレビューの最大幅(欄がこれより狭ければ欄の幅いっぱいに縮む)。
+   * 幅の上限に加え、各欄がビューポートの高さに収まる大きさも上限にする。
+   * --cube-page-offset: 欄の上端までの高さ(ヘッダー + main の上余白)+ 下の余裕
+   * --cube-net-overhead: 入力側の欄で、グリッド以外が占める高さ(余白・見出し・上下段の間隔)。
+   *   入力側の高さ = overhead + 下段の幅 × 1.45(上段は下段の 0.45 倍の正方形)
+   * --cube-viewer-overhead: 3D側の欄で、プレビュー以外が占める高さ(余白・見出し)
+   */
+  --cube-page-offset: 121px;
+  --cube-net-overhead: 113px;
+  --cube-viewer-overhead: 97px;
+  --cube-available-height: calc(100dvh - var(--cube-page-offset));
+  --cube-net-max-width: min(
+    480px,
+    max(160px, calc((var(--cube-available-height) - var(--cube-net-overhead)) / 1.45))
+  );
+  --cube-viewer-max-width: min(
+    560px,
+    max(160px, calc(var(--cube-available-height) - var(--cube-viewer-overhead)))
+  );
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 1.5rem 2rem;
@@ -21,7 +41,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 2rem;
   align-items: start;
 }
@@ -39,16 +59,31 @@
   font-size: 1.3rem;
 }
 
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.headerTitle {
+  margin: 0;
+}
+
+/* 使用マス選択グリッド(上段)と入力グリッド(下段)の間隔 */
+.selectRow {
+  margin-bottom: 1rem;
+}
+
 .controls {
   display: flex;
-  gap: 0.75rem;
-  justify-content: center;
-  margin-top: 1rem;
+  gap: 0.5rem;
 }
 
 .button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-text-primary);
   border: none;
@@ -81,43 +116,18 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.errorMessage {
-  width: 100%;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-bg-main);
-  border: 2px dashed var(--color-border);
-  border-radius: 0.5rem;
-  color: var(--color-text-secondary);
-  text-align: center;
-  padding: 2rem;
-}
-
-.errorMessage p {
-  margin: 0.5rem 0;
-}
-
-.hint {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  opacity: 0.7;
-}
-
 @media (max-width: 1024px) {
   .content {
-    grid-template-columns: 1fr;
-  }
-
-  .errorMessage {
-    height: 300px;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .container {
+    /* ヘッダーのタイトルが折り返す幅でも収まるよう、折り返し時の高さで見積もる */
+    --cube-page-offset: 145px;
+    --cube-net-overhead: 92px;
+    --cube-viewer-overhead: 77px;
     padding: 0 1rem 1.5rem;
   }
 
@@ -138,7 +148,7 @@
   }
 
   .button {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.9rem;
+    padding: 0.35rem 0.875rem;
+    font-size: 0.85rem;
   }
 }

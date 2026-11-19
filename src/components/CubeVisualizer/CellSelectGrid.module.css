@@ -1,0 +1,53 @@
+/* スケルトンソルバーのグリッド入力（SkeletonSolver/GridInput.module.css）と同じ見た目 */
+/*
+ * 下段の入力グリッド(幅 min(100%, --cube-net-max-width))の 0.45 倍の幅で連動して伸縮する。
+ * マスは aspect-ratio で正方形を保つ。
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  background-color: var(--color-border);
+  padding: 2px;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  width: calc(0.45 * min(100%, var(--cube-net-max-width)));
+  margin: 0 auto;
+}
+
+/* 行の要素は構造のために残し、配置は外側のグリッドに任せる */
+.row {
+  display: contents;
+}
+
+.cell {
+  min-width: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: 2px;
+}
+
+.inactive {
+  background-color: var(--color-bg-hover);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.inactive:hover {
+  background-color: var(--color-border);
+}
+
+.active {
+  background-color: var(--color-text-primary);
+}
+
+.active:hover {
+  background-color: var(--color-primary);
+}
+
+.cell:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

@@ -1,7 +1,10 @@
+/* マスの大きさは入力グリッドが決め、中の文字・回転ボタンはマスの幅(cqi)に比例させる */
 .gridCell {
+  container-type: inline-size;
   position: relative;
-  width: 80px;
-  height: 80px;
+  box-sizing: border-box;
+  min-width: 0;
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,6 +12,12 @@
   border: 2px solid var(--color-border);
   border-radius: 0.25rem;
   transition: all 0.2s;
+}
+
+.gridCell.unused {
+  background-color: transparent;
+  border-style: dashed;
+  opacity: 0.5;
 }
 
 .gridCell.filled {
@@ -20,7 +29,10 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  font-size: 2rem;
+  min-width: 0;
+  padding: 0;
+  /* 80px のマスで 2rem 相当 */
+  font-size: 40cqi;
   font-weight: bold;
   border: none;
   background: transparent;
@@ -40,19 +52,20 @@
   right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 2px;
+  padding: 2.5cqi;
   pointer-events: none;
 }
 
 .rotateBtn {
-  width: 24px;
-  height: 24px;
+  /* 80px のマスで 24px 相当 */
+  width: 30cqi;
+  height: 30cqi;
   padding: 0;
   border: 1px solid var(--color-border);
   border-radius: 0.25rem;
   background-color: var(--color-bg-main);
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: 18cqi;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -75,21 +88,4 @@
 
 .rotateBtn:active:not(:disabled) {
   transform: scale(0.95);
-}
-
-@media (max-width: 768px) {
-  .gridCell {
-    width: 65px;
-    height: 65px;
-  }
-
-  .cellInput {
-    font-size: 1.5rem;
-  }
-
-  .rotateBtn {
-    width: 20px;
-    height: 20px;
-    font-size: 0.8rem;
-  }
 }

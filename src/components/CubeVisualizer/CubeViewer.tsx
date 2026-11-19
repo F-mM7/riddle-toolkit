@@ -1,19 +1,31 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { TrackballControls } from "@react-three/drei";
-import { useRef, useState } from "react";
-import Cube3D from "./Cube3D";
-import { FaceMapping } from "../../types/cube";
-import styles from "./CubeViewer.module.css";
-import * as THREE from "three";
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { TrackballControls } from '@react-three/drei';
+import { useEffect, useRef, useState } from 'react';
+import Cube3D from './Cube3D';
+import { FaceMapping } from '../../types/cube';
+import styles from './CubeViewer.module.css';
+import * as THREE from 'three';
+
+/** 上下左右ボタンによる90度回転1回の所要時間(秒)。フレームレートに依存しない */
+const ROTATION_DURATION_SEC = 0.3;
 
 interface CubeViewerProps {
   faceMappings: FaceMapping[];
+  /** 有効な展開図かどうか。false の間は立方体の代わりに説明文を出し、回転ボタンを無効にする */
+  ready: boolean;
 }
 
-export default function CubeViewer({ faceMappings }: CubeViewerProps) {
+export default function CubeViewer({ faceMappings, ready }: CubeViewerProps) {
   const groupRef = useRef<THREE.Group | null>(null);
   const cameraRef = useRef<THREE.Camera | null>(null);
-  const [rotationQueue, setRotationQueue] = useState<Array<{ axis: THREE.Vector3; angle: number }>>([]);
+  const [rotationQueue, setRotationQueue] = useState<Array<{ axis: THREE.Vector3; angle: number }>>(
+    []
+  );
+
+  // 展開図が無効になったら(Canvas も外れるので)未消化の回転を破棄する
+  if (!ready && rotationQueue.length > 0) {
+    setRotationQueue([]);
+  }
 
   const handleRotate = (direction: 'up' | 'down' | 'left' | 'right') => {
     const camera = cameraRef.current;
@@ -39,7 +51,7 @@ export default function CubeViewer({ faceMappings }: CubeViewerProps) {
       angle = -Math.PI / 2;
     }
 
-    setRotationQueue(prev => [...prev, { axis: axisVector, angle }]);
+    setRotationQueue((prev) => [...prev, { axis: axisVector, angle }]);
   };
 
   return (
@@ -50,6 +62,7 @@ export default function CubeViewer({ faceMappings }: CubeViewerProps) {
           className={`${styles.rotateButton} ${styles.rotateTop}`}
           onClick={() => handleRotate('up')}
           title="上に転がす"
+          disabled={!ready}
         >
           ↑
         </button>
@@ -59,37 +72,42 @@ export default function CubeViewer({ faceMappings }: CubeViewerProps) {
           className={`${styles.rotateButton} ${styles.rotateLeft}`}
           onClick={() => handleRotate('left')}
           title="左に転がす"
+          disabled={!ready}
         >
           ←
         </button>
 
-        {/* 3Dキャンバス */}
-        <div className={styles.canvas}>
-          <Canvas camera={{ position: [3, 3, 3], fov: 50 }}>
-            <ambientLight intensity={0.9} />
-            <directionalLight position={[5, 5, 5]} intensity={0.5} />
-            <AnimatedCube
-              faceMappings={faceMappings}
-              groupRef={groupRef}
-              cameraRef={cameraRef}
-              rotationQueue={rotationQueue}
-              onRotationComplete={() => setRotationQueue([])}
-            />
-            <TrackballControls
-              noPan
-              noZoom
-              minDistance={3}
-              maxDistance={3}
-              rotateSpeed={8}
-            />
-          </Canvas>
-        </div>
+        {/* 3Dキャンバス(未完成の間は同じ枠に説明文) */}
+        {ready ? (
+          <div className={styles.canvas}>
+            <Canvas camera={{ position: [3, 3, 3], fov: 50 }}>
+              <ambientLight intensity={0.9} />
+              <directionalLight position={[5, 5, 5]} intensity={0.5} />
+              <AnimatedCube
+                faceMappings={faceMappings}
+                groupRef={groupRef}
+                cameraRef={cameraRef}
+                rotationQueue={rotationQueue}
+                onRotationComplete={() => setRotationQueue([])}
+              />
+              <TrackballControls noPan noZoom minDistance={3} maxDistance={3} rotateSpeed={8} />
+            </Canvas>
+          </div>
+        ) : (
+          <div className={`${styles.canvas} ${styles.placeholder}`}>
+            <p>有効な展開図を入力してください</p>
+            <p className={styles.hint}>
+              上段で立方体の展開図になる6マスを選択し、下段で文字を入力してください
+            </p>
+          </div>
+        )}
 
         {/* 右ボタン */}
         <button
           className={`${styles.rotateButton} ${styles.rotateRight}`}
           onClick={() => handleRotate('right')}
           title="右に転がす"
+          disabled={!ready}
         >
           →
         </button>
@@ -99,6 +117,7 @@ export default function CubeViewer({ faceMappings }: CubeViewerProps) {
           className={`${styles.rotateButton} ${styles.rotateBottom}`}
           onClick={() => handleRotate('down')}
           title="下に転がす"
+          disabled={!ready}
         >
           ↓
         </button>
@@ -116,23 +135,40 @@ interface AnimatedCubeProps {
   onRotationComplete: () => void;
 }
 
-function AnimatedCube({ faceMappings, groupRef, cameraRef, rotationQueue, onRotationComplete }: AnimatedCubeProps) {
+function AnimatedCube({
+  faceMappings,
+  groupRef,
+  cameraRef,
+  rotationQueue,
+  onRotationComplete,
+}: AnimatedCubeProps) {
   const { camera } = useThree();
   const animationStateRef = useRef<{
     axis: THREE.Vector3;
     targetAngle: number;
-    currentStep: number;
-    totalSteps: number;
+    /** 回転開始からの経過時間(秒) */
+    elapsed: number;
+    /** これまでに適用した回転角(ラジアン) */
+    appliedAngle: number;
   } | null>(null);
 
-  if (camera && !cameraRef.current) {
+  // Canvas は展開図が有効な間だけ存在するので、付け外しのたびにカメラ参照を更新する
+  useEffect(() => {
     cameraRef.current = camera;
-  }
+    return () => {
+      cameraRef.current = null;
+    };
+  }, [camera, cameraRef]);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (animationStateRef.current) {
-      const { axis, targetAngle, totalSteps } = animationStateRef.current;
-      const stepAngle = targetAngle / totalSteps;
+      const state = animationStateRef.current;
+      state.elapsed = Math.min(state.elapsed + delta, ROTATION_DURATION_SEC);
+      // 経過時間に比例した角度まで進める(最終フレームで目標角ちょうどに揃う)
+      const nextAngle = (state.targetAngle * state.elapsed) / ROTATION_DURATION_SEC;
+      const stepAngle = nextAngle - state.appliedAngle;
+      state.appliedAngle = nextAngle;
+      const { axis } = state;
 
       const currentUp = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
       const rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(axis, stepAngle);
@@ -144,9 +180,7 @@ function AnimatedCube({ faceMappings, groupRef, cameraRef, rotationQueue, onRota
       camera.up.copy(currentUp);
       camera.lookAt(0, 0, 0);
 
-      animationStateRef.current.currentStep++;
-
-      if (animationStateRef.current.currentStep >= totalSteps) {
+      if (state.elapsed >= ROTATION_DURATION_SEC) {
         animationStateRef.current = null;
         onRotationComplete();
       }
@@ -155,8 +189,8 @@ function AnimatedCube({ faceMappings, groupRef, cameraRef, rotationQueue, onRota
       animationStateRef.current = {
         axis,
         targetAngle: angle,
-        currentStep: 0,
-        totalSteps: 30
+        elapsed: 0,
+        appliedAngle: 0,
       };
     }
   });

@@ -2,7 +2,8 @@
 export interface CellData {
   row: number; // 行位置 (0-4)
   col: number; // 列位置 (0-4)
-  char: string; // 入力文字（空文字列なら空セル）
+  selected: boolean; // 展開図の面として使用するセルか（上段の選択グリッドで設定）
+  char: string; // 入力文字（未選択セルでは常に空文字列）
   rotation: number; // 回転角度 (0, 90, 180, 270)
 }
 
@@ -10,7 +11,7 @@ export interface CellData {
 export type GridData = CellData[][];
 
 // 立方体の面
-export type CubeFace = "front" | "back" | "left" | "right" | "top" | "bottom";
+export type CubeFace = 'front' | 'back' | 'left' | 'right' | 'top' | 'bottom';
 
 // 展開図パターンの面情報
 export interface NetPatternFace {
@@ -45,7 +46,7 @@ export interface FaceMapping {
 export interface ValidationResult {
   isValid: boolean;
   matchedPattern?: NetPattern;
-  filledCells?: [number, number][]; // マッチした実際のセル座標
+  selectedCells?: [number, number][]; // マッチした実際のセル座標（選択セル）
   cellMapping?: number[]; // パターンのセルインデックス→実際のセルインデックスのマッピング
   transformation?: string; // マッチした変換の種類（"original", "rotate90"など）
 }
