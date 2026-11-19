@@ -39,6 +39,13 @@ export function OrderSelector({ orderType, onOrderTypeChange }: OrderSelectorPro
         >
           アルファベット
         </button>
+        <button
+          className={orderType === 'custom' ? styles.active : styles.button}
+          onClick={() => onOrderTypeChange('custom')}
+          disabled={orderType === 'custom'}
+        >
+          オリジナル
+        </button>
       </div>
     </div>
   );

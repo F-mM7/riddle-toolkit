@@ -2,14 +2,18 @@ import { CharDistance } from '../../utils/charShifter/types';
 import styles from './CompareResultDisplay.module.css';
 
 interface CompareResultDisplayProps {
+  emptyMessage?: string;
   results: CharDistance[];
 }
 
-export function CompareResultDisplay({ results }: CompareResultDisplayProps) {
+export function CompareResultDisplay({
+  results,
+  emptyMessage = '2つの単語を入力してください',
+}: CompareResultDisplayProps) {
   if (results.length === 0) {
     return (
       <div className={styles.container}>
-        <p className={styles.empty}>2つの単語を入力してください</p>
+        <p className={styles.empty}>{emptyMessage}</p>
       </div>
     );
   }

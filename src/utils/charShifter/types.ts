@@ -2,7 +2,7 @@
 export type ShiftMode = 'individual' | 'batch' | 'compare';
 
 // 順序タイプ
-export type OrderType = 'gojuon' | 'iroha47' | 'iroha48' | 'alphabet';
+export type OrderType = 'gojuon' | 'iroha47' | 'iroha48' | 'alphabet' | 'custom';
 
 // 文字種別
 export type CharacterType =

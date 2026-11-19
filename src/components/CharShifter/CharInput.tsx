@@ -3,22 +3,34 @@ import { filterByOrderType } from '../../utils/charShifter/charValidator';
 import { OrderType } from '../../utils/charShifter/types';
 import styles from './CharInput.module.css';
 
+function getPlaceholder(orderType: OrderType, customSequence: readonly string[]): string {
+  if (orderType === 'alphabet') return '例: abcde';
+  if (orderType === 'custom') {
+    return customSequence.length > 0 ? `例: ${customSequence.slice(0, 5).join('')}` : '';
+  }
+  return '例: あいうえお';
+}
+
 interface CharInputProps {
   value: string;
   onChange: (value: string) => void;
   orderType: OrderType;
+  customSequence?: readonly string[];
   id?: string;
   label?: string;
   autoFocus?: boolean;
+  warning?: string;
 }
 
 export function CharInput({
   value,
   onChange,
   orderType,
+  customSequence = [],
   id = 'char-input',
   label,
   autoFocus = true,
+  warning,
 }: CharInputProps) {
   const [rawValue, setRawValue] = useState(value);
 
@@ -31,12 +43,13 @@ export function CharInput({
     setRawValue(input);
 
     // 順序タイプに応じて有効な文字のみをフィルタリング
-    const filtered = filterByOrderType(input, orderType);
+    const filtered = filterByOrderType(input, orderType, customSequence);
     onChange(filtered);
   };
 
-  const placeholder = orderType === 'alphabet' ? '例: abcde' : '例: あいうえお';
-  const resolvedLabel = label ?? (orderType === 'alphabet' ? '文字列' : 'かな文字列');
+  const placeholder = getPlaceholder(orderType, customSequence);
+  const resolvedLabel =
+    label ?? (orderType === 'alphabet' || orderType === 'custom' ? '文字列' : 'かな文字列');
 
   return (
     <div className={styles.container}>
@@ -52,6 +65,7 @@ export function CharInput({
         className={styles.input}
         autoFocus={autoFocus}
       />
+      {warning && <p className={styles.warning}>{warning}</p>}
     </div>
   );
 }

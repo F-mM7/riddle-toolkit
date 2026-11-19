@@ -1,4 +1,5 @@
 import { SEION, DAKUON_MAP, HANDAKUON_MAP, KOGAKI_MAP } from '../../data/kana';
+import { toSeion } from './charConverter';
 import { OrderType } from './types';
 
 /**
@@ -18,9 +19,17 @@ export function isAlphabetChar(char: string): boolean {
 /**
  * 順序タイプに応じて有効な文字かを判定
  */
-export function isValidChar(char: string, orderType: OrderType): boolean {
+export function isValidChar(
+  char: string,
+  orderType: OrderType,
+  customSequence: readonly string[] = []
+): boolean {
   if (orderType === 'alphabet') {
     return isAlphabetChar(char);
+  }
+  if (orderType === 'custom') {
+    // シーケンスに含まれる文字（濁音等は清音がシーケンスに含まれる場合も可）
+    return customSequence.includes(char) || customSequence.includes(toSeion(char));
   }
   return isKanaChar(char);
 }
@@ -43,6 +52,10 @@ export function filterKana(text: string): string {
 /**
  * 順序タイプに応じて有効な文字のみをフィルタリング
  */
-export function filterByOrderType(text: string, orderType: OrderType): string {
-  return [...text].filter((char) => isValidChar(char, orderType)).join('');
+export function filterByOrderType(
+  text: string,
+  orderType: OrderType,
+  customSequence: readonly string[] = []
+): string {
+  return [...text].filter((char) => isValidChar(char, orderType, customSequence)).join('');
 }

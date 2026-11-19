@@ -32,6 +32,13 @@
   opacity: 0.6;
 }
 
+.warning {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 768px) {
   .input {
     font-size: 1rem;

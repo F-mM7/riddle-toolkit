@@ -2,14 +2,18 @@ import { ShiftedChar } from '../../utils/charShifter/types';
 import styles from './ResultDisplay.module.css';
 
 interface ResultDisplayProps {
+  emptyMessage?: string;
   results: ShiftedChar[];
 }
 
-export function ResultDisplay({ results }: ResultDisplayProps) {
+export function ResultDisplay({
+  results,
+  emptyMessage = '文字列を入力してください',
+}: ResultDisplayProps) {
   if (results.length === 0) {
     return (
       <div className={styles.container}>
-        <p className={styles.empty}>文字列を入力してください</p>
+        <p className={styles.empty}>{emptyMessage}</p>
       </div>
     );
   }

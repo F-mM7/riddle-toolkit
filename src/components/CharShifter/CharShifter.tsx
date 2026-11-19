@@ -1,8 +1,14 @@
 import { useState, useMemo } from 'react';
 import { ShiftMode, OrderType } from '../../utils/charShifter/types';
 import { shiftChar, compareChars } from '../../utils/charShifter/charShifter';
+import {
+  parseCustomSequence,
+  findAmbiguousChars,
+  formatAmbiguousWarning,
+} from '../../utils/charShifter/customSequence';
 import { ModeSelector } from './ModeSelector';
 import { OrderSelector } from './OrderSelector';
+import { CustomSequenceInput } from './CustomSequenceInput';
 import { CharInput } from './CharInput';
 import { ShiftInput } from './ShiftInput';
 import { ResultDisplay } from './ResultDisplay';
@@ -16,6 +22,27 @@ export function CharShifter() {
   const [shifts, setShifts] = useState<number[]>([]);
   const [compareWord1, setCompareWord1] = useState('');
   const [compareWord2, setCompareWord2] = useState('');
+  const [customSequenceText, setCustomSequenceText] = useState('');
+
+  // オリジナルシーケンスを1文字ずつの並びに分解
+  const customSequence = useMemo(
+    () => parseCustomSequence(customSequenceText),
+    [customSequenceText]
+  );
+
+  // オリジナル選択時、空のシーケンスではずらし計算をしない
+  const isSequenceUsable = orderType !== 'custom' || customSequence.chars.length > 0;
+  const unusableMessage = 'オリジナルシーケンスを正しく入力してください';
+
+  // オリジナル選択時、シーケンス内で重複している文字は位置が決まらないため注意を出す
+  const getAmbiguousWarning = (text: string) =>
+    orderType === 'custom'
+      ? formatAmbiguousWarning(findAmbiguousChars(text, customSequence))
+      : undefined;
+  const charWarning = getAmbiguousWarning(charText);
+  const compareWarning1 = getAmbiguousWarning(compareWord1);
+  const compareWarning2 = getAmbiguousWarning(compareWord2);
+  const ambiguousMessage = '位置が決まらない文字を除いてください';
 
   // 文字数を計算
   const charLength = useMemo(() => [...charText].length, [charText]);
@@ -35,19 +62,36 @@ export function CharShifter() {
 
   // 結果を計算
   const results = useMemo(() => {
-    if (!charText) return [];
-    return shiftChar(charText, adjustedShifts, orderType);
-  }, [charText, adjustedShifts, orderType]);
+    if (!charText || !isSequenceUsable || charWarning) return [];
+    return shiftChar(charText, adjustedShifts, orderType, customSequence.chars);
+  }, [charText, adjustedShifts, orderType, customSequence, isSequenceUsable, charWarning]);
 
   // 比較モードの結果を計算
   const comparisonResults = useMemo(() => {
-    if (!compareWord1 && !compareWord2) return [];
-    return compareChars(compareWord1, compareWord2, orderType);
-  }, [compareWord1, compareWord2, orderType]);
+    if ((!compareWord1 && !compareWord2) || !isSequenceUsable) return [];
+    if (compareWarning1 || compareWarning2) return [];
+    return compareChars(compareWord1, compareWord2, orderType, customSequence.chars);
+  }, [
+    compareWord1,
+    compareWord2,
+    orderType,
+    customSequence,
+    isSequenceUsable,
+    compareWarning1,
+    compareWarning2,
+  ]);
 
   return (
     <div className={styles.container}>
       <OrderSelector orderType={orderType} onOrderTypeChange={setOrderType} />
+
+      {orderType === 'custom' && (
+        <CustomSequenceInput
+          value={customSequenceText}
+          onChange={setCustomSequenceText}
+          length={customSequence.chars.length}
+        />
+      )}
 
       <ModeSelector mode={mode} onModeChange={setMode} />
 
@@ -59,23 +103,42 @@ export function CharShifter() {
               value={compareWord1}
               onChange={setCompareWord1}
               orderType={orderType}
+              customSequence={customSequence.chars}
               label="単語1"
+              warning={compareWarning1}
             />
             <CharInput
               id="compare-word2"
               value={compareWord2}
               onChange={setCompareWord2}
               orderType={orderType}
+              customSequence={customSequence.chars}
               label="単語2"
+              warning={compareWarning2}
               autoFocus={false}
             />
           </div>
 
-          <CompareResultDisplay results={comparisonResults} />
+          <CompareResultDisplay
+            results={comparisonResults}
+            emptyMessage={
+              !isSequenceUsable
+                ? unusableMessage
+                : compareWarning1 || compareWarning2
+                  ? ambiguousMessage
+                  : undefined
+            }
+          />
         </>
       ) : (
         <>
-          <CharInput value={charText} onChange={setCharText} orderType={orderType} />
+          <CharInput
+            value={charText}
+            onChange={setCharText}
+            orderType={orderType}
+            customSequence={customSequence.chars}
+            warning={charWarning}
+          />
 
           <ShiftInput
             mode={mode}
@@ -84,7 +147,12 @@ export function CharShifter() {
             onShiftsChange={setShifts}
           />
 
-          <ResultDisplay results={results} />
+          <ResultDisplay
+            results={results}
+            emptyMessage={
+              !isSequenceUsable ? unusableMessage : charWarning ? ambiguousMessage : undefined
+            }
+          />
         </>
       )}
     </div>
