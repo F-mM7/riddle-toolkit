@@ -168,7 +168,7 @@
 /* レスポンシブ対応 */
 @media (max-width: 1024px) {
   .container {
-    padding: 1rem;
+    padding: 0 1rem 1rem;
   }
 
   .gridVisualization {
@@ -178,7 +178,7 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 0.75rem;
+    padding: 0 0.75rem 0.75rem;
   }
 
   .title {
@@ -221,7 +221,7 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 0.5rem;
+    padding: 0 0.5rem 0.5rem;
   }
 
   .gridSizeInput,

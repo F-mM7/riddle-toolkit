@@ -1,7 +1,12 @@
 .container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 0 1.5rem 2rem;
+}
+
+/* 上側余白は Layout の .main だけが決める */
+.container > :first-child {
+  margin-top: 0;
 }
 
 .field {
@@ -48,7 +53,7 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 1.5rem 1rem;
+    padding: 0 1rem 1.5rem;
   }
 
   .textarea {
