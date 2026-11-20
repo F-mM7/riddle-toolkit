@@ -70,6 +70,16 @@
   opacity: 0.5;
 }
 
+/* 位置が決まらない文字の候補（縦に並べ、破線で囲む。列幅を変えないよう outline を使う） */
+.candidates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  outline: 1px dashed var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
 .charIndex {
   position: absolute;
   top: -8px;

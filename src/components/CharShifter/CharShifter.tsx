@@ -42,7 +42,6 @@ export function CharShifter() {
   const charWarning = getAmbiguousWarning(charText);
   const compareWarning1 = getAmbiguousWarning(compareWord1);
   const compareWarning2 = getAmbiguousWarning(compareWord2);
-  const ambiguousMessage = '位置が決まらない文字を除いてください';
 
   // 文字数を計算
   const charLength = useMemo(() => [...charText].length, [charText]);
@@ -62,24 +61,15 @@ export function CharShifter() {
 
   // 結果を計算
   const results = useMemo(() => {
-    if (!charText || !isSequenceUsable || charWarning) return [];
+    if (!charText || !isSequenceUsable) return [];
     return shiftChar(charText, adjustedShifts, orderType, customSequence.chars);
-  }, [charText, adjustedShifts, orderType, customSequence, isSequenceUsable, charWarning]);
+  }, [charText, adjustedShifts, orderType, customSequence, isSequenceUsable]);
 
   // 比較モードの結果を計算
   const comparisonResults = useMemo(() => {
     if ((!compareWord1 && !compareWord2) || !isSequenceUsable) return [];
-    if (compareWarning1 || compareWarning2) return [];
     return compareChars(compareWord1, compareWord2, orderType, customSequence.chars);
-  }, [
-    compareWord1,
-    compareWord2,
-    orderType,
-    customSequence,
-    isSequenceUsable,
-    compareWarning1,
-    compareWarning2,
-  ]);
+  }, [compareWord1, compareWord2, orderType, customSequence, isSequenceUsable]);
 
   return (
     <div className={styles.container}>
@@ -121,13 +111,7 @@ export function CharShifter() {
 
           <CompareResultDisplay
             results={comparisonResults}
-            emptyMessage={
-              !isSequenceUsable
-                ? unusableMessage
-                : compareWarning1 || compareWarning2
-                  ? ambiguousMessage
-                  : undefined
-            }
+            emptyMessage={isSequenceUsable ? undefined : unusableMessage}
           />
         </>
       ) : (
@@ -149,9 +133,7 @@ export function CharShifter() {
 
           <ResultDisplay
             results={results}
-            emptyMessage={
-              !isSequenceUsable ? unusableMessage : charWarning ? ambiguousMessage : undefined
-            }
+            emptyMessage={isSequenceUsable ? undefined : unusableMessage}
           />
         </>
       )}
