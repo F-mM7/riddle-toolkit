@@ -1,5 +1,6 @@
 import { SEION, IROHA_47, IROHA_48, ALPHABET } from '../../data/kana';
 import { toSeion, getCharacterType, fromSeion } from './charConverter';
+import { findInCustomSequence } from './customSequence';
 import { ShiftedChar, CharDistance, OrderType } from './types';
 
 /**
@@ -19,21 +20,6 @@ function getKanaOrder(orderType: Exclude<OrderType, 'custom'>): readonly string[
 }
 
 /**
- * オリジナルシーケンス内での文字の位置を取得する。
- * 完全一致を優先し、なければ清音に変換して探す（濁音・半濁音・小字の扱いを既存のかな順と揃える）。
- */
-function findInCustomSequence(
-  char: string,
-  customSequence: readonly string[]
-): { index: number; viaSeion: boolean } {
-  const exactIndex = customSequence.indexOf(char);
-  if (exactIndex !== -1) {
-    return { index: exactIndex, viaSeion: false };
-  }
-  return { index: customSequence.indexOf(toSeion(char)), viaSeion: true };
-}
-
-/**
  * 1文字をずらす（オリジナルシーケンス）
  */
 function shiftCharCustom(
@@ -41,8 +27,8 @@ function shiftCharCustom(
   shift: number,
   customSequence: readonly string[]
 ): ShiftedChar {
-  const { index, viaSeion } = findInCustomSequence(char, customSequence);
-  if (index === -1) {
+  const { indices, matchedChar } = findInCustomSequence(char, customSequence);
+  if (indices.length === 0) {
     return {
       original: char,
       shifted: char,
@@ -51,12 +37,16 @@ function shiftCharCustom(
     };
   }
 
+  // 位置が決まらない文字は最初の出現位置を使う
+  const index = indices[0];
+
   // ずらし計算（循環）
   const length = customSequence.length;
   const newIndex = (((index + shift) % length) + length) % length;
   const shiftedBase = customSequence[newIndex];
 
   // 清音経由で見つかった場合は元の文字種（濁音等）に戻す
+  const viaSeion = matchedChar !== char;
   const converted = viaSeion ? fromSeion(shiftedBase, getCharacterType(char)) : shiftedBase;
 
   if (converted) {
@@ -206,7 +196,8 @@ function getCharIndex(
     return ALPHABET.indexOf(char.toLowerCase());
   }
   if (orderType === 'custom') {
-    return findInCustomSequence(char, customSequence).index;
+    const { indices } = findInCustomSequence(char, customSequence);
+    return indices.length > 0 ? indices[0] : -1;
   }
   return getKanaOrder(orderType).indexOf(toSeion(char));
 }
