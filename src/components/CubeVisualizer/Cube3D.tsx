@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { FaceMapping } from '../../types/cube';
 
@@ -80,13 +80,30 @@ export default function Cube3D({ faceMappings }: Cube3DProps) {
     });
   }, [faceMappings]);
 
+  // マテリアルとテクスチャは props として渡しているため自動では破棄されない。
+  // 作り直したときとアンマウント時に、前のものを破棄する
+  useEffect(() => {
+    return () => {
+      materials.forEach((material) => {
+        material.map?.dispose();
+        material.dispose();
+      });
+    };
+  }, [materials]);
+
+  // 輪郭線の元になる形状は一度だけ生成し、アンマウント時に破棄する
+  const edgeSourceGeometry = useMemo(() => new THREE.BoxGeometry(2, 2, 2), []);
+  useEffect(() => {
+    return () => edgeSourceGeometry.dispose();
+  }, [edgeSourceGeometry]);
+
   return (
     <>
       <mesh material={materials}>
         <boxGeometry args={[2, 2, 2]} />
       </mesh>
       <lineSegments>
-        <edgesGeometry args={[new THREE.BoxGeometry(2, 2, 2)]} />
+        <edgesGeometry args={[edgeSourceGeometry]} />
         <lineBasicMaterial color="#000000" linewidth={2} />
       </lineSegments>
     </>
