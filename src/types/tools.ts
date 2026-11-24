@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
-export type ToolGenre = 'count' | 'convert' | 'view' | 'solve';
+export type ToolGenre = 'count' | 'convert' | 'view' | 'solve' | 'sequence';
 
 /** ジャンルの表示順と見出し名 */
 export const TOOL_GENRES: readonly { id: ToolGenre; name: string }[] = [
@@ -33,6 +33,7 @@ export const TOOL_GENRES: readonly { id: ToolGenre; name: string }[] = [
   { id: 'convert', name: '変換する' },
   { id: 'view', name: '並べて見る' },
   { id: 'solve', name: '解く・探す' },
+  { id: 'sequence', name: '有名シーケンス' },
 ];
 
 export interface ToolInfo {
@@ -93,13 +94,6 @@ export const TOOLS: ToolInfo[] = [
     path: '/char-picker',
     genre: 'convert',
     icon: TextCursor,
-  },
-  {
-    id: 'sequence-skipper',
-    name: 'シーケンスとばし',
-    path: '/sequence-skipper',
-    genre: 'convert',
-    icon: SkipForward,
   },
   {
     id: 'tanuki-solver',
@@ -179,17 +173,24 @@ export const TOOLS: ToolInfo[] = [
     icon: LayoutGrid,
   },
   {
-    id: 'prefecture-regex',
-    name: '都道府県正規表現マッチャー',
-    path: '/prefecture-regex',
-    genre: 'solve',
-    icon: MapPin,
-  },
-  {
     id: 'maze-helper',
     name: '迷路ヘルパー',
     path: '/maze-helper',
     genre: 'solve',
     icon: Route,
+  },
+  {
+    id: 'sequence-skipper',
+    name: 'シーケンスとばし',
+    path: '/sequence-skipper',
+    genre: 'sequence',
+    icon: SkipForward,
+  },
+  {
+    id: 'prefecture-regex',
+    name: '都道府県正規表現マッチャー',
+    path: '/prefecture-regex',
+    genre: 'sequence',
+    icon: MapPin,
   },
 ];
