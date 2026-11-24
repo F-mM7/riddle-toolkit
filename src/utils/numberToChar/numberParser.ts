@@ -1,11 +1,12 @@
 import { NumberToken } from './types';
 
-// カンマ・空白（半角/全角）・改行などをまとめて区切り文字として扱う
+// 半角カンマ・空白類（\s）・全角空白の連続をまとめて区切り文字として扱う
+// （\s は改行にも一致するが、入力欄は1行の input なので実際には改行は届かない）
 const SEPARATOR_REGEX = /[,\s\u3000]+/;
 
 /**
  * 入力文字列をトークン列にパース
- * - カンマ、空白、改行のいずれを使ってもよい
+ * - 区切りには半角カンマ、空白類、全角空白のいずれを使ってもよい
  * - 数値としてパースできなかったものは isInvalid=true で保持し、表示時に区別する
  */
 export function parseNumberInput(input: string): NumberToken[] {
