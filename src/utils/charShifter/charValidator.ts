@@ -35,21 +35,6 @@ export function isValidChar(
 }
 
 /**
- * 文字列がすべてかな文字かを判定
- */
-export function isValidKana(text: string): boolean {
-  if (text.length === 0) return false;
-  return [...text].every(isKanaChar);
-}
-
-/**
- * かな文字のみをフィルタリング
- */
-export function filterKana(text: string): string {
-  return [...text].filter(isKanaChar).join('');
-}
-
-/**
  * 順序タイプに応じて有効な文字のみをフィルタリング
  */
 export function filterByOrderType(

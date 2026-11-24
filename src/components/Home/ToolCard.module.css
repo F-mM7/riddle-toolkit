@@ -31,10 +31,3 @@
   color: var(--color-primary);
   overflow-wrap: anywhere;
 }
-
-.button {
-  display: inline-block;
-  color: var(--color-secondary);
-  font-size: 0.875rem;
-  font-weight: 500;
-}

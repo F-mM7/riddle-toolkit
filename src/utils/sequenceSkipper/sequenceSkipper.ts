@@ -6,18 +6,6 @@ function gcd(a: number, b: number): number {
 }
 
 /**
- * 開始位置から step 間隔で進んで、開始位置に戻るまでに出現するユニーク要素数を返す。
- * length=7, step=2 → 7（全要素を巡る）
- * length=12, step=3 → 4（4要素で戻る）
- */
-export function getCycleLength(length: number, step: number): number {
-  if (length <= 0) return 0;
-  const normalized = ((step % length) + length) % length;
-  if (normalized === 0) return 1;
-  return length / gcd(length, normalized);
-}
-
-/**
  * シーケンスを「送る数」に従って巡回した結果を、列単位の二次元配列で返す。
  *
  * - gcd(length, step) = g、各巡回列の周期は cycle = length / g

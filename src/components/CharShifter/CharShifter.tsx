@@ -57,7 +57,7 @@ export function CharShifter() {
     return Array(charLength)
       .fill(0)
       .map((_, i) => shifts[i] || 0);
-  }, [charText, shifts, mode, charLength]);
+  }, [shifts, mode, charLength]);
 
   // 結果を計算
   const results = useMemo(() => {

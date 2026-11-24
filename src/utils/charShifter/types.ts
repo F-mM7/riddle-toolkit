@@ -28,13 +28,6 @@ export interface ShiftedChar {
   candidates: ShiftCandidate[];
 }
 
-// 入力状態
-export interface InputState {
-  kanaText: string; // 入力されたかな文字列
-  shifts: number[]; // ずらし数の配列
-  mode: ShiftMode; // 個別/一括モード
-}
-
 // 2文字間の距離情報（比較モード）
 // オリジナルシーケンスで位置が決まらない文字を含む場合、位置・距離は候補を複数持つ
 export interface CharDistance {

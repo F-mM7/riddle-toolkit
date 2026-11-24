@@ -115,9 +115,3 @@ export const VALID_POSITIONS = new Set<string>();
 Object.values(KANA_MAPPING).forEach(({ row, col }) => {
   VALID_POSITIONS.add(`${row}-${col}`);
 });
-
-// 位置から文字を逆引きするためのマップ
-export const POSITION_TO_KANA: Record<string, string> = {};
-Object.entries(KANA_MAPPING).forEach(([char, { row, col }]) => {
-  POSITION_TO_KANA[`${row}-${col}`] = char;
-});

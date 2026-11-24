@@ -126,7 +126,6 @@ export function CubeVisualizer() {
   // グリッドが変更されるたびに検証
   useEffect(() => {
     const result = validateNet(gridData);
-    console.log('Validation result:', result);
     setIsValid(result.isValid);
 
     if (result.isValid && result.matchedPattern && result.selectedCells && result.cellMapping) {
@@ -137,7 +136,6 @@ export function CubeVisualizer() {
         result.cellMapping,
         result.transformation
       );
-      console.log('Face mappings:', mappings);
       setFaceMappings(mappings);
     } else {
       setFaceMappings([]);

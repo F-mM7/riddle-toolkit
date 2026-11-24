@@ -1,5 +1,4 @@
 import {
-  SEION,
   DAKUON_MAP,
   HANDAKUON_MAP,
   KOGAKI_MAP,
@@ -47,11 +46,4 @@ export function fromSeion(seionChar: string, targetType: CharacterType): string 
   }
 
   return null;
-}
-
-/**
- * 文字が清音かどうかを判定
- */
-export function isSeion(char: string): boolean {
-  return SEION.includes(char);
 }
