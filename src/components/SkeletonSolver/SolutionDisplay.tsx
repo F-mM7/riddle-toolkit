@@ -38,12 +38,6 @@ export function SolutionDisplay({
         </div>
       )}
 
-      {!isSolving && !errorMessage && solutions.length === 0 && (
-        <div className={styles.message}>
-          <p>「解く」ボタンを押すと解が表示されます</p>
-        </div>
-      )}
-
       {!isSolving &&
         !errorMessage &&
         solutions.length > 0 &&
