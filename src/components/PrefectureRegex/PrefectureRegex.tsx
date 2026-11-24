@@ -9,9 +9,7 @@ import styles from './PrefectureRegex.module.css';
 
 export function PrefectureRegex() {
   const [mode, setMode] = useState<SearchMode>('prefecture');
-  const [patterns, setPatterns] = useState<Pattern[]>([
-    { id: '1', value: '', isValid: true },
-  ]);
+  const [patterns, setPatterns] = useState<Pattern[]>([{ id: '1', value: '', isValid: true }]);
 
   // 選択されたデータを取得
   const data = mode === 'prefecture' ? prefectures : capitals;
@@ -19,7 +17,7 @@ export function PrefectureRegex() {
   // マッチング結果を計算（useMemo）
   const results = useMemo(() => {
     // すべてのパターンが有効で空でない場合のみマッチング実行
-    if (patterns.every(p => p.isValid && p.value !== '')) {
+    if (patterns.every((p) => p.isValid && p.value !== '')) {
       return findMatches(patterns, data);
     }
     return [];

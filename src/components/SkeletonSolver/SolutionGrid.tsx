@@ -1,8 +1,4 @@
-import type {
-  Grid,
-  Solution,
-  Slot,
-} from '../../utils/skeletonSolver/types';
+import type { Grid, Solution, Slot } from '../../utils/skeletonSolver/types';
 import styles from './SolutionGrid.module.css';
 
 interface SolutionGridProps {
@@ -13,9 +9,7 @@ interface SolutionGridProps {
 
 export function SolutionGrid({ grid, solution, slots }: SolutionGridProps) {
   // 各セルに表示する文字を計算
-  const cellCharacters: (string | null)[][] = grid.map((row) =>
-    row.map(() => null)
-  );
+  const cellCharacters: (string | null)[][] = grid.map((row) => row.map(() => null));
 
   slots.forEach((slot) => {
     const word = solution.assignments[slot.id];

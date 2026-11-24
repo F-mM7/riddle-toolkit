@@ -6,11 +6,7 @@ interface WordListInputProps {
   wordCount: number;
 }
 
-export function WordListInput({
-  value,
-  onChange,
-  wordCount,
-}: WordListInputProps) {
+export function WordListInput({ value, onChange, wordCount }: WordListInputProps) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>

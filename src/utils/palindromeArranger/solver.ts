@@ -44,7 +44,7 @@ export interface SolveWithExclusionResult {
 
 function isPalindrome(s: string): boolean {
   const len = s.length;
-  for (let i = 0; i < (len >> 1); i++) {
+  for (let i = 0; i < len >> 1; i++) {
     if (s[i] !== s[len - 1 - i]) return false;
   }
   return true;
@@ -58,7 +58,7 @@ function isPalindrome(s: string): boolean {
  */
 export function solvePalindromeArrangement(
   inputWords: string[],
-  maxAnswers: number = ANSWER_MAX,
+  maxAnswers: number = ANSWER_MAX
 ): SolveResult {
   const words = inputWords.filter((w) => w.trim() !== '');
   const N = words.length;
@@ -100,8 +100,7 @@ export function solvePalindromeArrangement(
       if (side === 'N' || isPalindrome(carry)) {
         const ordering: number[] = [];
         for (let i = 0; i < leftBuf.length; i++) ordering.push(leftBuf[i]);
-        for (let i = rightBuf.length - 1; i >= 0; i--)
-          ordering.push(rightBuf[i]);
+        for (let i = rightBuf.length - 1; i >= 0; i--) ordering.push(rightBuf[i]);
         const wordList = ordering.map((i) => words[i]);
         solutions.push({ words: wordList, palindrome: wordList.join('') });
       }
@@ -191,9 +190,7 @@ export function solvePalindromeArrangement(
   return { solutions };
 }
 
-export function solvePalindromeWithOneExclusion(
-  inputWords: string[],
-): SolveWithExclusionResult {
+export function solvePalindromeWithOneExclusion(inputWords: string[]): SolveWithExclusionResult {
   const words = inputWords.filter((w) => w.trim() !== '');
   const N = words.length;
 

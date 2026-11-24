@@ -37,13 +37,7 @@ export function ResultDisplay({ results }: ResultDisplayProps) {
               </th>
               {results.map((result, i) => (
                 <td key={`input-${i}`} className={styles.cell}>
-                  <span
-                    className={
-                      result.token.isInvalid
-                        ? styles.numberInvalid
-                        : styles.number
-                    }
-                  >
+                  <span className={result.token.isInvalid ? styles.numberInvalid : styles.number}>
                     {result.token.raw}
                   </span>
                 </td>

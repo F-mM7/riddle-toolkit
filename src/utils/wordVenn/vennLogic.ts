@@ -3,11 +3,7 @@ import type { VennRegions } from './types';
 /**
  * 3つの単語から各ベン図領域の文字を計算
  */
-export function calculateVennRegions(
-  word1: string,
-  word2: string,
-  word3: string
-): VennRegions {
+export function calculateVennRegions(word1: string, word2: string, word3: string): VennRegions {
   // 文字列を文字配列に分割
   const chars1 = [...word1];
   const chars2 = [...word2];
@@ -30,11 +26,7 @@ export function calculateVennRegions(
   };
 
   // すべての文字を列挙
-  const allChars = new Set([
-    ...count1.keys(),
-    ...count2.keys(),
-    ...count3.keys(),
-  ]);
+  const allChars = new Set([...count1.keys(), ...count2.keys(), ...count3.keys()]);
 
   for (const char of allChars) {
     const c1 = count1.get(char) || 0;

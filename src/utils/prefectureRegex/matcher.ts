@@ -32,7 +32,7 @@ export function findMatches(
   maxResults: number = 100
 ): MatchResult[] {
   // 空のパターンや無効なパターンがある場合は空配列を返す
-  if (patterns.some(p => p.value === '' || !p.isValid)) {
+  if (patterns.some((p) => p.value === '' || !p.isValid)) {
     return [];
   }
 
@@ -107,28 +107,29 @@ function findMatchesRecursive(
   previousCaptures: string[],
   usedItems: string[],
   maxResults: number
-): Array<{
-  patternId: string;
-  matched: string;
-  captures: string[];
-}[]> {
+): Array<
+  {
+    patternId: string;
+    matched: string;
+    captures: string[];
+  }[]
+> {
   if (patterns.length === 0) {
     return [[]];
   }
 
-  const results: Array<{
-    patternId: string;
-    matched: string;
-    captures: string[];
-  }[]> = [];
+  const results: Array<
+    {
+      patternId: string;
+      matched: string;
+      captures: string[];
+    }[]
+  > = [];
 
   const currentPattern = patterns[0];
 
   // パターン内の後方参照（\1, \2など）を前のキャプチャグループで置き換える
-  const patternWithBackrefs = replaceBackreferences(
-    currentPattern.value,
-    previousCaptures
-  );
+  const patternWithBackrefs = replaceBackreferences(currentPattern.value, previousCaptures);
 
   const regex = new RegExp(`^${patternWithBackrefs}$`);
 
@@ -192,10 +193,7 @@ function findMatchesRecursive(
 /**
  * 後方参照（\1, \2など）を実際のキャプチャ値に置き換える
  */
-function replaceBackreferences(
-  pattern: string,
-  captures: string[]
-): string {
+function replaceBackreferences(pattern: string, captures: string[]): string {
   let result = pattern;
 
   // \1, \2, ... \9 を置き換え

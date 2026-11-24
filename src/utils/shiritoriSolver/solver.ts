@@ -36,10 +36,7 @@ export interface SolveResult {
  * しりとりソルバー
  * ビットマスクDP + DFSで全解を探索
  */
-export function solveShiritori(
-  inputWords: string[],
-  maxAnswers: number = ANSWER_MAX
-): SolveResult {
+export function solveShiritori(inputWords: string[], maxAnswers: number = ANSWER_MAX): SolveResult {
   const words = inputWords.filter((w) => w.trim() !== '');
   const N = words.length;
 
@@ -56,9 +53,7 @@ export function solveShiritori(
 
   // しりとり接続判定マトリックス
   // b[i][j] = true: 単語iの最初の文字が単語jの最後の文字と一致
-  const b: boolean[][] = Array.from({ length: N }, () =>
-    Array.from({ length: N }, () => false)
-  );
+  const b: boolean[][] = Array.from({ length: N }, () => Array.from({ length: N }, () => false));
 
   for (let i = 0; i < N; i++) {
     for (let j = 0; j < N; j++) {
@@ -139,9 +134,7 @@ export interface SolveWithExclusionResult {
 /**
  * 1つ除外して残り全単語が連結するパターンを検索
  */
-export function solveShiritoriWithOneExclusion(
-  inputWords: string[]
-): SolveWithExclusionResult {
+export function solveShiritoriWithOneExclusion(inputWords: string[]): SolveWithExclusionResult {
   const words = inputWords.filter((w) => w.trim() !== '');
   const N = words.length;
 

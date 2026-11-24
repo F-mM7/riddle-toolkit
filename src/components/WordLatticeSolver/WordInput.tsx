@@ -8,12 +8,7 @@ interface WordInputProps {
   onWordsChange: (words: string[][]) => void;
 }
 
-export const WordInput: React.FC<WordInputProps> = ({
-  rows,
-  cols,
-  words,
-  onWordsChange,
-}) => {
+export const WordInput: React.FC<WordInputProps> = ({ rows, cols, words, onWordsChange }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[][]>([]);
 
   const handleWordChange = (row: number, col: number, value: string) => {
@@ -22,17 +17,11 @@ export const WordInput: React.FC<WordInputProps> = ({
       return;
     }
 
-    const newWords = words.map((r, i) =>
-      r.map((w, j) => (i === row && j === col ? value : w))
-    );
+    const newWords = words.map((r, i) => r.map((w, j) => (i === row && j === col ? value : w)));
     onWordsChange(newWords);
   };
 
-  const handleKeyDown = (
-    row: number,
-    col: number,
-    e: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleKeyDown = (row: number, col: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Tab' && !e.shiftKey) {
       // 次のフィールドへ移動（最後のセルの場合はデフォルト動作）
       let nextRow = row;
@@ -73,9 +62,7 @@ export const WordInput: React.FC<WordInputProps> = ({
   const getInputStyle = (row: number, col: number): string => {
     const word = words[row][col];
     const hasError = word.length > 0 && word.length !== 4;
-    return hasError
-      ? `${styles.wordInputField} ${styles.error}`
-      : styles.wordInputField;
+    return hasError ? `${styles.wordInputField} ${styles.error}` : styles.wordInputField;
   };
 
   // 参照配列の初期化

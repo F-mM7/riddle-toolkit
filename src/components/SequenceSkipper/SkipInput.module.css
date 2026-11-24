@@ -17,7 +17,9 @@
   border: 2px solid var(--color-border);
   border-radius: 0.625rem;
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .stepper:focus-within {
@@ -34,7 +36,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.15s ease, color 0.15s ease,
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
     transform 0.05s ease;
   user-select: none;
 }

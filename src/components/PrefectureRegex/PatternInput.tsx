@@ -10,30 +10,25 @@ interface PatternInputProps {
 export function PatternInput({ patterns, onPatternsChange }: PatternInputProps) {
   const handlePatternChange = (id: string, value: string) => {
     const validation = validatePattern(value);
-    const newPatterns = patterns.map(p =>
-      p.id === id
-        ? { ...p, value, isValid: validation.isValid, error: validation.error }
-        : p
+    const newPatterns = patterns.map((p) =>
+      p.id === id ? { ...p, value, isValid: validation.isValid, error: validation.error } : p
     );
     onPatternsChange(newPatterns);
   };
 
   const handleAddPattern = () => {
-    const newId = String(Math.max(...patterns.map(p => Number(p.id))) + 1);
-    onPatternsChange([
-      ...patterns,
-      { id: newId, value: '', isValid: true },
-    ]);
+    const newId = String(Math.max(...patterns.map((p) => Number(p.id))) + 1);
+    onPatternsChange([...patterns, { id: newId, value: '', isValid: true }]);
   };
 
   const handleRemovePattern = (id: string) => {
     if (patterns.length > 1) {
-      onPatternsChange(patterns.filter(p => p.id !== id));
+      onPatternsChange(patterns.filter((p) => p.id !== id));
     }
   };
 
   const handleClear = () => {
-    const clearedPatterns = patterns.map(p => ({
+    const clearedPatterns = patterns.map((p) => ({
       ...p,
       value: '',
       isValid: true,
@@ -73,24 +68,16 @@ export function PatternInput({ patterns, onPatternsChange }: PatternInputProps) 
               </button>
             )}
 
-            {pattern.error && (
-              <span className={styles.error}>{pattern.error}</span>
-            )}
+            {pattern.error && <span className={styles.error}>{pattern.error}</span>}
           </div>
         ))}
       </div>
 
       <div className={styles.buttonGroup}>
-        <button
-          onClick={handleAddPattern}
-          className={styles.addButton}
-        >
+        <button onClick={handleAddPattern} className={styles.addButton}>
           + パターンを追加
         </button>
-        <button
-          onClick={handleClear}
-          className={styles.clearButton}
-        >
+        <button onClick={handleClear} className={styles.clearButton}>
           クリア
         </button>
       </div>

@@ -73,17 +73,11 @@ export function ShiritoriSolver() {
             1つ除外
           </button>
           {showSample && (
-            <button
-              className={`${styles.button} ${styles.buttonSecondary}`}
-              onClick={handleSample}
-            >
+            <button className={`${styles.button} ${styles.buttonSecondary}`} onClick={handleSample}>
               Sample
             </button>
           )}
-          <button
-            className={`${styles.button} ${styles.buttonSecondary}`}
-            onClick={handleClear}
-          >
+          <button className={`${styles.button} ${styles.buttonSecondary}`} onClick={handleClear}>
             Clear
           </button>
         </div>
@@ -93,9 +87,7 @@ export function ShiritoriSolver() {
       <div className={styles.resultSection}>
         <h2 className={styles.label}>結果</h2>
         {result === null ? (
-          <p className={styles.placeholder}>
-            単語を入力してSolveを押してください
-          </p>
+          <p className={styles.placeholder}>単語を入力してSolveを押してください</p>
         ) : result.data.error ? (
           <p className={styles.error}>{result.data.error}</p>
         ) : result.mode === 'solve' ? (
@@ -121,9 +113,7 @@ export function ShiritoriSolver() {
             </>
           )
         ) : result.data.results.length === 0 ? (
-          <p className={styles.noSolution}>
-            1つ除外で連結するパターンが見つかりませんでした
-          </p>
+          <p className={styles.noSolution}>1つ除外で連結するパターンが見つかりませんでした</p>
         ) : (
           <>
             <p className={styles.solutionCount}>
@@ -133,10 +123,7 @@ export function ShiritoriSolver() {
               {result.data.results.map((r) => (
                 <div key={r.excludedIndex} className={styles.solutionItem}>
                   <h3 className={styles.solutionTitle}>
-                    <span className={styles.excludedWord}>
-                      {r.excludedWord}
-                    </span>{' '}
-                    を除外
+                    <span className={styles.excludedWord}>{r.excludedWord}</span> を除外
                   </h3>
                   <ol className={styles.wordList}>
                     {r.solution.words.map((word, wordIdx) => (

@@ -1,8 +1,4 @@
-import type {
-  Grid,
-  Solution,
-  GridAnalysis,
-} from '../../utils/skeletonSolver/types';
+import type { Grid, Solution, GridAnalysis } from '../../utils/skeletonSolver/types';
 import { SolutionGrid } from './SolutionGrid';
 import styles from './SolutionDisplay.module.css';
 
@@ -48,29 +44,28 @@ export function SolutionDisplay({
         </div>
       )}
 
-      {!isSolving && !errorMessage && solutions.length > 0 && grid && analysis && solutions.map((solution, index) => (
-        <div key={index} className={styles.solutionContent}>
-          <SolutionGrid
-            grid={grid}
-            solution={solution}
-            slots={analysis.slots}
-          />
-          {solution.constraints && solution.constraints.length > 0 && (
-            <div className={styles.constraints}>
-              <div className={styles.constraintsTitle}>
-                未入力の単語への制約:
+      {!isSolving &&
+        !errorMessage &&
+        solutions.length > 0 &&
+        grid &&
+        analysis &&
+        solutions.map((solution, index) => (
+          <div key={index} className={styles.solutionContent}>
+            <SolutionGrid grid={grid} solution={solution} slots={analysis.slots} />
+            {solution.constraints && solution.constraints.length > 0 && (
+              <div className={styles.constraints}>
+                <div className={styles.constraintsTitle}>未入力の単語への制約:</div>
+                <div className={styles.constraintsList}>
+                  {solution.constraints.map((constraint, idx) => (
+                    <div key={idx} className={styles.constraintItem}>
+                      {constraint}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className={styles.constraintsList}>
-                {solution.constraints.map((constraint, idx) => (
-                  <div key={idx} className={styles.constraintItem}>
-                    {constraint}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
+            )}
+          </div>
+        ))}
     </div>
   );
 }

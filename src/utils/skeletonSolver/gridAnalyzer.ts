@@ -81,12 +81,10 @@ export function analyzeGrid(grid: Grid): GridAnalysis {
     wordLengthCounts[slot.length] = (wordLengthCounts[slot.length] || 0) + 1;
     if (slot.direction === 'horizontal') {
       horizontalCount++;
-      horizontalLengthCounts[slot.length] =
-        (horizontalLengthCounts[slot.length] || 0) + 1;
+      horizontalLengthCounts[slot.length] = (horizontalLengthCounts[slot.length] || 0) + 1;
     } else {
       verticalCount++;
-      verticalLengthCounts[slot.length] =
-        (verticalLengthCounts[slot.length] || 0) + 1;
+      verticalLengthCounts[slot.length] = (verticalLengthCounts[slot.length] || 0) + 1;
     }
   });
 

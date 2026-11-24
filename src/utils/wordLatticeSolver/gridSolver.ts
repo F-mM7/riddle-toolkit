@@ -51,10 +51,7 @@ function canFormWord(word: string, chars: (string | null)[]): boolean {
  * @param maxSolutions - 最大解の数（デフォルト: 10）
  * @returns 解の配列（各解は(rows+1) × (cols+1)の格子点配置）
  */
-export function solveGrid(
-  words: string[][],
-  maxSolutions: number = 10
-): string[][][] {
+export function solveGrid(words: string[][], maxSolutions: number = 10): string[][][] {
   const rows = words.length;
   const cols = words[0]?.length || 0;
 

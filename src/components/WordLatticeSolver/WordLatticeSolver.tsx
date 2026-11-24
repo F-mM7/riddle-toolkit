@@ -35,19 +35,9 @@ export function WordLatticeSolver() {
 
   return (
     <div className={styles.container}>
-      <GridSizeInput
-        rows={rows}
-        cols={cols}
-        onRowsChange={setRows}
-        onColsChange={setCols}
-      />
+      <GridSizeInput rows={rows} cols={cols} onRowsChange={setRows} onColsChange={setCols} />
 
-      <WordInput
-        rows={rows}
-        cols={cols}
-        words={words}
-        onWordsChange={setWords}
-      />
+      <WordInput rows={rows} cols={cols} words={words} onWordsChange={setWords} />
 
       <SolutionDisplay words={words} />
     </div>

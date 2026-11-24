@@ -30,27 +30,18 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/char-counter" element={<CharCounter />} />
-          <Route
-            path="/difference-of-character-set"
-            element={<DifferenceOfCharacterSet />}
-          />
+          <Route path="/difference-of-character-set" element={<DifferenceOfCharacterSet />} />
           <Route path="/shiritori-solver" element={<ShiritoriSolver />} />
           <Route path="/word-venn" element={<WordVenn />} />
           <Route path="/babanuki" element={<Babanuki />} />
-          <Route
-            path="/word-lattice-solver"
-            element={<WordLatticeSolver />}
-          />
+          <Route path="/word-lattice-solver" element={<WordLatticeSolver />} />
           <Route path="/skeleton-solver" element={<SkeletonSolver />} />
           <Route path="/kana-visualizer" element={<KanaVisualizer />} />
           <Route path="/prefecture-regex" element={<PrefectureRegex />} />
           <Route path="/char-shifter" element={<CharShifter />} />
           <Route path="/cube-visualizer" element={<CubeVisualizer />} />
           <Route path="/palindrome-checker" element={<PalindromeChecker />} />
-          <Route
-            path="/palindrome-arranger"
-            element={<PalindromeArranger />}
-          />
+          <Route path="/palindrome-arranger" element={<PalindromeArranger />} />
           <Route path="/sequence-skipper" element={<SequenceSkipper />} />
           <Route path="/number-to-char" element={<NumberToChar />} />
           <Route path="/amida-solver" element={<AmidaSolver />} />

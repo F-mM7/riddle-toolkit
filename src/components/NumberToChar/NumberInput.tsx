@@ -21,9 +21,7 @@ export function NumberInput({ value, onChange }: NumberInputProps) {
         className={styles.input}
         autoFocus
       />
-      <p className={styles.hint}>
-        カンマ・空白・改行のいずれかで区切ってください
-      </p>
+      <p className={styles.hint}>カンマ・空白・改行のいずれかで区切ってください</p>
     </div>
   );
 }

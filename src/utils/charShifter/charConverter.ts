@@ -13,10 +13,7 @@ import { CharacterType } from './types';
  * 文字を清音に変換
  */
 export function toSeion(char: string): string {
-  return DAKUON_MAP[char]
-    || HANDAKUON_MAP[char]
-    || KOGAKI_MAP[char]
-    || char;
+  return DAKUON_MAP[char] || HANDAKUON_MAP[char] || KOGAKI_MAP[char] || char;
 }
 
 /**
@@ -32,10 +29,7 @@ export function getCharacterType(char: string): CharacterType {
 /**
  * 清音から対応する濁音等を取得
  */
-export function fromSeion(
-  seionChar: string,
-  targetType: CharacterType
-): string | null {
+export function fromSeion(seionChar: string, targetType: CharacterType): string | null {
   if (targetType === 'seion') {
     return seionChar;
   }

@@ -56,11 +56,7 @@ export const SolutionDisplay: React.FC<SolutionDisplayProps> = ({ words }) => {
               </p>
               <div className={styles.solutionGrid}>
                 {solutions.map((solution, index) => (
-                  <GridVisualization
-                    key={index}
-                    solution={solution}
-                    solutionIndex={index + 1}
-                  />
+                  <GridVisualization key={index} solution={solution} solutionIndex={index + 1} />
                 ))}
               </div>
             </div>

@@ -73,16 +73,9 @@ const KanaTable: React.FC<KanaTableProps> = ({ lines }) => {
           <div key={rowIndex} className={styles.row}>
             {row.map((cell, colIndex) => {
               // 文字が存在しない位置は空欄にする（や行・わ行の一部）
-              const isValidPosition = VALID_POSITIONS.has(
-                `${rowIndex}-${colIndex}`
-              );
+              const isValidPosition = VALID_POSITIONS.has(`${rowIndex}-${colIndex}`);
               if (!isValidPosition) {
-                return (
-                  <div
-                    key={`${rowIndex}-${colIndex}`}
-                    className={styles.emptyCell}
-                  />
-                );
+                return <div key={`${rowIndex}-${colIndex}`} className={styles.emptyCell} />;
               }
               return (
                 <KanaCell

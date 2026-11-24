@@ -9,12 +9,7 @@ interface GridInputProps {
   onSizeChange: (size: number) => void;
 }
 
-export function GridInput({
-  grid,
-  onGridChange,
-  gridSize,
-  onSizeChange,
-}: GridInputProps) {
+export function GridInput({ grid, onGridChange, gridSize, onSizeChange }: GridInputProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [dragMode, setDragMode] = useState<'fill' | 'erase'>('fill');
 
@@ -40,9 +35,7 @@ export function GridInput({
   // 右90度回転
   const handleRotateRight = () => {
     const size = grid.length;
-    const rotated: Grid = Array.from({ length: size }, () =>
-      Array(size).fill(false)
-    );
+    const rotated: Grid = Array.from({ length: size }, () => Array(size).fill(false));
     for (let row = 0; row < size; row++) {
       for (let col = 0; col < size; col++) {
         rotated[col][size - 1 - row] = grid[row][col];
@@ -54,9 +47,7 @@ export function GridInput({
   // 左90度回転
   const handleRotateLeft = () => {
     const size = grid.length;
-    const rotated: Grid = Array.from({ length: size }, () =>
-      Array(size).fill(false)
-    );
+    const rotated: Grid = Array.from({ length: size }, () => Array(size).fill(false));
     for (let row = 0; row < size; row++) {
       for (let col = 0; col < size; col++) {
         rotated[size - 1 - col][row] = grid[row][col];
@@ -108,9 +99,7 @@ export function GridInput({
             max="20"
             value={gridSize}
             onChange={(e) =>
-              onSizeChange(
-                Math.max(3, Math.min(20, parseInt(e.target.value) || 10))
-              )
+              onSizeChange(Math.max(3, Math.min(20, parseInt(e.target.value) || 10)))
             }
             className={styles.sizeInput}
           />

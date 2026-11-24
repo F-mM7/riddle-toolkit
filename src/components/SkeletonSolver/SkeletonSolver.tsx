@@ -116,9 +116,7 @@ export function SkeletonSolver() {
   const [wordListText, setWordListText] = useState<string>('');
   const [solutions, setSolutions] = useState<Solution[]>([]);
   const [solvedGrid, setSolvedGrid] = useState<Grid | null>(null);
-  const [solvedAnalysis, setSolvedAnalysis] = useState<ReturnType<
-    typeof analyzeGrid
-  > | null>(null);
+  const [solvedAnalysis, setSolvedAnalysis] = useState<ReturnType<typeof analyzeGrid> | null>(null);
   const [isSolving, setIsSolving] = useState(false);
   const [solutionError, setSolutionError] = useState<string>('');
   const [clearCount, setClearCount] = useState<number>(0);
@@ -131,10 +129,7 @@ export function SkeletonSolver() {
   const analysis = useMemo(() => analyzeGrid(grid), [grid]);
 
   // 単語が条件を満たしているかチェック
-  const isWordsValid = useMemo(
-    () => checkWordsValid(analysis, words),
-    [analysis, words]
-  );
+  const isWordsValid = useMemo(() => checkWordsValid(analysis, words), [analysis, words]);
 
   // グリッドまたは単語リストが変更されたら自動的に解を計算
   useEffect(() => {
@@ -185,12 +180,7 @@ export function SkeletonSolver() {
           }
         };
 
-        const foundSolutions = solveSkeleton(
-          currentAnalysis,
-          words,
-          100,
-          onSolutionFound
-        );
+        const foundSolutions = solveSkeleton(currentAnalysis, words, 100, onSolutionFound);
 
         if (foundSolutions.length === 0) {
           setSolutionError('解が見つかりませんでした');
@@ -292,41 +282,21 @@ export function SkeletonSolver() {
     <>
       {showSamples && (
         <>
-          <button
-            onClick={handleLoadSample}
-            className={styles.buttonSecondary}
-            type="button"
-          >
+          <button onClick={handleLoadSample} className={styles.buttonSecondary} type="button">
             sample1
           </button>
-          <button
-            onClick={handleLoadSample2}
-            className={styles.buttonSecondary}
-            type="button"
-          >
+          <button onClick={handleLoadSample2} className={styles.buttonSecondary} type="button">
             sample2
           </button>
-          <button
-            onClick={handleLoadSample3}
-            className={styles.buttonSecondary}
-            type="button"
-          >
+          <button onClick={handleLoadSample3} className={styles.buttonSecondary} type="button">
             sample3
           </button>
-          <button
-            onClick={handleLoadSample4}
-            className={styles.buttonSecondary}
-            type="button"
-          >
+          <button onClick={handleLoadSample4} className={styles.buttonSecondary} type="button">
             sample4
           </button>
         </>
       )}
-      <button
-        onClick={handleClear}
-        className={styles.buttonSecondary}
-        type="button"
-      >
+      <button onClick={handleClear} className={styles.buttonSecondary} type="button">
         clear
       </button>
     </>

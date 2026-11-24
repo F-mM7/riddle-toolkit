@@ -8,12 +8,7 @@ interface ShiftInputProps {
   onShiftsChange: (shifts: number[]) => void;
 }
 
-export function ShiftInput({
-  mode,
-  charLength,
-  shifts,
-  onShiftsChange
-}: ShiftInputProps) {
+export function ShiftInput({ mode, charLength, shifts, onShiftsChange }: ShiftInputProps) {
   const handleChange = (index: number, value: string) => {
     const numValue = parseInt(value) || 0;
 

@@ -1,10 +1,4 @@
-import type {
-  GridAnalysis,
-  Solution,
-  Slot,
-  Intersection,
-  WordsByLength,
-} from './types';
+import type { GridAnalysis, Solution, Slot, Intersection, WordsByLength } from './types';
 
 /**
  * 単語リストを文字数でグループ化
@@ -48,11 +42,7 @@ export function solveSkeleton(
     // すべてのスロットに割り当て完了
     if (slotIndex === analysis.slots.length) {
       const filledCount = Object.keys(assignments).length;
-      const constraints = calculateConstraints(
-        assignments,
-        analysis.slots,
-        analysis.intersections
-      );
+      const constraints = calculateConstraints(assignments, analysis.slots, analysis.intersections);
       const solution: Solution = {
         assignments: { ...assignments },
         isPartial: false,

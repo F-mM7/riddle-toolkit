@@ -26,9 +26,7 @@ export function GridAnalysis({ analysis, words, actions }: GridAnalysisProps) {
     return (
       <div className={styles.container}>
         <h2 className={styles.title}>入力状況</h2>
-        <p className={styles.emptyMessage}>
-          グリッドにマスを配置してください
-        </p>
+        <p className={styles.emptyMessage}>グリッドにマスを配置してください</p>
         {actions && <div className={styles.actions}>{actions}</div>}
       </div>
     );
@@ -38,9 +36,7 @@ export function GridAnalysis({ analysis, words, actions }: GridAnalysisProps) {
 
   // すべての文字数を取得（必要数と入力数の両方から）
   const allLengths = new Set<number>();
-  Object.keys(analysis.wordLengthCounts).forEach((len) =>
-    allLengths.add(parseInt(len))
-  );
+  Object.keys(analysis.wordLengthCounts).forEach((len) => allLengths.add(parseInt(len)));
   Object.keys(wordsByLength).forEach((len) => allLengths.add(parseInt(len)));
   const lengths = Array.from(allLengths).sort((a, b) => a - b);
 
@@ -96,11 +92,7 @@ export function GridAnalysis({ analysis, words, actions }: GridAnalysisProps) {
                   <td key={len}>
                     {provided}
                     {diff !== 0 && (
-                      <span
-                        className={
-                          diff > 0 ? styles.overStatus : styles.shortStatus
-                        }
-                      >
+                      <span className={diff > 0 ? styles.overStatus : styles.shortStatus}>
                         ({diff > 0 ? '+' : ''}
                         {diff})
                       </span>

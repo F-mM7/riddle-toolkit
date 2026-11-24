@@ -7,11 +7,7 @@ interface SequenceSelectorProps {
   onSelect: (id: string) => void;
 }
 
-export function SequenceSelector({
-  sequences,
-  selectedId,
-  onSelect,
-}: SequenceSelectorProps) {
+export function SequenceSelector({ sequences, selectedId, onSelect }: SequenceSelectorProps) {
   return (
     <div className={styles.container}>
       <label className={styles.label}>シーケンス</label>

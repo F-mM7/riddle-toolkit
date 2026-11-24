@@ -26,10 +26,7 @@ const TextInput: React.FC<TextInputProps> = ({ lines, onChange }) => {
     <div className={styles.inputGroup}>
       {Array.from({ length: MAX_LINES }).map((_, index) => (
         <div key={index} className={styles.inputRow}>
-          <label
-            className={styles.label}
-            style={{ color: LINE_COLORS[index] }}
-          >
+          <label className={styles.label} style={{ color: LINE_COLORS[index] }}>
             {index + 1}.
           </label>
           <input

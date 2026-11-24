@@ -10,10 +10,7 @@ export function groupWordsByLength(words: string[]): WordsByLength {
   return grouped;
 }
 
-export function checkWordsValid(
-  analysis: GridAnalysis,
-  words: string[]
-): boolean {
+export function checkWordsValid(analysis: GridAnalysis, words: string[]): boolean {
   if (analysis.totalWords === 0) return false;
   if (words.length === 0) return false;
 

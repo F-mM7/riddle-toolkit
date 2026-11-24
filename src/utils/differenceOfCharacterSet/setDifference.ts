@@ -9,10 +9,7 @@ export interface SetDifferenceResult {
  * @param b 2番目のテキスト
  * @returns A-BとB-Aの差分
  */
-export function calculateSetDifference(
-  a: string,
-  b: string
-): SetDifferenceResult {
+export function calculateSetDifference(a: string, b: string): SetDifferenceResult {
   // スペースと改行を除外して文字配列に分割
   const charsA = a.split('').filter((c) => /[^ \n]/.test(c));
   const charsB = b.split('').filter((c) => /[^ \n]/.test(c));

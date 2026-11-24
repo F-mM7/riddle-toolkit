@@ -23,9 +23,7 @@ export function ResultDisplay({ results }: ResultDisplayProps) {
             {column.map((item, itemIndex) => (
               <div key={itemIndex} className={styles.itemBox}>
                 <span className={styles.display}>{item.display}</span>
-                {item.reading && (
-                  <span className={styles.reading}>{item.reading}</span>
-                )}
+                {item.reading && <span className={styles.reading}>{item.reading}</span>}
               </div>
             ))}
           </div>

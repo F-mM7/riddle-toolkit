@@ -52,15 +52,15 @@
 }
 
 .label1 {
-  color: #F87171; /* 赤 */
+  color: #f87171; /* 赤 */
 }
 
 .label2 {
-  color: #34D399; /* 緑 */
+  color: #34d399; /* 緑 */
 }
 
 .label3 {
-  color: #60A5FA; /* 青 */
+  color: #60a5fa; /* 青 */
 }
 
 .input {
@@ -76,19 +76,19 @@
 
 .input1:focus {
   outline: none;
-  border-color: #F87171; /* 赤 */
+  border-color: #f87171; /* 赤 */
   box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.2);
 }
 
 .input2:focus {
   outline: none;
-  border-color: #34D399; /* 緑 */
+  border-color: #34d399; /* 緑 */
   box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.2);
 }
 
 .input3:focus {
   outline: none;
-  border-color: #60A5FA; /* 青 */
+  border-color: #60a5fa; /* 青 */
   box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
 }
 

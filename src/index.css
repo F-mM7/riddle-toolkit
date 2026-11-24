@@ -10,14 +10,14 @@
   font-weight: 400;
 
   /* ダークテーマカラーパレット */
-  --color-primary: #60A5FA;
-  --color-secondary: #34D399;
-  --color-accent: #F87171;
+  --color-primary: #60a5fa;
+  --color-secondary: #34d399;
+  --color-accent: #f87171;
   --color-bg-main: #000000;
   --color-bg-card: #111111;
-  --color-bg-hover: #1C1C1C;
-  --color-text-primary: #F9FAFB;
-  --color-text-secondary: #D1D5DB;
+  --color-bg-hover: #1c1c1c;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
   --color-border: #222222;
 
   /* フォントサイズ */

@@ -44,16 +44,8 @@ export function SequenceSkipper() {
   return (
     <div className={styles.container}>
       <div className={styles.controls}>
-        <SequenceSelector
-          sequences={SEQUENCES}
-          selectedId={sequenceId}
-          onSelect={setSequenceId}
-        />
-        <SkipInput
-          stepCount={stepCount}
-          maxStep={maxStep}
-          onChange={setStepCount}
-        />
+        <SequenceSelector sequences={SEQUENCES} selectedId={sequenceId} onSelect={setSequenceId} />
+        <SkipInput stepCount={stepCount} maxStep={maxStep} onChange={setStepCount} />
       </div>
 
       <ResultDisplay results={results} />

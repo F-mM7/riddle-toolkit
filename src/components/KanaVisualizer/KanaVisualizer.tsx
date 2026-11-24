@@ -26,9 +26,7 @@ const KanaVisualizer: React.FC = () => {
         <button className={styles.button} onClick={handleClear}>
           クリア
         </button>
-        {invalidChars.length > 0 && (
-          <WarningMessage invalidChars={invalidChars} />
-        )}
+        {invalidChars.length > 0 && <WarningMessage invalidChars={invalidChars} />}
       </div>
 
       <div className={styles.tableSection}>

@@ -6,10 +6,7 @@ export function DifferenceOfCharacterSet() {
   const [textA, setTextA] = useState('');
   const [textB, setTextB] = useState('');
 
-  const result = useMemo(
-    () => calculateSetDifference(textA, textB),
-    [textA, textB]
-  );
+  const result = useMemo(() => calculateSetDifference(textA, textB), [textA, textB]);
 
   return (
     <div className={styles.container}>
