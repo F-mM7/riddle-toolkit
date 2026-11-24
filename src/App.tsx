@@ -23,6 +23,7 @@ import { TanukiSolver } from './components/TanukiSolver/TanukiSolver';
 import { MazeHelper } from './components/MazeHelper/MazeHelper';
 import { TilingSolver } from './components/TilingSolver/TilingSolver';
 import { FamousSequences } from './components/FamousSequences/FamousSequences';
+import { NationalHolidays } from './components/NationalHolidays/NationalHolidays';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/maze-helper" element={<MazeHelper />} />
           <Route path="/tiling-solver" element={<TilingSolver />} />
           <Route path="/famous-sequences" element={<FamousSequences />} />
+          <Route path="/national-holidays" element={<NationalHolidays />} />
         </Routes>
       </Layout>
     </BrowserRouter>

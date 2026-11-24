@@ -23,6 +23,7 @@ import {
   Route,
   LayoutGrid,
   ListOrdered,
+  CalendarDays,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -200,5 +201,12 @@ export const TOOLS: ToolInfo[] = [
     path: '/prefecture-regex',
     genre: 'sequence',
     icon: MapPin,
+  },
+  {
+    id: 'national-holidays',
+    name: '国民の休日一覧',
+    path: '/national-holidays',
+    genre: 'sequence',
+    icon: CalendarDays,
   },
 ];
