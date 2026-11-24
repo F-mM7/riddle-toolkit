@@ -1,0 +1,156 @@
+/*
+ * 全カードでタイトルの列とボタンの列の幅を揃えるため、ページ全体を 3 列(タイトル・表・ボタン)の grid にし、
+ * 各カードは subgrid で列を共有する
+ * タイトルの列とボタンの列は、全カードの中で最も広いものに合わせ(max-content)、表の列は残りの幅を使う
+ */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  row-gap: 0.5rem;
+}
+
+/* 表の一覧(目次)。各表へのリンクを横に並べ、収まらなければ折り返す */
+.toc {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.tocLink {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.tocLink:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* 左にタイトル、中央に表、右端にコピーボタンを並べて、カードの高さを詰める */
+.card {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  column-gap: 1.25rem;
+  align-items: start;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  /* 目次から跳んだとき、カードの上端が画面の上端に貼りつかないようにする */
+  scroll-margin-top: 0.5rem;
+}
+
+.name {
+  /* 列は明示する。表のないコピー専用のカードでも、ボタンを右端の列に置くため */
+  grid-column: 1;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+/*
+ * ボタンの列。文言とボタンの組を縦に積む。列の幅いっぱいに広げ、ボタンを列の右端(カードの右端)に揃える
+ */
+.copyActions {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* 何をコピーするかを示す文言とボタンの組。ボタンは列の右端に揃える */
+.copyAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* 文字数とボタンの組。文字数はボタンのすぐ左に置く */
+.copyButtonWithCount {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* コピーする文字列の文字数。桁数が違っても揃って見えるよう等幅の数字にする */
+.charCount {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 表の列。残りの幅を使い、表が収まらないときは、この中だけ横にスクロールさせる */
+.scroll {
+  grid-column: 2;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+/* 1 セルに 1 文字。短い語の下側の空のセルも枠だけ残す */
+.cell {
+  min-width: 2em;
+  height: 2em;
+  padding: 0.2rem 0.3rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+/* 縦に連結したグリッドの境目(下のグリッドの先頭の行)は、上罫線を太くして分かるようにする */
+.gridStart .cell {
+  border-top: 3px solid var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem 1.5rem;
+  }
+}
+
+/*
+ * 狭い画面では、3 列にすると表の列に 1 列ほどしか見えなくなるため、ボタンの列をやめてタイトルの下にボタンを積む
+ * (幅 375px で、3 列なら表は 1 列、この形なら 4〜5 列見える)
+ */
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
+  /* 1 行目にタイトル、2 行目にボタン。表は 2 行にまたがり、余った高さはボタンの行が受け持つ */
+  .card {
+    grid-template-rows: auto 1fr;
+    row-gap: 0.4rem;
+  }
+
+  .name {
+    grid-row: 1;
+  }
+
+  .scroll {
+    grid-row: 1 / span 2;
+  }
+
+  .copyActions {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}

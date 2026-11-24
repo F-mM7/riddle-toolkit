@@ -1,4 +1,4 @@
-// 「シーケンスとばし」用のシーケンス定義
+// 「シーケンスとばし」用のシーケンス定義(干支・曜日は「有名シーケンス一覧」でも参照する)
 
 export interface SequenceItem {
   display: string;

@@ -22,6 +22,7 @@ import {
   Eraser,
   Route,
   LayoutGrid,
+  ListOrdered,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
@@ -178,6 +179,13 @@ export const TOOLS: ToolInfo[] = [
     path: '/maze-helper',
     genre: 'solve',
     icon: Route,
+  },
+  {
+    id: 'famous-sequences',
+    name: '有名シーケンス一覧',
+    path: '/famous-sequences',
+    genre: 'sequence',
+    icon: ListOrdered,
   },
   {
     id: 'sequence-skipper',

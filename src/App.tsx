@@ -22,6 +22,7 @@ import { CharPicker } from './components/CharPicker/CharPicker';
 import { TanukiSolver } from './components/TanukiSolver/TanukiSolver';
 import { MazeHelper } from './components/MazeHelper/MazeHelper';
 import { TilingSolver } from './components/TilingSolver/TilingSolver';
+import { FamousSequences } from './components/FamousSequences/FamousSequences';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/tanuki-solver" element={<TanukiSolver />} />
           <Route path="/maze-helper" element={<MazeHelper />} />
           <Route path="/tiling-solver" element={<TilingSolver />} />
+          <Route path="/famous-sequences" element={<FamousSequences />} />
         </Routes>
       </Layout>
     </BrowserRouter>
