@@ -1,7 +1,7 @@
 import { NetPattern } from '../../types/cube';
 
 /**
- * 立方体の11種類の展開図パターン（新形式）
+ * 立方体の展開図パターン（全20パターン、新形式）
  *
  * 各パターンはfaces配列で定義：
  * [0] right  (+X軸)
@@ -292,7 +292,7 @@ export const NET_PATTERNS: NetPattern[] = [
   //
   // U=top, L=left, F=front, R=right, B=back, D=bottom
   {
-    name: '2-3-1A',
+    name: '1-3-2A',
     faces: [
       { cell: [1, 2], rotation: 0 }, // [0] right
       { cell: [2, 0], rotation: 90 }, // [1] left
