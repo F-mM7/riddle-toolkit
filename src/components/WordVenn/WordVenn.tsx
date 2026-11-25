@@ -1,57 +1,89 @@
-import { useState } from 'react';
-import { calculateVennRegions } from '../../utils/wordVenn/vennLogic';
+import { useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { LAYOUTS, MAX_SETS } from '../../utils/wordVenn/layouts';
+import { SET_COLORS } from '../../utils/wordVenn/colors';
+import { calculateRegions } from '../../utils/wordVenn/vennLogic';
+import VennDiagram from './VennDiagram';
 import styles from './WordVenn.module.css';
 
+/** 図が扱う集合の最小数(単語が1〜2個でも3集合の図を出す) */
+const MIN_SETS = 3;
+
+/** クリアの連打とみなす押下間隔(ミリ秒) */
+const CLEAR_TAP_INTERVAL_MS = 600;
+
+/** 試験入力を入れるクリアの連打回数 */
+const CLEAR_TAP_COUNT = 3;
+
+/**
+ * 試験入力: 全領域に1文字ずつ入る単語の組。
+ * 1〜(2^MAX_SETS - 1) の数 k を32進の1文字(1〜9, a〜v)で表し、
+ * 単語 i は k の MAX_SETS 桁2進表現で上から i 桁目が1の文字を昇順に並べたもの。
+ */
+const TEST_WORDS = Array.from({ length: MAX_SETS }, (_, i) => {
+  const bit = 1 << (MAX_SETS - 1 - i);
+  let word = '';
+  for (let k = 1; k < 1 << MAX_SETS; k++) {
+    if (k & bit) word += k.toString(32);
+  }
+  return word;
+});
+
+/** 末尾の空欄を落とす(途中の空欄は詰めない) */
+function trimTrailingEmpty(words: string[]): string[] {
+  let end = words.length;
+  while (end > 0 && words[end - 1] === '') {
+    end--;
+  }
+  return words.slice(0, end);
+}
+
 export function WordVenn() {
-  const [word1, setWord1] = useState('');
-  const [word2, setWord2] = useState('');
-  const [word3, setWord3] = useState('');
+  const [words, setWords] = useState<string[]>([]);
+  const [selectedLayoutId, setSelectedLayoutId] = useState<string | null>(null);
 
-  // ベン図の各領域の文字を計算
-  const regions = calculateVennRegions(word1, word2, word3);
+  // 入力のある最後の欄までの個数
+  const filledCount = words.length;
+  // n 個入力されたら n+1 欄目を表示する(最低3欄、上限 MAX_SETS)
+  const fieldCount = Math.min(MAX_SETS, Math.max(MIN_SETS, filledCount + 1));
+  const isAtLimit = fieldCount === MAX_SETS;
 
-  // 円の設定（正三角形配置で2円のみの重なり領域の合計を最大化）
-  // 数値最適化により、半径120、中心間距離120 (=1.0R) が最適と判明
-  const circles = [
-    {
-      cx: 250,
-      cy: 165,
-      r: 120,
-      fill: '#DC2626', // 赤（単語1）- 暗めの赤
-    },
-    {
-      cx: 190,
-      cy: 269,
-      r: 120,
-      fill: '#16A34A', // 緑（単語2）- 暗めの緑
-    },
-    {
-      cx: 310,
-      cy: 269,
-      r: 120,
-      fill: '#2563EB', // 青（単語3）- 暗めの青
-    },
-  ];
+  // 図の集合数と配置
+  const setCount = Math.max(MIN_SETS, filledCount);
+  const layouts = LAYOUTS[setCount];
+  const layout = layouts.find((l) => l.id === selectedLayoutId) ?? layouts[0];
 
-  // 各領域の文字表示位置（幾何学的に厳密計算）
-  // 計算方法:
-  // - only領域: 各円の中心から他の2円と反対方向に0.67R
-  // - intersect領域: 2円の交点のうち重心から遠い方から、弦の長さの1/4だけ重心方向に戻った位置
-  // - intersectAll: 3円の重心
-  const textPositions = {
-    only1: { x: 250, y: 85 },
-    only2: { x: 120, y: 309 },
-    only3: { x: 380, y: 309 },
-    intersect12: { x: 175, y: 191 },
-    intersect13: { x: 325, y: 191 },
-    intersect23: { x: 250, y: 321 },
-    intersectAll: { x: 250, y: 234 },
+  const paddedWords = Array.from({ length: setCount }, (_, i) => words[i] ?? '');
+  const regions = calculateRegions(paddedWords);
+
+  const handleChange = (index: number, value: string) => {
+    setWords((prev) => {
+      const next = Array.from(
+        { length: Math.max(prev.length, index + 1) },
+        (_, i) => prev[i] ?? ''
+      );
+      next[index] = value;
+      return trimTrailingEmpty(next);
+    });
   };
 
+  // 直近のクリア押下時刻(連打検出用)
+  const clearTapTimesRef = useRef<number[]>([]);
+
   const handleClear = () => {
-    setWord1('');
-    setWord2('');
-    setWord3('');
+    const now = Date.now();
+    const prevTimes = clearTapTimesRef.current;
+    const last = prevTimes[prevTimes.length - 1];
+    const times =
+      last !== undefined && now - last <= CLEAR_TAP_INTERVAL_MS ? [...prevTimes, now] : [now];
+
+    if (times.length >= CLEAR_TAP_COUNT) {
+      clearTapTimesRef.current = [];
+      setWords(TEST_WORDS);
+      return;
+    }
+    clearTapTimesRef.current = times;
+    setWords([]);
   };
 
   return (
@@ -60,38 +92,27 @@ export function WordVenn() {
       <div className={styles.inputSection}>
         <h2 className={styles.label}>入力</h2>
         <div className={styles.inputGroup}>
-          <div className={styles.inputRow}>
-            <label className={`${styles.inputLabel} ${styles.label1}`}>単語1</label>
-            <input
-              type="text"
-              className={`${styles.input} ${styles.input1}`}
-              value={word1}
-              onChange={(e) => setWord1(e.target.value)}
-              placeholder=""
-            />
-          </div>
-          <div className={styles.inputRow}>
-            <label className={`${styles.inputLabel} ${styles.label2}`}>単語2</label>
-            <input
-              type="text"
-              className={`${styles.input} ${styles.input2}`}
-              value={word2}
-              onChange={(e) => setWord2(e.target.value)}
-              placeholder=""
-            />
-          </div>
-          <div className={styles.inputRow}>
-            <label className={`${styles.inputLabel} ${styles.label3}`}>単語3</label>
-            <input
-              type="text"
-              className={`${styles.input} ${styles.input3}`}
-              value={word3}
-              onChange={(e) => setWord3(e.target.value)}
-              placeholder=""
-            />
-          </div>
+          {Array.from({ length: fieldCount }, (_, i) => (
+            <div
+              key={i}
+              className={styles.inputRow}
+              style={{ '--set-color': SET_COLORS[i].fill } as CSSProperties}
+            >
+              <label className={styles.inputLabel} htmlFor={`word-venn-${i}`}>
+                単語{i + 1}
+              </label>
+              <input
+                id={`word-venn-${i}`}
+                type="text"
+                className={styles.input}
+                value={words[i] ?? ''}
+                onChange={(e) => handleChange(i, e.target.value)}
+              />
+            </div>
+          ))}
+          {isAtLimit && <p className={styles.note}>最大 {MAX_SETS} 個までです</p>}
         </div>
-        <button className={styles.button} onClick={handleClear}>
+        <button type="button" className={styles.button} onClick={handleClear}>
           クリア
         </button>
       </div>
@@ -99,101 +120,22 @@ export function WordVenn() {
       {/* ベン図表示エリア */}
       <div className={styles.diagramSection}>
         <h2 className={styles.label}>ベン図</h2>
-        <svg viewBox="40 20 420 390" className={styles.svg}>
-          {/* 円を描画 */}
-          {circles.map((circle, index) => (
-            <circle
-              key={index}
-              cx={circle.cx}
-              cy={circle.cy}
-              r={circle.r}
-              fill={circle.fill}
-              fillOpacity="0.4"
-              stroke={circle.fill}
-              strokeWidth="2"
-              style={{ mixBlendMode: 'screen' }}
-            />
-          ))}
-
-          {/* 各領域の文字を表示 */}
-          <text
-            x={textPositions.only1.x}
-            y={textPositions.only1.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.only1}
-          </text>
-          <text
-            x={textPositions.only2.x}
-            y={textPositions.only2.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.only2}
-          </text>
-          <text
-            x={textPositions.only3.x}
-            y={textPositions.only3.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.only3}
-          </text>
-          <text
-            x={textPositions.intersect12.x}
-            y={textPositions.intersect12.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.intersect12}
-          </text>
-          <text
-            x={textPositions.intersect13.x}
-            y={textPositions.intersect13.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.intersect13}
-          </text>
-          <text
-            x={textPositions.intersect23.x}
-            y={textPositions.intersect23.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.intersect23}
-          </text>
-          <text
-            x={textPositions.intersectAll.x}
-            y={textPositions.intersectAll.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="24"
-            fill="var(--color-text-primary)"
-            fontWeight="bold"
-          >
-            {regions.intersectAll}
-          </text>
-        </svg>
+        {layouts.length >= 2 && (
+          <div className={styles.segment} role="group" aria-label="配置">
+            {layouts.map((l) => (
+              <button
+                key={l.id}
+                type="button"
+                className={`${styles.segmentButton} ${l.id === layout.id ? styles.segmentActive : ''}`}
+                aria-pressed={l.id === layout.id}
+                onClick={() => setSelectedLayoutId(l.id)}
+              >
+                {l.name}
+              </button>
+            ))}
+          </div>
+        )}
+        <VennDiagram layout={layout} regions={regions} colors={SET_COLORS} />
       </div>
     </div>
   );

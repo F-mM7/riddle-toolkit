@@ -1,0 +1,56 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/*
+ * 図の中の色。サイト全体と同じ黒地に不透明な塗りを置き、
+ * 領域の境目は地と同じ黒の太線で区切る(図の中に白い面を作らない)。
+ */
+.svg {
+  --venn-bg: var(--color-bg-main);
+  --venn-separator: var(--color-bg-main);
+  --venn-frame: #9ca3af;
+  --venn-label: #ffffff;
+  --venn-label-outline: #000000;
+
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--venn-bg);
+  margin: 0 auto;
+}
+
+.separator {
+  fill: none;
+  stroke: var(--venn-separator);
+}
+
+.outsideVeil {
+  fill: var(--venn-bg);
+  fill-opacity: 0.7;
+}
+
+.replicaFrame {
+  fill: none;
+  stroke: var(--venn-frame);
+  stroke-width: 1.5;
+}
+
+.label {
+  fill: var(--venn-label);
+  stroke: var(--venn-label-outline);
+  stroke-linejoin: round;
+  paint-order: stroke;
+  font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+  .svg {
+    max-width: 100%;
+  }
+}

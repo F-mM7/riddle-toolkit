@@ -1,5 +1,5 @@
 .container {
-  height: calc(100vh - 180px);
+  min-height: calc(100vh - 180px);
   display: flex;
   gap: 1.5rem;
 }
@@ -47,20 +47,8 @@
 
 .inputLabel {
   min-width: 60px;
-  color: var(--color-text-primary);
+  color: var(--set-color, var(--color-text-primary));
   font-weight: 600;
-}
-
-.label1 {
-  color: #f87171; /* 赤 */
-}
-
-.label2 {
-  color: #34d399; /* 緑 */
-}
-
-.label3 {
-  color: #60a5fa; /* 青 */
 }
 
 .input {
@@ -74,32 +62,16 @@
   color: var(--color-text-primary);
 }
 
-.input1:focus {
-  outline: none;
-  border-color: #f87171; /* 赤 */
-  box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.2);
-}
-
-.input2:focus {
-  outline: none;
-  border-color: #34d399; /* 緑 */
-  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.2);
-}
-
-.input3:focus {
-  outline: none;
-  border-color: #60a5fa; /* 青 */
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
-}
-
 .input:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: var(--set-color, var(--color-primary));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--set-color, var(--color-primary)) 20%, transparent);
 }
 
-.input::placeholder {
+.note {
+  margin: 0;
   color: var(--color-text-secondary);
-  opacity: 0.6;
+  font-size: 0.85rem;
 }
 
 .button {
@@ -118,41 +90,45 @@
   background-color: var(--color-border);
 }
 
-.svg {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  background-color: var(--color-bg-main);
-  margin: 0 auto;
+.segment {
+  display: inline-flex;
+  align-self: center;
+  margin-bottom: 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.4rem;
+  overflow: hidden;
 }
 
-.placeholder {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text-secondary);
-  opacity: 0.7;
-  font-style: italic;
-  background-color: var(--color-bg-main);
-  border-radius: 0.25rem;
+.segmentButton {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.segmentButton:hover:not(.segmentActive) {
+  background-color: var(--color-bg-hover);
+}
+
+.segmentActive {
+  background-color: var(--color-primary);
+  color: var(--color-bg-main);
+  cursor: default;
 }
 
 @media (max-width: 1024px) {
   .container {
-    height: auto;
+    min-height: auto;
     flex-direction: column;
   }
 
   .inputSection,
   .diagramSection {
     min-height: 300px;
-  }
-
-  .svg {
-    max-width: 100%;
   }
 }
 
