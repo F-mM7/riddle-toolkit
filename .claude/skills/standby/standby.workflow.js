@@ -1,5 +1,5 @@
 export const meta = {
-  name: 'implementation-map',
+  name: 'standby',
   description: 'riddle-toolkit の機能追加・拡張をすぐ始められるよう、共通の仕組みと各ツールの実装を把握する',
   whenToUse: '機能追加・既存ツールの拡張・改修に着手する前。args.focus にツール id の配列を渡すとそのツールを深く読む',
   phases: [
