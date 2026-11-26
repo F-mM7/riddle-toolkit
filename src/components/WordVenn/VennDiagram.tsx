@@ -13,7 +13,7 @@ export interface VennDiagramProps {
 
 /** 平面図の文字サイズ(既存の単語ベン図と同じ) */
 const PLANE_FONT_SIZE = 24;
-/** コピーで補う図の文字サイズの上限・下限 */
+/** コピーで補う図の文字サイズの上限・下限。上限は配置データの labels の width を測った長方形の高さと同じ */
 const FIT_FONT_MAX = 20;
 const FIT_FONT_MIN = 9;
 /** 領域どうしの境目に引く線の太さ(viewBox の長辺に対する比) */
@@ -43,15 +43,14 @@ function parseViewBox(viewBox: string): ViewBox {
 }
 
 /**
- * 文字列が maxR の内接円に収まる文字サイズを返す。
- * 全角1文字の幅をフォントサイズと同じとみなし、幅 len*fs・高さ fs の矩形が
- * 半径 maxR の円に入る条件 (len*fs/2)^2 + (fs/2)^2 <= maxR^2 から求める。
+ * 文字列の横幅が width に収まる文字サイズを返す。
+ * 全角1文字の幅をフォントサイズと同じとみなし、幅 len*fs が width 以下になる最大の fs を、上限・下限の間に収める。
+ * 文字の高さ fs は上限以下なので、配置データの長方形(高さ=上限)に収まる。
  * 下限で収まらない場合も下限のまま表示する(省略しない)。
  */
-function fitFontSize(text: string, maxR: number): number {
+function fitFontSize(text: string, width: number): number {
   const len = Array.from(text).length;
-  const fitted = (2 * maxR) / Math.sqrt(len * len + 1);
-  return Math.min(FIT_FONT_MAX, Math.max(FIT_FONT_MIN, fitted));
+  return Math.min(FIT_FONT_MAX, Math.max(FIT_FONT_MIN, width / len));
 }
 
 /**
@@ -91,18 +90,18 @@ function OutsideVeil({ holePath, vb }: { holePath: string; vb: ViewBox }) {
   );
 }
 
-function RegionLabels({
-  layout,
+function RegionLabels<Label extends LabelPos>({
+  labels,
   regions,
   fontSizeOf,
 }: {
-  layout: VennLayout;
+  labels: Record<number, Label>;
   regions: RegionTexts;
-  fontSizeOf: (text: string, pos: LabelPos) => number;
+  fontSizeOf: (text: string, pos: Label) => number;
 }) {
   return (
     <g>
-      {Object.entries(layout.labels).map(([maskKey, pos]) => {
+      {Object.entries(labels).map(([maskKey, pos]) => {
         const text = regions[Number(maskKey)] ?? '';
         if (text === '') return null;
         const fontSize = fontSizeOf(text, pos);
@@ -223,15 +222,19 @@ export default function VennDiagram({ layout, regions, colors }: VennDiagramProp
             />
           </>
         )}
-        <RegionLabels
-          layout={layout}
-          regions={regions}
-          fontSizeOf={
-            layout.kind === 'plane'
-              ? () => PLANE_FONT_SIZE
-              : (text, pos) => fitFontSize(text, pos.maxR)
-          }
-        />
+        {layout.kind === 'plane' ? (
+          <RegionLabels
+            labels={layout.labels}
+            regions={regions}
+            fontSizeOf={() => PLANE_FONT_SIZE}
+          />
+        ) : (
+          <RegionLabels
+            labels={layout.labels}
+            regions={regions}
+            fontSizeOf={(text, pos) => fitFontSize(text, pos.width)}
+          />
+        )}
       </svg>
     </div>
   );

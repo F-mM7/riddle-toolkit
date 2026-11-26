@@ -2,12 +2,20 @@ import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { LAYOUTS, MAX_SETS } from '../../utils/wordVenn/layouts';
 import { SET_COLORS } from '../../utils/wordVenn/colors';
+import { TWO_SET_LAYOUTS } from '../../utils/wordVenn/twoSetLayout';
+import type { VennLayout } from '../../utils/wordVenn/types';
 import { calculateRegions } from '../../utils/wordVenn/vennLogic';
 import VennDiagram from './VennDiagram';
 import styles from './WordVenn.module.css';
 
-/** 図が扱う集合の最小数(単語が1〜2個でも3集合の図を出す) */
-const MIN_SETS = 3;
+/** 図が扱う集合の最小数(単語が0〜1個でも2集合の図を出す) */
+const MIN_SETS = 2;
+
+/** 集合数ごとの配置。2集合の配置は LAYOUTS とは別のファイル(twoSetLayout.ts)に置いている */
+const LAYOUTS_BY_SET_COUNT: Record<number, readonly VennLayout[]> = {
+  ...LAYOUTS,
+  2: TWO_SET_LAYOUTS,
+};
 
 /** クリアの連打とみなす押下間隔(ミリ秒) */
 const CLEAR_TAP_INTERVAL_MS = 600;
@@ -44,13 +52,13 @@ export function WordVenn() {
 
   // 入力のある最後の欄までの個数
   const filledCount = words.length;
-  // n 個入力されたら n+1 欄目を表示する(最低3欄、上限 MAX_SETS)
+  // n 個入力されたら n+1 欄目を表示する(最低 MIN_SETS 欄、上限 MAX_SETS)
   const fieldCount = Math.min(MAX_SETS, Math.max(MIN_SETS, filledCount + 1));
   const isAtLimit = fieldCount === MAX_SETS;
 
   // 図の集合数と配置
   const setCount = Math.max(MIN_SETS, filledCount);
-  const layouts = LAYOUTS[setCount];
+  const layouts = LAYOUTS_BY_SET_COUNT[setCount];
   const layout = layouts.find((l) => l.id === selectedLayoutId) ?? layouts[0];
 
   const paddedWords = Array.from({ length: setCount }, (_, i) => words[i] ?? '');
