@@ -1,0 +1,103 @@
+/*
+ * 出典(DataSource)をページの最下部に置く: 本文が画面より短いときは画面の下端へ押し下げ、
+ * 長いときは本文の後に続ける。Layout は .layout(高さ100vh以上の縦並び)の中で <main> を
+ * flex: 1 で伸ばしているので、このページのときだけ <main> を縦並びにして .container を伸ばす
+ */
+:global(main):has(> .container) {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  /* 下側余白は Layout の .main だけが決める(出典を画面の下端に近づける) */
+  padding: 0 1.5rem;
+}
+
+/* 入力と結果。伸びて出典を下へ押し下げる(flex の子なので中の余白は外へはみ出さない) */
+.content {
+  flex: 1 0 auto;
+}
+
+/* 上側余白は Layout の .main だけが決める */
+.content > :first-child {
+  margin-top: 0;
+}
+
+/* 結果と出典の間隔は出典側の margin-top だけが決める */
+.content > :last-child {
+  margin-bottom: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+  font-family: inherit;
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* クリアボタン: 単語ベン図・50音表のクリアボタンと同じ見た目 */
+.button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+.button:hover:not(:disabled) {
+  background-color: var(--color-border);
+}
+
+/* 入力が空のとき(迷路のクリアボタンと同じ表し方) */
+.button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .textarea {
+    font-size: 1rem;
+    padding: 0.625rem 0.875rem;
+  }
+}

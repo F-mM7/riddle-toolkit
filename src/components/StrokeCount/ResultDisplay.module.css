@@ -1,0 +1,131 @@
+.container {
+  margin: 2rem 0;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+}
+
+.emptyMessage {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  padding: 2rem;
+  margin: 0;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.warning {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  overflow-wrap: anywhere;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  /* 入力の改行で分かれた行どうしの間隔。行の中で折り返した段の間隔（.line の gap）より広くして見分けられるようにする */
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+
+/* 入力の1行分（長いときは折り返す） */
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* カード: 字と画数のセット（正方形。画数を大きく、字を小さく表示する） */
+.card,
+.cardMissing,
+.cardPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  flex-shrink: 0;
+  width: 4rem;
+  aspect-ratio: 1;
+  padding: 0.25rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background-color: var(--color-bg-main);
+}
+
+.cardMissing {
+  opacity: 0.75;
+}
+
+.cardPlaceholder {
+  visibility: hidden;
+}
+
+/* 長い書記素でもカードからはみ出さないよう、幅をカードの内側に収める */
+.char {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.count,
+.missing {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.count {
+  color: var(--color-primary);
+}
+
+.missing {
+  color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .line {
+    gap: 0.375rem;
+  }
+
+  .card,
+  .cardMissing,
+  .cardPlaceholder {
+    width: 3.25rem;
+  }
+
+  .char {
+    font-size: 0.85rem;
+  }
+
+  .count,
+  .missing {
+    font-size: 1.4rem;
+  }
+}
