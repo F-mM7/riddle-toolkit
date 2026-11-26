@@ -3,13 +3,16 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  min-width: 0;
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
-  padding: 1.5rem 0.75rem;
+  padding: 1.5rem 0.5rem;
   text-decoration: none;
   color: var(--color-text-primary);
   transition: all 0.2s;
+  /* ツール名の文字の大きさをカードの幅から決めるため */
+  container-type: inline-size;
 }
 
 .card:hover {
@@ -23,11 +26,16 @@
   line-height: 1;
 }
 
+/*
+ * ツール名は折り返さず1行で表示する。
+ * --title-width(全角1文字=1とした名前の幅)で割って、カードの幅に収まる大きさまで縮める。
+ */
 .title {
-  font-size: 1rem;
+  width: 100%;
+  font-size: min(1rem, 100cqi / (var(--title-width) * 1.08));
   font-weight: 600;
   margin: 0;
   line-height: 1.4;
   color: var(--color-primary);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
