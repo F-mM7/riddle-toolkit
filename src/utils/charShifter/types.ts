@@ -1,5 +1,5 @@
 // モード
-export type ShiftMode = 'individual' | 'batch' | 'compare';
+export type ShiftMode = 'individual' | 'batch' | 'compare' | 'add' | 'subtract' | 'sum';
 
 // 順序タイプ
 export type OrderType = 'gojuon' | 'iroha47' | 'iroha48' | 'alphabet' | 'custom';
@@ -43,4 +43,17 @@ export interface CharDistance {
 export interface DistanceCandidate {
   forward: number; // 順方向（単語1→単語2）の距離
   backward: number; // 逆方向（単語2→単語1）の距離
+}
+
+// 番号の和・差から得た文字の候補（加算・減算・合計モード）
+export interface SumCandidate {
+  index: number; // 和・差を順序の長さで循環させた番号（1始まり）
+  char: string; // その番号の文字
+}
+
+// 文字の番号の和・差（加算・減算モードは同じ位置の2文字、合計モードは1行の全文字）
+// オリジナルシーケンスで位置が決まらない文字を含む場合、候補を複数持つ
+export interface CharSum {
+  terms: string[]; // 使った文字（加算・減算モードで片方の単語に文字がない位置は1文字だけ）
+  candidates: SumCandidate[]; // 考えられる結果（番号の昇順、重複なし。計算できない場合は空）
 }

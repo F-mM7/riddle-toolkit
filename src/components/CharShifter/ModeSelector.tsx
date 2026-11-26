@@ -1,6 +1,15 @@
 import { ShiftMode } from '../../utils/charShifter/types';
 import styles from './ModeSelector.module.css';
 
+const MODES: readonly { mode: ShiftMode; label: string }[] = [
+  { mode: 'individual', label: '個別' },
+  { mode: 'batch', label: '一括' },
+  { mode: 'compare', label: '比較' },
+  { mode: 'add', label: '加算' },
+  { mode: 'subtract', label: '減算' },
+  { mode: 'sum', label: '合計' },
+];
+
 interface ModeSelectorProps {
   mode: ShiftMode;
   onModeChange: (mode: ShiftMode) => void;
@@ -11,27 +20,16 @@ export function ModeSelector({ mode, onModeChange }: ModeSelectorProps) {
     <div className={styles.container}>
       <label className={styles.label}>モード</label>
       <div className={styles.buttonGroup}>
-        <button
-          className={mode === 'individual' ? styles.active : styles.button}
-          onClick={() => onModeChange('individual')}
-          disabled={mode === 'individual'}
-        >
-          個別
-        </button>
-        <button
-          className={mode === 'batch' ? styles.active : styles.button}
-          onClick={() => onModeChange('batch')}
-          disabled={mode === 'batch'}
-        >
-          一括
-        </button>
-        <button
-          className={mode === 'compare' ? styles.active : styles.button}
-          onClick={() => onModeChange('compare')}
-          disabled={mode === 'compare'}
-        >
-          比較
-        </button>
+        {MODES.map((option) => (
+          <button
+            key={option.mode}
+            className={mode === option.mode ? styles.active : styles.button}
+            onClick={() => onModeChange(option.mode)}
+            disabled={mode === option.mode}
+          >
+            {option.label}
+          </button>
+        ))}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { SEION, IROHA_47, IROHA_48, ALPHABET } from '../../data/kana';
 import { toSeion, getCharacterType, fromSeion } from './charConverter';
 import { findInCustomSequence } from './customSequence';
-import { ShiftedChar, ShiftCandidate, CharDistance, OrderType } from './types';
+import { ShiftedChar, ShiftCandidate, CharDistance, CharSum, OrderType } from './types';
 
 /**
  * 順序タイプに応じた文字配列を取得
@@ -160,12 +160,12 @@ function getCharIndices(
 }
 
 /**
- * 順序の全長を取得
+ * 順序タイプに応じた文字の並びを取得（オリジナルはシーケンスそのもの）
  */
-function getOrderLength(orderType: OrderType, customSequence: readonly string[]): number {
-  if (orderType === 'alphabet') return ALPHABET.length;
-  if (orderType === 'custom') return customSequence.length;
-  return getKanaOrder(orderType).length;
+function getOrder(orderType: OrderType, customSequence: readonly string[]): readonly string[] {
+  if (orderType === 'alphabet') return ALPHABET;
+  if (orderType === 'custom') return customSequence;
+  return getKanaOrder(orderType);
 }
 
 /**
@@ -189,7 +189,7 @@ function compareCharPair(
     return { char1, char2, isValid: false };
   }
 
-  const length = getOrderLength(orderType, customSequence);
+  const length = getOrder(orderType, customSequence).length;
   const forwardDistances = new Set(
     indices1.flatMap((index1) => indices2.map((index2) => wrapIndex(index2 - index1, length)))
   );
@@ -223,4 +223,123 @@ export function compareChars(
   return Array.from({ length }, (_, i) =>
     compareCharPair(chars1[i], chars2[i], orderType, customSequence)
   );
+}
+
+/**
+ * 文字の番号（1始まり）を符号付きで足し合わせ、結果の番号の文字を求める。
+ * 結果が 1〜順序の長さ の範囲外になった場合は循環する（長さ+1 番は1番目、0 番は最後）。
+ * 位置が決まらない文字を含む場合は、考えられるすべての位置の組み合わせの結果を候補とする。
+ * 順序にない文字を含む場合や使う文字がない場合は候補を空にする。
+ * 濁音・半濁音・小字は清音の番号で数え、結果は清音で返す。
+ * アルファベットは、使った文字がすべて大文字なら大文字、それ以外は小文字で返す。
+ */
+function combineCharNumbers(
+  terms: readonly { char: string; sign: 1 | -1 }[],
+  orderType: OrderType,
+  customSequence: readonly string[]
+): CharSum {
+  const order = getOrder(orderType, customSequence);
+  const result: CharSum = { terms: terms.map((term) => term.char), candidates: [] };
+  if (terms.length === 0 || order.length === 0) return result;
+
+  // 番号（0始まりの位置+1）の符号付きの和を順序の長さで循環させた値の集合
+  let totals = new Set([0]);
+  for (const { char, sign } of terms) {
+    const indices = getCharIndices(char, orderType, customSequence);
+    if (indices.length === 0) return result;
+    totals = new Set(
+      [...totals].flatMap((total) =>
+        indices.map((index) => wrapIndex(total + sign * (index + 1), order.length))
+      )
+    );
+  }
+
+  const isUpper =
+    orderType === 'alphabet' && terms.every(({ char }) => char !== char.toLowerCase());
+  const candidates = [...totals]
+    .map((total) => wrapIndex(total - 1, order.length))
+    .sort((a, b) => a - b)
+    .map((index) => ({
+      index: index + 1,
+      char: isUpper ? order[index].toUpperCase() : order[index],
+    }));
+  return { ...result, candidates };
+}
+
+/**
+ * 2つの文字列の同じ位置の文字の番号を、2つ目の符号を sign2 として足し合わせる。
+ * 片方の単語に文字がない位置は計算しない（候補が空）。
+ */
+function combineCharPairs(
+  word1: string,
+  word2: string,
+  sign2: 1 | -1,
+  orderType: OrderType,
+  customSequence: readonly string[]
+): CharSum[] {
+  const chars1 = [...word1];
+  const chars2 = [...word2];
+  const length = Math.max(chars1.length, chars2.length);
+
+  return Array.from({ length }, (_, i) => {
+    const char1 = chars1[i];
+    const char2 = chars2[i];
+    if (char1 === undefined || char2 === undefined) {
+      return { terms: [char1 ?? char2], candidates: [] };
+    }
+    const terms = [
+      { char: char1, sign: 1 as const },
+      { char: char2, sign: sign2 },
+    ];
+    return combineCharNumbers(terms, orderType, customSequence);
+  });
+}
+
+/**
+ * 2つの文字列の同じ位置の文字の番号を足し、和の番号の文字を求める（加算モード）。
+ * 片方の単語に文字がない位置は計算しない（候補が空）。
+ */
+export function addChars(
+  word1: string,
+  word2: string,
+  orderType: OrderType = 'gojuon',
+  customSequence: readonly string[] = []
+): CharSum[] {
+  return combineCharPairs(word1, word2, 1, orderType, customSequence);
+}
+
+/**
+ * 同じ位置の文字について、1つ目の文字の番号から2つ目の文字の番号を引き、差の番号の文字を求める（減算モード）。
+ * 差が1未満になった場合は循環する（0 番は最後の文字）。
+ * 片方の単語に文字がない位置は計算しない（候補が空）。
+ */
+export function subtractChars(
+  word1: string,
+  word2: string,
+  orderType: OrderType = 'gojuon',
+  customSequence: readonly string[] = []
+): CharSum[] {
+  return combineCharPairs(word1, word2, -1, orderType, customSequence);
+}
+
+/**
+ * 1行ずつ、行内の全文字の番号を足し、和の番号の文字を求める（合計モード）。
+ * 空行（空白のみの行を含む）は結果に含めない。行内の空白は無視する。
+ */
+export function sumLines(
+  text: string,
+  orderType: OrderType = 'gojuon',
+  customSequence: readonly string[] = []
+): CharSum[] {
+  return text
+    .split('\n')
+    .map((line) => [...line].filter((char) => !/\s/.test(char)))
+    .filter((chars) => chars.length > 0)
+    .map((chars) =>
+      combineCharNumbers(
+        chars.map((char) => ({ char, sign: 1 as const })),
+        orderType,
+        customSequence
+      )
+    );
 }

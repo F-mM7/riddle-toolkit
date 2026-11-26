@@ -20,6 +20,7 @@ interface CharInputProps {
   label?: string;
   autoFocus?: boolean;
   warning?: string;
+  multiline?: boolean; // true の場合は複数行（1行1単語）の入力欄にする
 }
 
 export function CharInput({
@@ -31,6 +32,7 @@ export function CharInput({
   label,
   autoFocus = true,
   warning,
+  multiline = false,
 }: CharInputProps) {
   const [rawValue, setRawValue] = useState(value);
 
@@ -38,12 +40,17 @@ export function CharInput({
     setRawValue(value);
   }, [value]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const input = e.target.value;
     setRawValue(input);
 
-    // 順序タイプに応じて有効な文字のみをフィルタリング
-    const filtered = filterByOrderType(input, orderType, customSequence);
+    // 順序タイプに応じて有効な文字のみをフィルタリング（複数行の場合は改行を残して行ごとに）
+    const filtered = multiline
+      ? input
+          .split('\n')
+          .map((line) => filterByOrderType(line, orderType, customSequence))
+          .join('\n')
+      : filterByOrderType(input, orderType, customSequence);
     onChange(filtered);
   };
 
@@ -56,15 +63,27 @@ export function CharInput({
       <label htmlFor={id} className={styles.label}>
         {resolvedLabel}
       </label>
-      <input
-        id={id}
-        type="text"
-        value={rawValue}
-        onChange={handleChange}
-        placeholder={placeholder}
-        className={styles.input}
-        autoFocus={autoFocus}
-      />
+      {multiline ? (
+        <textarea
+          id={id}
+          value={rawValue}
+          onChange={handleChange}
+          placeholder={placeholder}
+          className={`${styles.input} ${styles.textarea}`}
+          autoFocus={autoFocus}
+          rows={4}
+        />
+      ) : (
+        <input
+          id={id}
+          type="text"
+          value={rawValue}
+          onChange={handleChange}
+          placeholder={placeholder}
+          className={styles.input}
+          autoFocus={autoFocus}
+        />
+      )}
       {warning && <p className={styles.warning}>{warning}</p>}
     </div>
   );

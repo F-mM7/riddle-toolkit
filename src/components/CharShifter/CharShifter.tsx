@@ -1,6 +1,12 @@
 import { useState, useMemo } from 'react';
 import { ShiftMode, OrderType } from '../../utils/charShifter/types';
-import { shiftChar, compareChars } from '../../utils/charShifter/charShifter';
+import {
+  shiftChar,
+  compareChars,
+  addChars,
+  subtractChars,
+  sumLines,
+} from '../../utils/charShifter/charShifter';
 import {
   parseCustomSequence,
   findAmbiguousChars,
@@ -13,6 +19,7 @@ import { CharInput } from './CharInput';
 import { ShiftInput } from './ShiftInput';
 import { ResultDisplay } from './ResultDisplay';
 import { CompareResultDisplay } from './CompareResultDisplay';
+import { SumResultDisplay } from './SumResultDisplay';
 import styles from './CharShifter.module.css';
 
 export function CharShifter() {
@@ -20,8 +27,11 @@ export function CharShifter() {
   const [orderType, setOrderType] = useState<OrderType>('gojuon');
   const [charText, setCharText] = useState('');
   const [shifts, setShifts] = useState<number[]>([]);
-  const [compareWord1, setCompareWord1] = useState('');
-  const [compareWord2, setCompareWord2] = useState('');
+  // 比較・加算・減算モードの2単語（各モードで共有）
+  const [word1, setWord1] = useState('');
+  const [word2, setWord2] = useState('');
+  // 合計モードの単語（1行1単語）
+  const [sumText, setSumText] = useState('');
   const [customSequenceText, setCustomSequenceText] = useState('');
 
   // オリジナルシーケンスを1文字ずつの並びに分解
@@ -40,8 +50,9 @@ export function CharShifter() {
       ? formatAmbiguousWarning(findAmbiguousChars(text, customSequence))
       : undefined;
   const charWarning = getAmbiguousWarning(charText);
-  const compareWarning1 = getAmbiguousWarning(compareWord1);
-  const compareWarning2 = getAmbiguousWarning(compareWord2);
+  const wordWarning1 = getAmbiguousWarning(word1);
+  const wordWarning2 = getAmbiguousWarning(word2);
+  const sumWarning = getAmbiguousWarning(sumText);
 
   // 文字数を計算
   const charLength = useMemo(() => [...charText].length, [charText]);
@@ -67,9 +78,27 @@ export function CharShifter() {
 
   // 比較モードの結果を計算
   const comparisonResults = useMemo(() => {
-    if ((!compareWord1 && !compareWord2) || !isSequenceUsable) return [];
-    return compareChars(compareWord1, compareWord2, orderType, customSequence.chars);
-  }, [compareWord1, compareWord2, orderType, customSequence, isSequenceUsable]);
+    if ((!word1 && !word2) || !isSequenceUsable) return [];
+    return compareChars(word1, word2, orderType, customSequence.chars);
+  }, [word1, word2, orderType, customSequence, isSequenceUsable]);
+
+  // 加算・減算モードの結果を計算
+  const arithmeticResults = useMemo(() => {
+    if ((mode !== 'add' && mode !== 'subtract') || (!word1 && !word2) || !isSequenceUsable) {
+      return [];
+    }
+    const calculate = mode === 'add' ? addChars : subtractChars;
+    return calculate(word1, word2, orderType, customSequence.chars);
+  }, [mode, word1, word2, orderType, customSequence, isSequenceUsable]);
+
+  // 合計モードの結果を計算
+  const sumResults = useMemo(() => {
+    if (!isSequenceUsable) return [];
+    return sumLines(sumText, orderType, customSequence.chars);
+  }, [sumText, orderType, customSequence, isSequenceUsable]);
+
+  const emptyMessage = (defaultMessage: string) =>
+    isSequenceUsable ? defaultMessage : unusableMessage;
 
   return (
     <div className={styles.container}>
@@ -85,33 +114,60 @@ export function CharShifter() {
 
       <ModeSelector mode={mode} onModeChange={setMode} />
 
-      {mode === 'compare' ? (
+      {mode === 'compare' || mode === 'add' || mode === 'subtract' ? (
         <>
           <div className={styles.compareInputs}>
             <CharInput
               id="compare-word1"
-              value={compareWord1}
-              onChange={setCompareWord1}
+              value={word1}
+              onChange={setWord1}
               orderType={orderType}
               customSequence={customSequence.chars}
               label="単語1"
-              warning={compareWarning1}
+              warning={wordWarning1}
             />
             <CharInput
               id="compare-word2"
-              value={compareWord2}
-              onChange={setCompareWord2}
+              value={word2}
+              onChange={setWord2}
               orderType={orderType}
               customSequence={customSequence.chars}
               label="単語2"
-              warning={compareWarning2}
+              warning={wordWarning2}
               autoFocus={false}
             />
           </div>
 
-          <CompareResultDisplay
-            results={comparisonResults}
-            emptyMessage={isSequenceUsable ? undefined : unusableMessage}
+          {mode === 'compare' ? (
+            <CompareResultDisplay
+              results={comparisonResults}
+              emptyMessage={isSequenceUsable ? undefined : unusableMessage}
+            />
+          ) : (
+            <SumResultDisplay
+              results={arithmeticResults}
+              emptyMessage={emptyMessage('2つの単語を入力してください')}
+              perLine={false}
+            />
+          )}
+        </>
+      ) : mode === 'sum' ? (
+        <>
+          <CharInput
+            id="sum-words"
+            value={sumText}
+            onChange={setSumText}
+            orderType={orderType}
+            customSequence={customSequence.chars}
+            label="単語（1行に1つ）"
+            warning={sumWarning}
+            multiline
+          />
+
+          <SumResultDisplay
+            results={sumResults}
+            emptyMessage={emptyMessage('単語を入力してください')}
+            perLine
           />
         </>
       ) : (
