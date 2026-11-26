@@ -1,5 +1,8 @@
 import { KANA_MAPPING } from './kanaMapping';
 
+/** 50音表に表示する文字の種類 */
+export type KanaScript = 'hiragana' | 'katakana';
+
 /**
  * 濁音・半濁音・小字を清音に変換するマッピング
  */
@@ -44,11 +47,47 @@ const NORMALIZE_MAP: Record<string, string> = {
   っ: 'つ',
 };
 
+// ひらがな（ぁ U+3041〜ゖ U+3096）とカタカナ（ァ U+30A1〜ヶ U+30F6）の符号位置の差
+const KATAKANA_OFFSET = 0x60;
+const HIRAGANA_START = 0x3041;
+const HIRAGANA_END = 0x3096;
+const KATAKANA_START = HIRAGANA_START + KATAKANA_OFFSET;
+const KATAKANA_END = HIRAGANA_END + KATAKANA_OFFSET;
+
 /**
- * 濁音・半濁音・小字を清音に変換
+ * ひらがなを対応するカタカナに変換（ひらがな以外の文字はそのまま）
+ */
+export function hiraganaToKatakana(text: string): string {
+  return Array.from(text)
+    .map((char) => {
+      const code = char.codePointAt(0)!;
+      return code >= HIRAGANA_START && code <= HIRAGANA_END
+        ? String.fromCodePoint(code + KATAKANA_OFFSET)
+        : char;
+    })
+    .join('');
+}
+
+/**
+ * カタカナを対応するひらがなに変換（カタカナ以外の文字はそのまま）
+ */
+export function katakanaToHiragana(text: string): string {
+  return Array.from(text)
+    .map((char) => {
+      const code = char.codePointAt(0)!;
+      return code >= KATAKANA_START && code <= KATAKANA_END
+        ? String.fromCodePoint(code - KATAKANA_OFFSET)
+        : char;
+    })
+    .join('');
+}
+
+/**
+ * カタカナをひらがなにしたうえで、濁音・半濁音・小字を清音に変換
  */
 export function normalizeKana(char: string): string {
-  return NORMALIZE_MAP[char] || char;
+  const hiragana = katakanaToHiragana(char);
+  return NORMALIZE_MAP[hiragana] || hiragana;
 }
 
 /**

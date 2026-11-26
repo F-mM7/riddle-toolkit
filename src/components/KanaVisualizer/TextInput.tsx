@@ -34,7 +34,7 @@ const TextInput: React.FC<TextInputProps> = ({ lines, onChange }) => {
             className={styles.input}
             value={lines[index] || ''}
             onChange={(e) => handleChange(index, e.target.value)}
-            placeholder="ひらがな（清音）"
+            placeholder="ひらがな・カタカナ"
           />
         </div>
       ))}

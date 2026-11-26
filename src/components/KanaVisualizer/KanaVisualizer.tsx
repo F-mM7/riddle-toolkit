@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { extractAllNonSeion } from '../../utils/kanaVisualizer/kanaUtils';
+import { extractAllNonSeion, type KanaScript } from '../../utils/kanaVisualizer/kanaUtils';
 import TextInput from './TextInput';
 import KanaTable from './KanaTable';
 import WarningMessage from './WarningMessage';
+import { ScriptSelector } from './ScriptSelector';
 import styles from './KanaVisualizer.module.css';
 
 const KanaVisualizer: React.FC = () => {
   const [lines, setLines] = useState<string[]>(['', '', '']);
+  const [script, setScript] = useState<KanaScript>('hiragana');
 
   // 清音以外の文字を検出
   const invalidChars = useMemo(() => {
@@ -31,7 +33,8 @@ const KanaVisualizer: React.FC = () => {
 
       <div className={styles.tableSection}>
         <h2 className={styles.label}>50音表</h2>
-        <KanaTable lines={lines} />
+        <ScriptSelector script={script} onChange={setScript} />
+        <KanaTable lines={lines} script={script} />
       </div>
     </div>
   );

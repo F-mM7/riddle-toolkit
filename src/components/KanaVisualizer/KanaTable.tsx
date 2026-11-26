@@ -6,16 +6,21 @@ import {
   GRID_COLS,
   VALID_POSITIONS,
 } from '../../utils/kanaVisualizer/kanaMapping';
-import { extractSeion } from '../../utils/kanaVisualizer/kanaUtils';
+import {
+  extractSeion,
+  hiraganaToKatakana,
+  type KanaScript,
+} from '../../utils/kanaVisualizer/kanaUtils';
 import { calculateMixedColor } from '../../utils/kanaVisualizer/colorUtils';
 import KanaCell from './KanaCell';
 import styles from './KanaTable.module.css';
 
 interface KanaTableProps {
   lines: string[]; // 入力された各行のテキスト
+  script: KanaScript; // 表に表示する文字の種類
 }
 
-const KanaTable: React.FC<KanaTableProps> = ({ lines }) => {
+const KanaTable: React.FC<KanaTableProps> = ({ lines, script }) => {
   // グリッドデータを計算（どのマスに何色を塗るか）
   const gridData = useMemo(() => {
     // 各マスの情報を格納する2次元配列
@@ -50,21 +55,22 @@ const KanaTable: React.FC<KanaTableProps> = ({ lines }) => {
       });
     });
 
-    // すべての清音文字をグリッドに配置
+    // すべての清音文字をグリッドに配置（表示はカタカナ設定なら変換する）
     Object.entries(KANA_MAPPING).forEach(([char, { row, col }]) => {
       const rowIndices = kanaToRows.get(char);
+      const displayChar = script === 'katakana' ? hiraganaToKatakana(char) : char;
       if (rowIndices && rowIndices.length > 0) {
         // 入力された文字は色付き
         const color = calculateMixedColor(rowIndices);
-        grid[row][col] = { character: char, color, isInput: true };
+        grid[row][col] = { character: displayChar, color, isInput: true };
       } else {
         // 入力されていない文字は色なし（暗めに表示）
-        grid[row][col] = { character: char, color: null, isInput: false };
+        grid[row][col] = { character: displayChar, color: null, isInput: false };
       }
     });
 
     return grid;
-  }, [lines]);
+  }, [lines, script]);
 
   return (
     <div className={styles.container}>
