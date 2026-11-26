@@ -4,6 +4,10 @@
   padding: 0 1rem 2rem;
 }
 
+.selectors {
+  margin-bottom: 0.5rem;
+}
+
 @media (max-width: 640px) {
   .container {
     padding: 0 0.5rem 1rem;

@@ -1,12 +1,14 @@
 import type { MatchResult, Pattern } from '../../utils/prefectureRegex/types';
+import { MatchedName } from './MatchedName';
 import styles from './ResultDisplay.module.css';
 
 interface ResultDisplayProps {
   results: MatchResult[];
   patterns: Pattern[];
+  showList: boolean;
 }
 
-export function ResultDisplay({ results, patterns }: ResultDisplayProps) {
+export function ResultDisplay({ results, patterns, showList }: ResultDisplayProps) {
   // パターンがすべて入力されているかチェック
   const hasValidInput = patterns.every((p) => p.value !== '' && p.isValid);
 
@@ -39,7 +41,11 @@ export function ResultDisplay({ results, patterns }: ResultDisplayProps) {
               {result.patterns.map((patternMatch, patternIndex) => (
                 <div key={patternMatch.patternId} className={styles.patternMatch}>
                   <span className={styles.patternNumber}>パターン{patternIndex + 1}:</span>
-                  <span className={styles.matchedValue}>{patternMatch.matched}</span>
+                  <MatchedName
+                    name={patternMatch.matched}
+                    list={patternMatch.list}
+                    showList={showList}
+                  />
                 </div>
               ))}
             </div>

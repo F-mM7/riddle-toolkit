@@ -1,4 +1,4 @@
-import type { Pattern, MatchResult } from './types';
+import type { Pattern, MatchResult, NameEntry, PatternMatch } from './types';
 
 /**
  * 正規表現パターンのバリデーション
@@ -25,10 +25,11 @@ export function validatePattern(patternValue: string): {
 /**
  * 複数パターンでのマッチング実行
  * キャプチャグループの引用機能を含む
+ * 同じ項目（一覧の中の位置が同じもの）は再使用しない
  */
 export function findMatches(
   patterns: Pattern[],
-  data: string[],
+  data: readonly NameEntry[],
   maxResults: number = 100
 ): MatchResult[] {
   // 空のパターンや無効なパターンがある場合は空配列を返す
@@ -42,8 +43,9 @@ export function findMatches(
   const firstPattern = patterns[0];
   const firstRegex = new RegExp(`^${firstPattern.value}$`);
 
-  for (const item of data) {
-    const match = item.match(firstRegex);
+  for (let index = 0; index < data.length; index++) {
+    const entry = data[index];
+    const match = entry.name.match(firstRegex);
     if (match) {
       // 最初のパターンのキャプチャグループを保存
       const captures = match.slice(1);
@@ -54,7 +56,7 @@ export function findMatches(
           patterns.slice(1),
           data,
           captures,
-          [item],
+          [index],
           maxResults - results.length
         );
 
@@ -63,7 +65,8 @@ export function findMatches(
             patterns: [
               {
                 patternId: firstPattern.id,
-                matched: item,
+                matched: entry.name,
+                list: entry.list,
                 captures,
               },
               ...restResult,
@@ -80,7 +83,8 @@ export function findMatches(
           patterns: [
             {
               patternId: firstPattern.id,
-              matched: item,
+              matched: entry.name,
+              list: entry.list,
               captures,
             },
           ],
@@ -99,32 +103,20 @@ export function findMatches(
 /**
  * 再帰的にパターンマッチングを行う
  * previousCaptures: これまでのパターンで取得したキャプチャグループ
- * usedItems: すでに使用済みの項目（重複を避けるため）
+ * usedIndices: すでに使用済みの項目の位置（重複を避けるため）
  */
 function findMatchesRecursive(
   patterns: Pattern[],
-  data: string[],
+  data: readonly NameEntry[],
   previousCaptures: string[],
-  usedItems: string[],
+  usedIndices: number[],
   maxResults: number
-): Array<
-  {
-    patternId: string;
-    matched: string;
-    captures: string[];
-  }[]
-> {
+): PatternMatch[][] {
   if (patterns.length === 0) {
     return [[]];
   }
 
-  const results: Array<
-    {
-      patternId: string;
-      matched: string;
-      captures: string[];
-    }[]
-  > = [];
+  const results: PatternMatch[][] = [];
 
   const currentPattern = patterns[0];
 
@@ -133,13 +125,14 @@ function findMatchesRecursive(
 
   const regex = new RegExp(`^${patternWithBackrefs}$`);
 
-  for (const item of data) {
+  for (let index = 0; index < data.length; index++) {
     // すでに使用済みの項目はスキップ
-    if (usedItems.includes(item)) {
+    if (usedIndices.includes(index)) {
       continue;
     }
 
-    const match = item.match(regex);
+    const entry = data[index];
+    const match = entry.name.match(regex);
     if (match) {
       const captures = match.slice(1);
 
@@ -152,7 +145,7 @@ function findMatchesRecursive(
           patterns.slice(1),
           data,
           newCaptures,
-          [...usedItems, item],
+          [...usedIndices, index],
           maxResults - results.length
         );
 
@@ -160,7 +153,8 @@ function findMatchesRecursive(
           results.push([
             {
               patternId: currentPattern.id,
-              matched: item,
+              matched: entry.name,
+              list: entry.list,
               captures,
             },
             ...restResult,
@@ -175,7 +169,8 @@ function findMatchesRecursive(
         results.push([
           {
             patternId: currentPattern.id,
-            matched: item,
+            matched: entry.name,
+            list: entry.list,
             captures,
           },
         ]);
