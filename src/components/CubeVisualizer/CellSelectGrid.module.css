@@ -1,4 +1,4 @@
-/* スケルトンソルバーのグリッド入力（SkeletonSolver/GridInput.module.css）と同じ見た目 */
+/* スケルトンのグリッド入力（SkeletonSolver/GridInput.module.css）と同じ見た目 */
 /*
  * 下段の入力グリッド(幅 min(100%, --cube-net-max-width))の 0.45 倍の幅で連動して伸縮する。
  * マスは aspect-ratio で正方形を保つ。

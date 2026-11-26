@@ -4,7 +4,6 @@ import {
   FileDigit,
   CircleMinus,
   Link,
-  Spade,
   VectorSquare,
   Cross,
   Grid,
@@ -24,17 +23,18 @@ import {
   LayoutGrid,
   ListOrdered,
   CalendarDays,
+  Calculator,
+  Brush,
 } from 'lucide-react';
 
 /** ツールのジャンル(トップページの区切り) */
-export type ToolGenre = 'count' | 'convert' | 'view' | 'solve' | 'sequence';
+export type ToolGenre = 'view' | 'convert' | 'solve' | 'sequence';
 
 /** ジャンルの表示順と見出し名 */
 export const TOOL_GENRES: readonly { id: ToolGenre; name: string }[] = [
-  { id: 'count', name: '数える・比べる' },
+  { id: 'view', name: 'Visualizer' },
   { id: 'convert', name: '変換する' },
-  { id: 'view', name: '並べて見る' },
-  { id: 'solve', name: '解く・探す' },
+  { id: 'solve', name: 'ソルバー' },
   { id: 'sequence', name: '有名シーケンス' },
 ];
 
@@ -49,32 +49,53 @@ export interface ToolInfo {
 // ジャンルごとに、ジャンル内の表示順で並べる
 export const TOOLS: ToolInfo[] = [
   {
+    id: 'kana-visualizer',
+    name: '50音表',
+    path: '/kana-visualizer',
+    genre: 'view',
+    icon: Grid,
+  },
+  {
     id: 'char-counter',
     name: '文字カウンター',
     path: '/char-counter',
-    genre: 'count',
+    genre: 'view',
     icon: FileDigit,
   },
   {
     id: 'difference-of-character-set',
     name: '差集合',
     path: '/difference-of-character-set',
-    genre: 'count',
+    genre: 'view',
     icon: CircleMinus,
-  },
-  {
-    id: 'babanuki',
-    name: '文字ババ抜き',
-    path: '/babanuki',
-    genre: 'count',
-    icon: Spade,
   },
   {
     id: 'word-venn',
     name: '単語ベン図',
     path: '/word-venn',
-    genre: 'count',
+    genre: 'view',
     icon: Blend,
+  },
+  {
+    id: 'line-wrapper',
+    name: '改行',
+    path: '/line-wrapper',
+    genre: 'view',
+    icon: TextWrap,
+  },
+  {
+    id: 'palindrome-checker',
+    name: '回文チェッカー',
+    path: '/palindrome-checker',
+    genre: 'view',
+    icon: FlipHorizontal2,
+  },
+  {
+    id: 'cube-visualizer',
+    name: '3D立方体',
+    path: '/cube-visualizer',
+    genre: 'view',
+    icon: Box,
   },
   {
     id: 'char-shifter',
@@ -105,36 +126,15 @@ export const TOOLS: ToolInfo[] = [
     icon: Eraser,
   },
   {
-    id: 'line-wrapper',
-    name: '改行グリッド',
-    path: '/line-wrapper',
-    genre: 'view',
-    icon: TextWrap,
-  },
-  {
-    id: 'palindrome-checker',
-    name: '回文チェッカー',
-    path: '/palindrome-checker',
-    genre: 'view',
-    icon: FlipHorizontal2,
-  },
-  {
-    id: 'kana-visualizer',
-    name: '50音表ビジュアライザー',
-    path: '/kana-visualizer',
-    genre: 'view',
-    icon: Grid,
-  },
-  {
-    id: 'cube-visualizer',
-    name: '立方体ビジュアライザー',
-    path: '/cube-visualizer',
-    genre: 'view',
-    icon: Box,
+    id: 'stroke-count',
+    name: '画数',
+    path: '/stroke-count',
+    genre: 'convert',
+    icon: Brush,
   },
   {
     id: 'shiritori-solver',
-    name: 'しりとりソルバー',
+    name: 'しりとり',
     path: '/shiritori-solver',
     genre: 'solve',
     icon: Link,
@@ -148,28 +148,28 @@ export const TOOLS: ToolInfo[] = [
   },
   {
     id: 'skeleton-solver',
-    name: 'スケルトンソルバー',
+    name: 'スケルトン',
     path: '/skeleton-solver',
     genre: 'solve',
     icon: Cross,
   },
   {
     id: 'word-lattice-solver',
-    name: '単語格子ソルバー',
+    name: '単語格子',
     path: '/word-lattice-solver',
     genre: 'solve',
     icon: VectorSquare,
   },
   {
     id: 'amida-solver',
-    name: 'あみだくじソルバー',
+    name: 'あみだくじ',
     path: '/amida-solver',
     genre: 'solve',
     icon: Waypoints,
   },
   {
     id: 'tiling-solver',
-    name: 'タイリングソルバー',
+    name: 'タイリング',
     path: '/tiling-solver',
     genre: 'solve',
     icon: LayoutGrid,
@@ -180,6 +180,13 @@ export const TOOLS: ToolInfo[] = [
     path: '/maze-helper',
     genre: 'solve',
     icon: Route,
+  },
+  {
+    id: 'cryptarithm-solver',
+    name: '覆面算',
+    path: '/cryptarithm-solver',
+    genre: 'solve',
+    icon: Calculator,
   },
   {
     id: 'famous-sequences',
@@ -197,7 +204,7 @@ export const TOOLS: ToolInfo[] = [
   },
   {
     id: 'prefecture-regex',
-    name: '都道府県正規表現マッチャー',
+    name: '都道府県',
     path: '/prefecture-regex',
     genre: 'sequence',
     icon: MapPin,

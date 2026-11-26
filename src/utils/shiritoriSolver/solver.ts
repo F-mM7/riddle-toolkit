@@ -33,7 +33,7 @@ export interface SolveResult {
 }
 
 /**
- * しりとりソルバー
+ * しりとりの解を求める
  * ビットマスクDP + DFSで全解を探索
  */
 export function solveShiritori(inputWords: string[], maxAnswers: number = ANSWER_MAX): SolveResult {

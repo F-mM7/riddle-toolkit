@@ -5,7 +5,6 @@ import { CharCounter } from './components/CharCounter/CharCounter';
 import { DifferenceOfCharacterSet } from './components/DifferenceOfCharacterSet/DifferenceOfCharacterSet';
 import { ShiritoriSolver } from './components/ShiritoriSolver/ShiritoriSolver';
 import { WordVenn } from './components/WordVenn/WordVenn';
-import { Babanuki } from './components/Babanuki/Babanuki';
 import { WordLatticeSolver } from './components/WordLatticeSolver/WordLatticeSolver';
 import { SkeletonSolver } from './components/SkeletonSolver/SkeletonSolver';
 import KanaVisualizer from './components/KanaVisualizer/KanaVisualizer';
@@ -24,6 +23,8 @@ import { MazeHelper } from './components/MazeHelper/MazeHelper';
 import { TilingSolver } from './components/TilingSolver/TilingSolver';
 import { FamousSequences } from './components/FamousSequences/FamousSequences';
 import { NationalHolidays } from './components/NationalHolidays/NationalHolidays';
+import { CryptarithmSolver } from './components/CryptarithmSolver/CryptarithmSolver';
+import { StrokeCount } from './components/StrokeCount/StrokeCount';
 
 function App() {
   return (
@@ -35,7 +36,6 @@ function App() {
           <Route path="/difference-of-character-set" element={<DifferenceOfCharacterSet />} />
           <Route path="/shiritori-solver" element={<ShiritoriSolver />} />
           <Route path="/word-venn" element={<WordVenn />} />
-          <Route path="/babanuki" element={<Babanuki />} />
           <Route path="/word-lattice-solver" element={<WordLatticeSolver />} />
           <Route path="/skeleton-solver" element={<SkeletonSolver />} />
           <Route path="/kana-visualizer" element={<KanaVisualizer />} />
@@ -54,6 +54,8 @@ function App() {
           <Route path="/tiling-solver" element={<TilingSolver />} />
           <Route path="/famous-sequences" element={<FamousSequences />} />
           <Route path="/national-holidays" element={<NationalHolidays />} />
+          <Route path="/cryptarithm-solver" element={<CryptarithmSolver />} />
+          <Route path="/stroke-count" element={<StrokeCount />} />
         </Routes>
       </Layout>
     </BrowserRouter>

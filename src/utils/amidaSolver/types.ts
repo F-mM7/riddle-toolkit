@@ -1,4 +1,4 @@
-// あみだくじソルバー: 横線1本分の情報
+// あみだくじ: 横線1本分の情報
 export interface Rung {
   id: number;
   left: number; // 左側の縦線インデックス（0始まり）。left と left+1 を結ぶ
