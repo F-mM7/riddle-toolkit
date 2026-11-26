@@ -1,6 +1,7 @@
 // 「有名シーケンス一覧」用のシーケンス定義
-// 干支・曜日・都道府県名・県庁所在地名は既存の配列を参照して作る(名前や並びを書き写さない)
+// 干支・曜日・都道府県名・県庁所在地名・五十音は既存の配列を参照して作る(名前や並びを書き写さない)
 
+import { SEION } from './kana';
 import { CAPITALS_IN_CODE_ORDER, PREFECTURES_IN_CODE_ORDER } from './prefectureCodes';
 import { ETO, WEEKDAY, type SequenceItem } from './sequences';
 
@@ -393,6 +394,15 @@ const CAPITALS: FamousSequence = {
   copyTargets: LINE_SEPARATED_KANA_COPY_TARGETS,
 };
 
+// 五十音(清音 46 文字。あ〜ん)。46 件あるので表は見せず、コピーだけにする
+// 1 文字ずつの要素なので、区切りなしでつなげたもの(あいうえお…をん)をコピーする(既定のコピーボタン)
+const GOJUON: FamousSequence = {
+  id: 'gojuon',
+  name: '五十音',
+  view: 'copyOnly',
+  grids: [kanaGrid(SEION)],
+};
+
 export const FAMOUS_SEQUENCES: readonly FamousSequence[] = [
   { id: ETO.id, name: ETO.name, grids: [readingGrid(requireReadings(ETO.items))] },
   WEEKDAYS,
@@ -406,4 +416,5 @@ export const FAMOUS_SEQUENCES: readonly FamousSequence[] = [
   FINGERS,
   PREFECTURES,
   CAPITALS,
+  GOJUON,
 ];
