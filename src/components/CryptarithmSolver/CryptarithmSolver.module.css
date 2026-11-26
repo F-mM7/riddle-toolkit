@@ -1,0 +1,284 @@
+.container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.inputSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-card);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  min-width: 0;
+}
+
+.resultSection {
+  flex: 2.5;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-card);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  min-width: 0;
+}
+
+.label {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-size: 1.3rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  color: var(--color-text-primary);
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.extractField {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.extractLabel {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.extractInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  color: var(--color-text-primary);
+}
+
+.extractInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.extractInput::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.symbolsTitle {
+  margin: 0 0 0.5rem 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.symbolsTable {
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+}
+
+.symbolsTable th,
+.symbolsTable td {
+  padding: 0.2rem 0.75rem;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.symbolsTable th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* 記号の列は等幅で並べる */
+.symbolsTable .symbol {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.button {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-color: var(--color-primary);
+  color: var(--color-bg-main);
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.buttonSecondary {
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+.buttonSecondary:hover {
+  background-color: var(--color-border);
+}
+
+.placeholder {
+  margin: 0;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.statusText {
+  margin: 0;
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+.noSolution {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.errorList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.error {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.skippedNote {
+  margin: 0.5rem 0 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.solutions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.solutionCard {
+  background-color: var(--color-bg-hover);
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.solutionTitle {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.extracted {
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-bg-main);
+  border-radius: 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  overflow-wrap: anywhere;
+}
+
+.equations {
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-bg-main);
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: var(--color-secondary);
+  line-height: 1.6;
+}
+
+.equation {
+  overflow-wrap: anywhere;
+}
+
+.assignments {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-rows: repeat(5, auto);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0.25rem 0.75rem;
+  font-family: 'Courier New', monospace;
+  color: var(--color-text-primary);
+}
+
+.assignment {
+  white-space: nowrap;
+}
+
+.unusedDigit {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 1rem;
+  }
+
+  .inputSection,
+  .resultSection {
+    padding: 1rem;
+  }
+
+  .label {
+    font-size: 1.1rem;
+  }
+}
