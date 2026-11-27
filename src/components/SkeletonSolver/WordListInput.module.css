@@ -56,3 +56,51 @@
   color: var(--color-text-secondary);
   margin: 0;
 }
+
+.toggle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggleLabel {
+  flex-shrink: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.toggleButtons {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.25rem;
+}
+
+.toggleButton,
+.toggleActive {
+  padding: 0.3rem 0.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggleButton {
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.toggleButton:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-primary);
+}
+
+.toggleActive {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-bg-main);
+}

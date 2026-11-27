@@ -7,6 +7,7 @@ import { SolutionDisplay } from './SolutionDisplay';
 import { analyzeGrid } from '../../utils/skeletonSolver/gridAnalyzer';
 import { solveSkeleton } from '../../utils/skeletonSolver/solver';
 import { checkWordsValid } from '../../utils/skeletonSolver/validation';
+import { enlargeKogaki } from '../../utils/skeletonSolver/enlargeKogaki';
 import styles from './SkeletonSolver.module.css';
 
 // nxnの空のグリッドを生成
@@ -14,12 +15,13 @@ const createEmptyGrid = (size: number): Grid => {
   return Array.from({ length: size }, () => Array(size).fill(false));
 };
 
-// 単語リストをパース
-const parseWordList = (text: string): string[] => {
+// 単語リストをパース(shouldEnlargeKogaki が true なら小字を大きい字に直す)
+const parseWordList = (text: string, shouldEnlargeKogaki: boolean): string[] => {
   return text
     .split('\n')
     .map((line) => line.trim())
-    .filter((line) => line.length > 0);
+    .filter((line) => line.length > 0)
+    .map((word) => (shouldEnlargeKogaki ? enlargeKogaki(word) : word));
 };
 
 // サンプルデータ
@@ -121,9 +123,13 @@ export function SkeletonSolver() {
   const [solutionError, setSolutionError] = useState<string>('');
   const [clearCount, setClearCount] = useState<number>(0);
   const [showSamples, setShowSamples] = useState<boolean>(false);
+  const [shouldEnlargeKogaki, setShouldEnlargeKogaki] = useState<boolean>(true);
 
   // 単語リストをパース
-  const words = useMemo(() => parseWordList(wordListText), [wordListText]);
+  const words = useMemo(
+    () => parseWordList(wordListText, shouldEnlargeKogaki),
+    [wordListText, shouldEnlargeKogaki]
+  );
 
   // グリッド解析
   const analysis = useMemo(() => analyzeGrid(grid), [grid]);
@@ -208,6 +214,15 @@ export function SkeletonSolver() {
   // 単語リスト変更時の処理
   const handleWordListChange = (text: string) => {
     setWordListText(text);
+    setSolutions([]); // 解をクリア
+    setClearCount(0); // カウントをリセット
+  };
+
+  // 小字を大きくするかの切り替え
+  const handleEnlargeKogakiChange = (value: boolean) => {
+    // 同じ値なら自動探索が走らないので、解を消さない
+    if (value === shouldEnlargeKogaki) return;
+    setShouldEnlargeKogaki(value);
     setSolutions([]); // 解をクリア
     setClearCount(0); // カウントをリセット
   };
@@ -321,6 +336,8 @@ export function SkeletonSolver() {
                 value={wordListText}
                 onChange={handleWordListChange}
                 wordCount={words.length}
+                shouldEnlargeKogaki={shouldEnlargeKogaki}
+                onEnlargeKogakiChange={handleEnlargeKogakiChange}
               />
             </div>
           </div>
