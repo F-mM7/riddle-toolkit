@@ -34,6 +34,38 @@
   flex-shrink: 0;
 }
 
+.extractField {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.extractLabel {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.extractInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  color: var(--color-text-primary);
+}
+
+.extractInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
 .textarea {
   flex: 1;
   width: 100%;
@@ -145,6 +177,17 @@
   margin: 0 0 0.75rem 0;
   color: var(--color-primary);
   font-size: 1rem;
+}
+
+.extracted {
+  margin: 0 0 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-bg-main);
+  border-radius: 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  overflow-wrap: anywhere;
 }
 
 .wordList {

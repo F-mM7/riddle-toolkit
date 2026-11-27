@@ -6,6 +6,7 @@ import {
   type SolveResult,
   type SolveWithExclusionResult,
 } from '../../utils/shiritoriSolver/solver';
+import { extractChars, parseExtractPattern } from '../../utils/shiritoriSolver/extractChars';
 import styles from './ShiritoriSolver.module.css';
 
 type ResultState =
@@ -14,6 +15,8 @@ type ResultState =
 
 export function ShiritoriSolver() {
   const [inputText, setInputText] = useState('');
+  // 抜き出し指定(例: 1-1,10-3)。探索には使わず、表示時に各解へ当てる
+  const [extractPattern, setExtractPattern] = useState('');
   const [result, setResult] = useState<ResultState | null>(null);
   const [clearCount, setClearCount] = useState<number>(0);
   const [showSample, setShowSample] = useState<boolean>(false);
@@ -43,6 +46,7 @@ export function ShiritoriSolver() {
 
   const handleClear = () => {
     setInputText('');
+    setExtractPattern('');
     setResult(null);
 
     const newCount = clearCount + 1;
@@ -53,11 +57,29 @@ export function ShiritoriSolver() {
     }
   };
 
+  const extractSpecs = parseExtractPattern(extractPattern);
+
+  // 解の単語の並びから抜き出した文字(指定が無ければ何も出さない)
+  const renderExtracted = (words: string[]) => {
+    const extracted = extractChars(extractSpecs, words);
+    return extracted !== null && <div className={styles.extracted}>{extracted}</div>;
+  };
+
   return (
     <div className={styles.container}>
       {/* 入力エリア */}
       <div className={styles.inputSection}>
         <h2 className={styles.label}>単語リスト</h2>
+        <label className={styles.extractField}>
+          <span className={styles.extractLabel}>抜き出し</span>
+          <input
+            type="text"
+            className={styles.extractInput}
+            value={extractPattern}
+            onChange={(e) => setExtractPattern(e.target.value)}
+            spellCheck={false}
+          />
+        </label>
         <textarea
           className={styles.textarea}
           value={inputText}
@@ -102,6 +124,7 @@ export function ShiritoriSolver() {
                 {result.data.solutions.map((solution, idx) => (
                   <div key={idx} className={styles.solutionItem}>
                     <h3 className={styles.solutionTitle}>解 {idx + 1}</h3>
+                    {renderExtracted(solution.words)}
                     <ol className={styles.wordList}>
                       {solution.words.map((word, wordIdx) => (
                         <li key={wordIdx}>{word}</li>
@@ -125,6 +148,7 @@ export function ShiritoriSolver() {
                   <h3 className={styles.solutionTitle}>
                     <span className={styles.excludedWord}>{r.excludedWord}</span> を除外
                   </h3>
+                  {renderExtracted(r.solution.words)}
                   <ol className={styles.wordList}>
                     {r.solution.words.map((word, wordIdx) => (
                       <li key={wordIdx}>{word}</li>
